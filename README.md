@@ -10,7 +10,9 @@ Main purpose is to slowly port complex custom components over to React where dev
 
 ## **Usage(W.I.P Basic Concept)**
 
-Via React: `require("@figure/react-components")` / `import Figure from "@figure/react-components";` || `import { COMPONENT_NAME } from "@figure/react-components";`
+Via React: 
+- Install the package: `$ npm i @offsetpartners/react-components`
+- `require("@offsetpartners/react-components")` / `import Figure from "@offsetpartners/react-components";` || `import { COMPONENT_NAME } from "@offsetpartners/react-components";`
 
 Via CDN Link:
 
@@ -27,7 +29,7 @@ Via CDN Link:
 ## **Development**
 
 - Clone the repo:
-  ` $ git clone GIT_LINK`
+  ` $ git clone https://github.com/offsetpartners/react-components.git`
 - CD into Project Directory and run: `$ npm i` or `$ yarn start` to install deps
 - Once all packages have been installed then simply run `$ npm run start` to start a [styleguidist](https://react-styleguidist.js.org/) server
 - Then viola you're ready to play around with all the Components
