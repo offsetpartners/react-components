@@ -17,13 +17,29 @@ Via React:
 Via CDN Link:
 
 ```html
-<!-- Fetch via CDN Link -->
-<script src="https://CDN_LINK_HERE/figure/react-components"></script>
+<!-- Make Sure to include these in the <head /> -->
+<head>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@offsetpartners/react-components@VERSION_NUMBER/dist/figure.css"
+    />
+    <script
+      crossorigin
+      src="https://unpkg.com/react@16/umd/react.production.min.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"
+    ></script>
+</head>
 
-<!-- Retrieve Components from Library -->
-<script>
-  const { QueryBuilder, ...COMPONENT_NAMES } = figure["react_components"];
-</script>
+<!-- Fetch via CDN Link -->
+<body>
+    <!-- For QueryBuilder -->
+    <div id="fig-query-builder"></div>
+    
+    <script src="https://unpkg.com/@offsetpartners/react-components@VERSION_NUMBER/dist/figure.js"></script>
+</body>
 ```
 
 ## **Development**
