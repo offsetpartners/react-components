@@ -1,11 +1,11 @@
 {
-  "name": "@figure/react-components",
+  "name": "@offsetpartners/react-components",
   "version": "0.1.0",
   "description": "React Components for Figure and Offset",
   "main": "./dist/figure.js",
   "module": "./dist/figure.js",
   "publishConfig": {
-    "access": "restricted"
+    "access": "public"
   },
   "dependencies": {
     "@ant-design/icons": "^4.2.2",
