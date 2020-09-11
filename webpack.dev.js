@@ -1,8 +1,6 @@
 const webpack = require("webpack");
 const { resolve } = require("path");
 const pkg = require("./package.json");
-const TerserPlugin = require("terser-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = function () {
   return {
@@ -19,11 +17,6 @@ module.exports = function () {
       library: pkg.name,
       libraryTarget: "umd",
       umdNamedDefine: true,
-    },
-
-    optimization: {
-      minimize: true,
-      minimizer: [new TerserPlugin()],
     },
 
     // Modules
@@ -46,8 +39,13 @@ module.exports = function () {
         {
           test: /\.(css|less)$/, // .less and .css
           use: [
-            "css-loader",
-            MiniCssExtractPlugin.loader,
+            "style-loader",
+            {
+              loader: "css-loader",
+              options: {
+                importLoaders: 1,
+              },
+            },
             {
               loader: "less-loader",
               options: {
@@ -95,8 +93,9 @@ module.exports = function () {
       },
     },
 
+    // Add an instance of the MiniCssExtractPlugin to the plugins list
+    // But remember - only for production!
     plugins: [
-      new MiniCssExtractPlugin(),
       new webpack.HashedModuleIdsPlugin(), // so that file hashes don't change unexpectedly
     ],
   };

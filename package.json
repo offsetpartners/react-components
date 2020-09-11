@@ -1,6 +1,6 @@
 {
   "name": "@offsetpartners/react-components",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "React Components for Figure and Offset",
   "main": "./dist/figure.js",
   "module": "./dist/figure.js",
@@ -12,7 +12,8 @@
     "antd": "^4.6.2",
     "moment": "^2.27.0",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-feather": "^2.0.8"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
@@ -26,6 +27,7 @@
     "mini-css-extract-plugin": "^0.11.0",
     "react-styleguidist": "^11.0.11",
     "style-loader": "^1.2.1",
+    "terser-webpack-plugin": "^4.1.0",
     "url-loader": "^4.1.0",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
@@ -38,7 +40,8 @@
     "clean": "rm -rf ./dist",
     "build": "npm run clean && webpack --mode=production",
     "watch": "webpack --watch ",
-    "start": "styleguidist server"
+    "start": "styleguidist server",
+    "docs:build": "styleguidist build"
   },
   "keywords": [
     "Figure",

@@ -1,10 +1,11 @@
-const path = require("path");
+const { resolve } = require("path");
 
 module.exports = {
-  title: "Figure: React Components",
-  components: "src/components/*/index.js",
+  styleguideDir: "dist-docs",
+  title: "Offset Partners: React Components",
+  components: "src/components/*/[A-Z]*.js",
   moduleAliases: {
-    "@figure/react-components": path.resolve(__dirname, "src"),
+    "@offsetpartners/react-components": resolve(__dirname, "src/components"),
   },
-  webpackConfig: require("./webpack.config"),
+  webpackConfig: require("./webpack.dev"),
 };
