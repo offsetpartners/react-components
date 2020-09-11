@@ -50,8 +50,6 @@ Via CDN Link:
 - Once all packages have been installed then simply run `$ npm run start` to start a [styleguidist](https://react-styleguidist.js.org/) server
 - Then viola you're ready to play around with all the Components
 
-Once done then viola
-
 ### **Version**
 
-v. 0.1.0
+v. 0.1.2

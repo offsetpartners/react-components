@@ -1,7 +1,7 @@
 QueryBuilder Example
 
 ```jsx
-import { QueryBuilder } from "@figure/react-components";
+import { QueryBuilder } from "@offsetpartners/react-components";
 
 <QueryBuilder />
 ```
