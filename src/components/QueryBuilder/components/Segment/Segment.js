@@ -1,7 +1,8 @@
 import React from "react";
 import Rule from "../Rule";
-import { useQueryBuilder } from "../../Provider";
-import { DeleteOutlined } from "@ant-design/icons";
+import Icon from "@ant-design/icons";
+import { Trash } from "react-feather";
+import { useQueryBuilder } from "../../provider";
 import { Row, Col, Card, Button, Select, Divider, Popconfirm } from "antd";
 
 const getRules = (inputs) => {
@@ -50,6 +51,7 @@ export default (props) => {
     <Card
       bordered
       style={cardStyle}
+      className="fig-query-builder-segment-card"
       actions={
         index > 0
           ? [
@@ -58,7 +60,18 @@ export default (props) => {
                 onConfirm={() => handleDelete(type, index)}
                 title="Are you sure you want to delete this Segment?"
               >
-                <Button block type="text" icon={<DeleteOutlined />}>
+                <Button
+                  block
+                  type="text"
+                  style={{ color: "#4F5268" }}
+                  icon={
+                    <Icon
+                      component={() => (
+                        <Trash width={16} height={16} type="outlined" />
+                      )}
+                    />
+                  }
+                >
                   Delete Segment
                 </Button>
               </Popconfirm>,

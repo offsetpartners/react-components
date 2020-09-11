@@ -3,7 +3,7 @@ import "./styles/index.less";
 import "./styles/index.css";
 import { Tabs, Layout } from "antd";
 import QueryTab from "./components/QueryTab";
-import QueryBuilderProvider from "./Provider";
+import QueryBuilderProvider from "./provider";
 import { ORDERS_INPUTS, CUSTOMERS_INPUTS } from "./lib/inputs";
 
 export default function QueryBuilder() {
@@ -11,24 +11,8 @@ export default function QueryBuilder() {
   const { Content } = Layout;
 
   return (
-    <Layout
-      style={{
-        display: "flex",
-        alignItems: "center",
-        flexDirection: "column",
-        backgroundColor: "#fff",
-      }}
-    >
-      <Content
-        style={{
-          width: "100%",
-          maxWidth: 960,
-          display: "flex",
-          padding: "50px 50px",
-          flexDirection: "column",
-          backgroundColor: "#fff",
-        }}
-      >
+    <Layout className="fig-query-builder-layout">
+      <Content className="fig-query-builder-content">
         <QueryBuilderProvider>
           <Tabs animated>
             <TabPane key="0" tab="Orders">

@@ -1,22 +1,100 @@
 @import "~antd/dist/antd.less";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
+// Base
+// ----
+@font-family: "Inter";
 @text-color: #2a2f56;
 @border-radius-base: 4px;
 @primary-color: #ff7358;
 @heading-color: #2a2f56;
 @border-color-base: #dee2e6;
-@box-shadow-base: 0px 2px 5px rgba(60, 66, 87, 0.08), 0px 0px 0px 1px #dee2e6,
-  0px 1px 1px rgba(0, 0, 0, 0.12);
+@box-shadow-base: 0px 2px 5px rgba(60, 66, 87, 0.08),
+  0px 0px 0px 1px rgba(60, 66, 87, 0.16), 0px 1px 1px rgba(0, 0, 0, 0.12);
 
-@item-hover-bg: @primary-color;
+@item-hover-bg: #f8f6fb;
 
+// Button
+// ---
 @btn-default-bg: #fff1ef;
 @btn-default-border: @primary-color;
 
+// Tag
+// ---
+@tag-default-bg: #e3e8ee;
+
+// Tabs
+// ---
+@tabs-title-font-size: 16px;
 @tabs-highlight-color: @text-color;
 
+// Divider
+// ---
 @divider-color: #dee2e6;
 
-@select-selection-item-bg: #e3e8ee;
+// Input
+// ---
+@input-border-color: transparent;
 
+// Check
+// -
+@checkbox-border-width: 0px;
+
+// Select
+// ---
+@select-border-color: transparent;
+@select-selection-item-bg: #e3e8ee;
+@select-item-active-bg: @item-hover-bg;
+@select-item-selected-bg: rgba(255, 115, 88, 0.7);
+
+// Card
+// ---
 @card-actions-li-margin: 0;
+
+// Table
+// ---
+@table-header-bg: #f6f6fb;
+
+// CSS Override
+// ---
+.ant-typography-edit {
+  color: #2a2f56;
+}
+
+.ant-card-bordered {
+  border-color: #dee2e6;
+}
+
+.ant-select-item {
+  letter-spacing: -0.006em;
+}
+
+.ant-select-item-group {
+  opacity: 0.5;
+  color: #2a2f56;
+  font-size: 12.8px;
+  letter-spacing: -0.002em;
+}
+
+.ant-tabs-top > .ant-tabs-nav::before {
+  border-bottom: 1px solid #dee2e6;
+}
+
+.ant-tabs-top > .ant-tabs-nav .ant-tabs-ink-bar {
+  height: 3px;
+}
+
+.ant-input,
+.ant-picker,
+.ant-checkbox-inner,
+.ant-select-selector {
+  box-shadow: @box-shadow-base;
+}
+
+.ant-table-thead > tr > th {
+  font-weight: 600;
+  font-size: 12.8px;
+  line-height: 18px;
+  font-style: normal;
+  letter-spacing: 0.08em;
+}

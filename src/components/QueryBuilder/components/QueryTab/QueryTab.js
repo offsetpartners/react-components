@@ -1,8 +1,10 @@
+import { Edit3 } from "react-feather";
 import React, { Fragment } from "react";
 import Segment from "../Segment/Segment";
-import { useQueryBuilder } from "../../Provider";
-import { PlusOutlined } from "@ant-design/icons";
+import { useQueryBuilder } from "../../provider";
 import { Row, Col, Button, Typography } from "antd";
+import Icon, { PlusOutlined } from "@ant-design/icons";
+import { ResultTable } from "@offsetpartners/react-components";
 
 export default ({ type, inputs }) => {
   const { getObjectFromType, handleNewSegment } = useQueryBuilder();
@@ -19,6 +21,13 @@ export default ({ type, inputs }) => {
             level={4}
             style={{ left: 0 }}
             editable={{
+              icon: (
+                <Icon
+                  component={() => (
+                    <Edit3 width={16} height={16} type="outlined" />
+                  )}
+                />
+              ),
               onChange: (str) => {
                 handlerFunction((prevState) => {
                   return { ...prevState, title: str };
@@ -47,10 +56,11 @@ export default ({ type, inputs }) => {
 
               <Col span={24}>
                 <Button
+                  type="ghost"
                   disabled={!isLastItem}
                   icon={<PlusOutlined />}
-                  style={{ marginLeft: 20 }}
                   onClick={() => handleNewSegment(type)}
+                  className="fig-query-builder-and-button"
                 >
                   And
                 </Button>
@@ -58,6 +68,18 @@ export default ({ type, inputs }) => {
             </Fragment>
           );
         })}
+      </Row>
+
+      <Row style={{ marginTop: 30 }}>
+        <Col>
+          <Button type="primary">Save and Preview</Button>
+        </Col>
+      </Row>
+
+      <Row style={{ marginTop: 30 }}>
+        <Col span={24}>
+          <ResultTable />
+        </Col>
       </Row>
     </Fragment>
   );

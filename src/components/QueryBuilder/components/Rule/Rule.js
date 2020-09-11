@@ -6,7 +6,7 @@ import MultiSelect from "../MultiSelect";
 import BooleanSelect from "../BooleanSelect";
 import CountryRegionSelect from "../CountryRegionSelect";
 import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
-import { Row, Col, Space, Button, Select, Popconfirm } from "antd";
+import { Row, Col, Space, Button, Select, Popconfirm, Tooltip } from "antd";
 
 const ProperRule = ({ type, ...props }) => {
   switch (type) {
@@ -20,7 +20,7 @@ const ProperRule = ({ type, ...props }) => {
       return <MultiSelect {...props} />;
     case "boolean_select":
       return <BooleanSelect {...props} />;
-    case "countr_region_select":
+    case "country_region_select":
       return <CountryRegionSelect {...props} />;
     default:
       return null;
@@ -86,11 +86,16 @@ export default (props) => {
         }}
       >
         <Space>
+          {/* 
+          TODO: Implement OR Operators on the backend before
+          releasing this feature
           {condition && value && (
-            <Button icon={<PlusOutlined />} onClick={onNewRule} disabled={!isLastRule}>
-              Or
-            </Button>
-          )}
+            <Tooltip title="Coming Soon!">
+              <Button icon={<PlusOutlined />} onClick={onNewRule} disabled>
+                Or
+              </Button>
+            </Tooltip>
+          )} */}
 
           <Popconfirm
             onConfirm={() => onDelete(index)}

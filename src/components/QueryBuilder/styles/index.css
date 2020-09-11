@@ -1,7 +1,56 @@
-.ant-typography-edit {
+/* Colors
+  ---
+*/
+.fig-tag {
+  border: none;
   color: #2a2f56;
+  padding: 4px 6px;
+  border-radius: 2px;
+  margin-right: 6.5px;
+  font-weight: 500;
+  font-size: 12.8px;
+  line-height: 10px;
+  font-family: Inter;
+  font-style: normal;
 }
 
-.ant-card-bordered {
-  border-color: #dee2e6;
+.fig-default {
+  background-color: #e3e8ee;
+}
+.fig-important {
+  color: #5f2020;
+  background-color: #ff9b9b;
+}
+.fig-warning {
+  color: #584D27;
+  background-color: #F6DE8C;
+}
+.fig-success {
+  color: #174f3e;
+  background-color: #8ae8cb;
+}
+.fig-info {
+  background-color: #3a87ad;
+}
+.fig-inverse {
+  color: #2d3258;
+  background-color: #9da7f0;
+}
+
+.fig-query-builder-layout {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: #ffffff;
+}
+
+.fig-query-builder-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+}
+
+.fig-query-builder-and-button {
+  margin-left: 20px;
 }
