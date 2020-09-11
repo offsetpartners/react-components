@@ -1,7 +1,7 @@
 const { resolve } = require("path");
 
 module.exports = {
-  styleguideDir: "dist-docs",
+  styleguideDir: "docs",
   title: "Offset Partners: React Components",
   components: "src/components/*/[A-Z]*.js",
   moduleAliases: {
