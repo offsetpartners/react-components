@@ -3,7 +3,7 @@
 */
 .fig-tag {
   border: none;
-  color: #2a2f56;
+  color: #4F5268;
   padding: 4px 6px;
   border-radius: 2px;
   margin-right: 6.5px;
@@ -12,14 +12,15 @@
   line-height: 10px;
   font-family: Inter;
   font-style: normal;
+  letter-spacing: 0.01em;
 }
 
 .fig-default {
-  background-color: #e3e8ee;
+  background-color: #E3E8EE;
 }
 .fig-important {
-  color: #5f2020;
-  background-color: #ff9b9b;
+  color: #5F2020;
+  background-color: #FF9B9B;
 }
 .fig-warning {
   color: #584D27;
@@ -30,7 +31,8 @@
   background-color: #8ae8cb;
 }
 .fig-info {
-  background-color: #3a87ad;
+  color: #4F5268;
+  background-color: #DDE0FB;
 }
 .fig-inverse {
   color: #2d3258;
