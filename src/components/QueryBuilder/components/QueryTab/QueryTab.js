@@ -78,7 +78,7 @@ export default ({ type, inputs }) => {
 
       <Row style={{ marginTop: 30 }}>
         <Col span={24}>
-          <ResultTable />
+          <ResultTable type={type} />
         </Col>
       </Row>
     </Fragment>

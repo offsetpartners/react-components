@@ -20,6 +20,7 @@ export const classNames = {
   Active: "fig-tag fig-success",
   Inactive: "fig-tag fig-important",
   Archived: "fig-tag fig-default",
+  "Needs Attention": "fig-tag fig-warning",
 };
 
 export const shipMethods = {
