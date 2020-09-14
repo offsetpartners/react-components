@@ -11,6 +11,7 @@
     "@ant-design/icons": "^4.2.2",
     "antd": "^4.6.2",
     "moment": "^2.27.0",
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-feather": "^2.0.8"
@@ -42,7 +43,8 @@
     "build": "npm run clean && webpack --mode=production",
     "watch": "webpack --watch ",
     "start": "styleguidist server",
-    "docs:build": "styleguidist build"
+    "docs:clean": "rm -rf ./docs",
+    "docs:build": "npm run docs:clean && styleguidist build"
   },
   "keywords": [
     "Figure",
