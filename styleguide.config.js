@@ -7,5 +7,8 @@ module.exports = {
   moduleAliases: {
     "@offsetpartners/react-components": resolve(__dirname, "src/components"),
   },
-  webpackConfig: require("./webpack.dev"),
+  webpackConfig:
+    process.env.NODE_ENV === "development"
+      ? require("./webpack.dev")
+      : require("./webpack.config"),
 };

@@ -46,8 +46,13 @@ module.exports = function () {
         {
           test: /\.(css|less)$/, // .less and .css
           use: [
-            "css-loader",
             MiniCssExtractPlugin.loader,
+            {
+              loader: "css-loader",
+              options: {
+                importLoaders: 1,
+              },
+            },
             {
               loader: "less-loader",
               options: {
@@ -56,6 +61,21 @@ module.exports = function () {
             },
           ],
         },
+        {
+          test: /\.s[ac]ss$/i,
+          use: [
+            "style-loader",
+            "css-loader",
+            {
+              loader: "sass-loader",
+              options: {
+                // Prefer `dart-sass`
+                implementation: require("sass"),
+              },
+            },
+          ],
+        },
+
         {
           test: /\.(js|jsx|ts|tsx)$/,
           use: ["babel-loader"],
@@ -75,7 +95,10 @@ module.exports = function () {
 
     resolve: {
       alias: {
-        Components: resolve(__dirname, "src/components/"),
+        "@offsetpartners/react-components": resolve(
+          __dirname,
+          "src/components"
+        ),
       },
     },
 
