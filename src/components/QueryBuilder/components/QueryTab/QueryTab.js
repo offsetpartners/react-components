@@ -4,7 +4,7 @@ import React, { Fragment } from "react";
 import { Row, Col, Button, Typography } from "antd";
 import Icon, { PlusOutlined } from "@ant-design/icons";
 import { ResultTable } from "@offsetpartners/react-components";
-import { useQueryBuilder } from "components/QueryBuilder/provider";
+import { useQueryBuilder } from "components/QueryBuilder/lib/Provider";
 
 export default ({ type, inputs }) => {
   const { getObjectFromType, handleNewSegment } = useQueryBuilder();

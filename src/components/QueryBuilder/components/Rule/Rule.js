@@ -6,7 +6,7 @@ import MultiSelect from "../MultiSelect";
 import BooleanSelect from "../BooleanSelect";
 import { DeleteOutlined } from "@ant-design/icons";
 import CountryRegionSelect from "../CountryRegionSelect";
-import { Row, Col, Space, Button, Select, Popconfirm, Tooltip } from "antd";
+import { Row, Col, Space, Button, Select, Popconfirm } from "antd";
 
 const ProperRule = ({ type, ...props }) => {
   switch (type) {

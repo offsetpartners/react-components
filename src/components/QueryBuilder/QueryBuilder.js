@@ -3,7 +3,7 @@ import "./styles/index.less";
 import "./styles/index.css";
 import { Tabs, Layout } from "antd";
 import QueryTab from "./components/QueryTab";
-import QueryBuilderProvider from "./provider";
+import QueryBuilderProvider from "./lib/Provider";
 import { ORDERS_INPUTS, CUSTOMERS_INPUTS } from "./lib/inputs";
 
 export default function QueryBuilder() {
