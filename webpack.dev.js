@@ -5,7 +5,7 @@ const pkg = require("./package.json");
 module.exports = function () {
   return {
     entry: {
-      figure: resolve(__dirname, "src/components/index.js"),
+      figure: resolve(__dirname, "src/index.js"),
     },
 
     output: {
@@ -73,7 +73,7 @@ module.exports = function () {
           test: /\.(js|jsx|ts|tsx)$/,
           use: ["babel-loader"],
           exclude: /node_modules/,
-          include: resolve(__dirname, "src/components"),
+          include: resolve(__dirname, "src"),
         },
         {
           test: /\.(eot|ttf|woff|woff2)$/,
@@ -88,10 +88,7 @@ module.exports = function () {
 
     resolve: {
       alias: {
-        "@offsetpartners/react-components": resolve(
-          __dirname,
-          "src/components"
-        ),
+        "@offsetpartners/react-components": resolve(__dirname, "src"),
       },
     },
 
