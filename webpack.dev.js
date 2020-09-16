@@ -88,7 +88,10 @@ module.exports = function () {
 
     resolve: {
       alias: {
-        Components: resolve(__dirname, "src/components/"),
+        "@offsetpartners/react-components": resolve(
+          __dirname,
+          "src/components"
+        ),
       },
     },
 

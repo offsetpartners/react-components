@@ -45,8 +45,7 @@
     "build": "npm run clean && webpack --mode=production",
     "watch": "webpack --watch ",
     "start": "styleguidist server",
-    "docs:clean": "rm -rf ./docs",
-    "docs:build": "npm run docs:clean && styleguidist build"
+    "docs:build": "styleguidist build"
   },
   "keywords": [
     "Figure",
