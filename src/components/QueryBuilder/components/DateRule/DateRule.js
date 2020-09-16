@@ -1,7 +1,7 @@
 import moment from "moment";
 import React, { Fragment } from "react";
 import { Col, Select, DatePicker } from "antd";
-import { DATE_CONDITIONS } from "../../lib/conditions";
+import { DATE_CONDITIONS } from "components/QueryBuilder/lib/conditions";
 
 export default ({ value, setValue, condition, setCondition }) => {
   const allyProps = {

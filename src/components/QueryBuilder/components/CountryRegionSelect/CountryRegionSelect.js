@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { Col, Select, Cascader } from "antd";
 import { parseCountryRegion } from "./helpers";
-import { MULTI_SELECT_CONDITIONS } from "../../lib/conditions";
+import { MULTI_SELECT_CONDITIONS } from "components/QueryBuilder/lib/conditions";
 
 export default ({
   value,

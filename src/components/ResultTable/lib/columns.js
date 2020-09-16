@@ -1,4 +1,3 @@
-import { common } from "@offsetpartners/react-components";
 import ordersColumns from "./orders.columns";
 import customersColumns from "./customers.columns";
 

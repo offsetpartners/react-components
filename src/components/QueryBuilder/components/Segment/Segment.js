@@ -2,7 +2,7 @@ import React from "react";
 import Rule from "../Rule";
 import Icon from "@ant-design/icons";
 import { Trash } from "react-feather";
-import { useQueryBuilder } from "../../provider";
+import { useQueryBuilder } from "components/QueryBuilder/provider";
 import { Row, Col, Card, Button, Select, Divider, Popconfirm } from "antd";
 
 const getRules = (inputs) => {

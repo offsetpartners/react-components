@@ -4,8 +4,8 @@ import DateRule from "../DateRule";
 import NumberRule from "../NumberRule";
 import MultiSelect from "../MultiSelect";
 import BooleanSelect from "../BooleanSelect";
+import { DeleteOutlined } from "@ant-design/icons";
 import CountryRegionSelect from "../CountryRegionSelect";
-import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Row, Col, Space, Button, Select, Popconfirm, Tooltip } from "antd";
 
 const ProperRule = ({ type, ...props }) => {

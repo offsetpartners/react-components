@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { Col, Select, Slider } from "antd";
-import { NUMBER_CONDITIONS } from "../../lib/conditions";
+import { NUMBER_CONDITIONS } from "components/QueryBuilder/lib/conditions";
 
 export default ({
   min = 0,

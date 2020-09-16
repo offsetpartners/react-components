@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { Col, Input, Select } from "antd";
-import { KEYWORD_CONDITIONS } from "../../lib/conditions";
+import { KEYWORD_CONDITIONS } from "components/QueryBuilder/lib/conditions";
 
 export default ({ value, setValue, condition, setCondition }) => {
   return (
