@@ -1,5 +1,5 @@
 import React from "react";
-import "./styles/index.less";
+import "styles/index.less";
 import "./styles/index.css";
 import { Tabs, Layout } from "antd";
 import QueryTab from "./components/QueryTab";

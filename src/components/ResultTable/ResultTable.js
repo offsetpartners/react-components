@@ -1,3 +1,4 @@
+import "styles/index.less";
 import { Table } from "antd";
 import getColumn from "./lib/columns";
 import data from "./placeholder.json";
