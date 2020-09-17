@@ -1,0 +1,107 @@
+// Cell
+// ----
+.fig-calendar-cell {
+  padding: 0;
+  font-size: 12.8px;
+  line-height: 18px;
+  text-align: center;
+  display: table-cell;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid @border-color-base;
+  }
+}
+
+.fig-calendar-cell-inactive {
+}
+
+.fig-calendar-cell.fig-calendar-cell-active {
+}
+
+.fig-calendar-cell.fig-calendar-cell-inactive {
+  color: fade(@text-color, 50%);
+}
+
+// Grid
+// ----
+.fig-calendar-grid-wrapper {
+  height: 0;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding-bottom: 100%;
+}
+
+.fig-calendar-grid {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  border-radius: @border-radius-base;
+}
+
+.fig-calendar-day-wrapper {
+  width: 100%;
+}
+
+.fig-calendar-day-cell {
+  width: 50%;
+  margin: auto;
+  display: flex;
+  max-width: 30px;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s linear;
+
+  &:before {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+  }
+}
+
+.fig-calendar-day {
+  margin: 0;
+}
+
+.fig-calendar-grid-selected {
+  .fig-calendar-day {
+    color: @item-hover-bg;
+  }
+
+  .fig-calendar-day-cell {
+    box-shadow: @box-shadow-base;
+    background-color: @text-color;
+  }
+
+  .fig-calendar-day-cell {
+    box-shadow: @box-shadow-base;
+    background-color: @text-color;
+  }
+}
+
+.fig-calendar-grid-active {
+  cursor: pointer;
+
+  &:hover:not(.fig-calendar-grid-selected) {
+    .fig-calendar-day-cell {
+      background-color: @item-hover-bg;
+
+      .fig-calendar-day {
+        color: @text-color !important;
+      }
+    }
+  }
+}
+
+.fig-calendar-cell-inactive {
+  cursor: not-allowed;
+  .fig-calendar-day {
+    color: inherit;
+  }
+}

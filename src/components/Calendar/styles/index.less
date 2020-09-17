@@ -1,0 +1,40 @@
+@import "../../../styles/index.less";
+
+// Table
+// ----
+.fig-calendar-wrapper {
+  border-radius: @border-radius-base;
+  border: 1px solid @border-color-base;
+}
+
+.fig-calendar {
+  width: 100%;
+  display: table;
+  overflow: hidden;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+// Body
+// ----
+.fig-calendar-body {
+  width: 100%;
+  display: grid;
+  padding: 24px;
+  overflow: hidden;
+  grid-column-end: -1;
+  grid-column-start: 1;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.fig-calendar-container {
+  width: 100%;
+  display: grid;
+  grid-column-end: -1;
+  grid-column-start: 1;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+@import "Header.less";
+@import "DaysLabel.less";
+@import "Cell.less";
