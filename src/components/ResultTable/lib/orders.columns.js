@@ -1,8 +1,9 @@
 import React from "react";
 import moment from "moment";
-import { Col, Row, Tag, Popover, Typography } from "antd";
+import { Mail, Phone } from "react-feather";
 import { classNames, shipMethods } from "./tag.config";
 import { common } from "@offsetpartners/react-components";
+import { Col, Row, Tag, Avatar, Popover, Typography, Space } from "antd";
 
 const { formatMoney } = common;
 
@@ -25,45 +26,58 @@ export default [
     title: "CUSTOMER",
     dataIndex: "first_name",
     render: (text, record, index) => {
-      const fullName = `${record.first_name} ${record.last_name}`;
+      const { email, phone, first_name, last_name } = record;
+      const fullName = `${first_name} ${last_name}`;
 
       const customerPreview = (
-        <>
-          <Row>
-            <Col span={24}>
-              <Typography.Text strong>Phone: </Typography.Text>
-              <Typography.Text>{record.phone || "-"}</Typography.Text>
-            </Col>
+        <Row align="middle" gutter={[8, 0]}>
+          <Col>
+            <Avatar size="large" style={{ backgroundColor: "#AA7B71" }}>
+              {first_name[0]}
+              {last_name[0]}
+            </Avatar>
+          </Col>
 
-            <Col span={24}>
-              <Typography.Text strong>Email: </Typography.Text>
-              <Typography.Text>{record.email || "-"}</Typography.Text>
-            </Col>
+          <Col>
+            <Typography.Text strong style={{ fontSize: 14 }}>
+              {fullName}
+            </Typography.Text>
+          </Col>
 
-            <Col span={24}>
-              <Typography.Text strong>Company: </Typography.Text>
-              <Typography.Text>{record.company || "-"}</Typography.Text>
-            </Col>
-          </Row>
-        </>
+          <Col span={24} style={{ marginTop: 8 }}>
+            <Row align="middle">
+              <Mail size={12} />
+
+              <Col>
+                <Typography.Text
+                  ellipsis
+                  style={{ fontSize: 12, marginLeft: 8 }}
+                >
+                  {email || "-"}
+                </Typography.Text>
+              </Col>
+            </Row>
+          </Col>
+
+          <Col span={24}>
+            <Row align="middle">
+              <Phone size={12} />
+
+              <Col>
+                <Typography.Text style={{ fontSize: 12, marginLeft: 8 }}>
+                  {phone || "-"}
+                </Typography.Text>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
       );
 
       return (
-        <Popover
-          content={customerPreview}
-          overlayStyle={{ maxWidth: 300 }}
-          title={
-            <Typography.Title level={4} style={{ marginBottom: 0 }}>
-              {fullName}
-            </Typography.Title>
-          }
-        >
-          <Typography.Link
-            strong
-            href={`/customers/overview/${record.customer_id}`}
-          >
-            {fullName}
-          </Typography.Link>
+        <Popover content={customerPreview} overlayStyle={{ maxWidth: 260 }}>
+          <a href={`/customers/overview/${record.customer_id}`}>
+            <Typography.Text strong>{fullName}</Typography.Text>
+          </a>
         </Popover>
       );
     },

@@ -1,21 +1,30 @@
-import "styles/index.less";
 import { Table } from "antd";
+import PropTypes from "prop-types";
 import getColumn from "./lib/columns";
-import data from "./placeholder.json";
-import data2 from "./customerPlaceholder.json";
-import CommonProps from "./lib/common.js";
 import React, { useState } from "react";
+import CommonProps from "./lib/common.js";
 
-export default function ResultTable({ type = "customers" }) {
+const ResultTable = ({ type = "orders", data }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const columns = getColumn(type);
 
   return (
     <Table
       columns={columns}
+      dataSource={data}
       scroll={{ x: "max-content" }}
-      dataSource={Object.values(type === "orders" ? data : data2)}
       {...CommonProps(selectedRowKeys, setSelectedRowKeys)}
     />
   );
-}
+};
+
+ResultTable.propTypes = {
+  type: PropTypes.oneOf(["orders", "customers"]),
+
+  /**
+   * Data to display on the Table
+   */
+  result: PropTypes.any,
+};
+
+export default ResultTable;

@@ -12,10 +12,10 @@ export const classNames = {
   Processing: "fig-tag fig-warning",
   Hold: "fig-tag fig-warning",
   "Not Shipped": "fig-tag fig-important",
-  Cancelled: "fig-tag",
+  Cancelled: "fig-tag fig-warning",
   "Hold Pickup": "fig-tag fig-warning",
   "Picked Up": "fig-tag fig-success",
-  Completed: "fig-tag fig-success",
+  Completed: "fig-tag fig-inverse",
 
   Active: "fig-tag fig-success",
   Inactive: "fig-tag fig-important",
