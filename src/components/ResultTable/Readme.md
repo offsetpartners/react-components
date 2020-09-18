@@ -10,7 +10,7 @@ const [type, toggleType] = useState("orders");
 
 <>
   <Select
-    defaultValue="customers"
+    defaultValue="orders"
     style={{ marginBottom: 20 }}
     onSelect={(v) => toggleType(v)}
   >
