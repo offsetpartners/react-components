@@ -10,13 +10,12 @@
     border-bottom: 1px solid @border-color-base;
   }
 }
+
 .fig-calendar-cell-inactive {
   cursor: not-allowed;
   .fig-calendar-day {
     color: inherit;
   }
-}
-.fig-calendar-cell-inactive {
 }
 
 .fig-calendar-cell.fig-calendar-cell-active {
@@ -24,6 +23,12 @@
 
 .fig-calendar-cell.fig-calendar-cell-inactive {
   color: fade(@text-color, 50%);
+}
+
+.fig-calendar-cell.fig-calendar-cell-today .fig-calendar-day-cell {
+  &:not(.fig-calendar-grid-selected) {
+    border: 1px solid @border-color-base;
+  }
 }
 
 // Grid

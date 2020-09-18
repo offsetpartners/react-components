@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { Row, Col, Space, Button, Typography } from "antd";
+import { Row, Col, Space, Button } from "antd";
 import { MONTHS } from "components/Calendar/lib/constants";
 import {
   ChevronLeft,
@@ -109,17 +109,20 @@ export default memo((props) => {
 
   return (
     <Row align="middle">
-      <Col span={8} className="fig-calendar-header-left">
+      <Col
+        span={8}
+        className="fig-sm-body fig-sm-body-semibold fig-calendar-header-left"
+      >
         <Space>{Left}</Space>
       </Col>
 
       <Col span={8} className="fig-calendar-header-month">
-        <Typography.Title level={4} className="fig-calendar-header-month-text">
+        <span className="fig-body fig-body-semibold">
           {MONTHS[month].displayName} {year}
-        </Typography.Title>
+        </span>
       </Col>
 
-      <Col span={8} className="fig-calendar-header-right">
+      <Col span={8} className="fig-sm-body-semibold fig-calendar-header-right">
         <Space>{Right}</Space>
       </Col>
     </Row>

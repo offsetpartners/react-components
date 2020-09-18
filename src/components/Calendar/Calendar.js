@@ -17,7 +17,7 @@ const Calendar = ({
   // Data fetching Props
   onCellClick,
   onDateChange,
-  renderCellContent,
+  doesCellHaveEvent,
 
   // UI Props
   headerComponents,
@@ -106,7 +106,7 @@ const Calendar = ({
               year={year || _year}
               month={month || _month}
               selected={selected || _selected}
-              renderContent={renderCellContent}
+              doesCellHaveEvent={doesCellHaveEvent}
               onClick={(d) => {
                 if (typeof onCellClick === "function") {
                   onCellClick(d);
@@ -165,6 +165,11 @@ Calendar.propTypes = {
    * @param {Number} year
    */
   onDateChange: PropTypes.func,
+
+  /**
+   * Check a Data Source to indicate whether Date has an Event
+   */
+  doesCellHaveEvent: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
 
   /**
    * Control what is displayed on the Header

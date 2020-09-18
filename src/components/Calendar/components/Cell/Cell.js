@@ -1,11 +1,16 @@
+import PropTypes from "prop-types";
 import React, { memo } from "react";
 /**
  *
  * @param {Object} styles
  * @param {Boolean} active
  */
-const getCellClass = (active, isLastWeek) => {
+const getCellClass = (active, isToday, isLastWeek) => {
   const className = ["fig-calendar-cell"];
+  if (isToday) {
+    className.push("fig-calendar-cell-today");
+  }
+
   if (isLastWeek) {
     className.push("fig-calendar-cell-last-week");
   }
@@ -38,10 +43,18 @@ const getGridClass = (active, selected) => {
   return className.join(" ");
 };
 
-export default memo(({ active, selected, children, onClick, isLastWeek }) => {
+const Cell = ({
+  active,
+  selected,
+  children,
+  onClick,
+  isToday,
+  hasEvent,
+  isLastWeek,
+}) => {
   return (
     <td
-      className={getCellClass(active, isLastWeek)}
+      className={getCellClass(active, isToday, isLastWeek)}
       onClick={() => {
         if (onClick && typeof onClick === "function") onClick();
       }}
@@ -50,13 +63,35 @@ export default memo(({ active, selected, children, onClick, isLastWeek }) => {
         <div className={getGridClass(active, selected)}>
           <div className="fig-calendar-day-wrapper">
             <div className="fig-calendar-day-cell">
-              <p className="fig-calendar-day">{children}</p>
+              <span className="fig-calendar-day">{children}</span>
             </div>
 
-            <div className="fig-calendar-event-indicator"></div>
+            {hasEvent && <div className="fig-calendar-event-indicator"></div>}
           </div>
         </div>
       </div>
     </td>
   );
-});
+};
+
+Cell.propTypes = {
+  active: PropTypes.bool,
+  isToday: PropTypes.bool,
+  selected: PropTypes.bool,
+  isLastWeek: PropTypes.bool,
+
+  onClick: PropTypes.func,
+};
+
+Cell.defaultProps = {
+  active: false,
+  isToday: false,
+  selected: false,
+  isLastWeek: false,
+
+  onClick: () => {
+    console.log("HI");
+  },
+};
+
+export default memo(Cell);

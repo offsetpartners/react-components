@@ -3,7 +3,7 @@ import moment from "moment";
 import Cell from "components/Calendar/components/Cell";
 import { DAYS_ARRAY, WEEKS_ARRAY } from "components/Calendar/lib/constants";
 
-export default ({ month, year, onClick, selected }) => {
+export default ({ month, year, onClick, selected, doesCellHaveEvent }) => {
   let date = 1;
 
   const formattedMonth = moment(`${month + 1}/${year}`, "M/YYYY");
@@ -38,11 +38,18 @@ export default ({ month, year, onClick, selected }) => {
       const dateObj = new Date(year, month, date);
       const momentSelected = moment(selected);
       const momentDate = moment(`${date}-${month + 1}-${year}`, "D-M-YYYY");
+      const isToday = momentDate.isSame(moment(), "d");
       return (
         <Cell
           active
           key={key}
+          isToday={isToday}
           isLastWeek={isLastWeek}
+          hasEvent={
+            typeof doesCellHaveEvent === "function"
+              ? doesCellHaveEvent(dateObj)
+              : doesCellHaveEvent
+          }
           selected={momentSelected.isSame(momentDate, "d")}
           onClick={() => {
             if (typeof onClick === "function") {
