@@ -1,16 +1,22 @@
-import { Space, Typography } from "antd";
 import React, { memo } from "react";
 /**
  *
  * @param {Object} styles
  * @param {Boolean} active
  */
-const getCellClass = (active) => {
-  if (active) {
-    return "fig-calendar-cell fig-calendar-cell-active";
+const getCellClass = (active, isLastWeek) => {
+  const className = ["fig-calendar-cell"];
+  if (isLastWeek) {
+    className.push("fig-calendar-cell-last-week");
   }
 
-  return "fig-calendar-cell fig-calendar-cell-inactive";
+  if (active) {
+    className.push("fig-calendar-cell-active");
+  } else {
+    className.push("fig-calendar-cell-inactive");
+  }
+
+  return className.join(" ");
 };
 
 /**
@@ -20,32 +26,35 @@ const getCellClass = (active) => {
  * @param {Boolean} selected
  */
 const getGridClass = (active, selected) => {
+  const className = ["fig-calendar-grid"];
   if (active && selected) {
-    return "fig-calendar-grid fig-calendar-grid-active fig-calendar-grid-selected";
-  } else if (active) {
-    return "fig-calendar-grid fig-calendar-grid-active";
+    className.push("fig-calendar-grid-active", "fig-calendar-grid-selected");
+  } else if (active && !selected) {
+    className.push("fig-calendar-grid-active");
+  } else if (!active) {
+    className.push("fig-calendar-grid-inactive");
   }
 
-  return "fig-calendar-grid fig-calendar-grid-inactive";
+  return className.join(" ");
 };
 
-export default memo(({ active, selected, children, onClick }) => {
+export default memo(({ active, selected, children, onClick, isLastWeek }) => {
   return (
     <td
-      className={getCellClass(active)}
+      className={getCellClass(active, isLastWeek)}
       onClick={() => {
         if (onClick && typeof onClick === "function") onClick();
       }}
     >
       <div className="fig-calendar-grid-wrapper">
         <div className={getGridClass(active, selected)}>
-          <Space direction="vertical" className="fig-calendar-day-wrapper">
+          <div className="fig-calendar-day-wrapper">
             <div className="fig-calendar-day-cell">
               <p className="fig-calendar-day">{children}</p>
             </div>
 
             <div className="fig-calendar-event-indicator"></div>
-          </Space>
+          </div>
         </div>
       </div>
     </td>

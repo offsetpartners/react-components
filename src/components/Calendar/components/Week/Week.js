@@ -3,10 +3,9 @@ import moment from "moment";
 import Cell from "components/Calendar/components/Cell";
 import { DAYS_ARRAY, WEEKS_ARRAY } from "components/Calendar/lib/constants";
 
-export default ({ month, year, onClick }) => {
+export default ({ month, year, onClick, selected }) => {
   let date = 1;
 
-  const today = moment();
   const formattedMonth = moment(`${month + 1}/${year}`, "M/YYYY");
 
   const daysInMonth = formattedMonth.daysInMonth();
@@ -16,34 +15,38 @@ export default ({ month, year, onClick }) => {
   const prevMonthDays = prevMonth.daysInMonth();
 
   return WEEKS_ARRAY.map((week) => {
+    const isLastWeek = week === WEEKS_ARRAY.length - 1;
     return DAYS_ARRAY.map((day) => {
+      const key = `${day}-${week}-${month}-${year}`;
       if (week === 0 && day < firstDay) {
         const prevMonthDay = prevMonthDays - (firstDay - day - 1);
         return (
-          <Cell key={`${day}-${week}-${month}-${year}`}>{prevMonthDay}</Cell>
+          <Cell key={key} isLastWeek={isLastWeek}>
+            {prevMonthDay}
+          </Cell>
         );
       } else if (date > daysInMonth) {
         const nextMonthDay = date++ - daysInMonth;
 
         return (
-          <Cell key={`${day}-${week}-${month}-${year}`}>{nextMonthDay}</Cell>
+          <Cell key={key} isLastWeek={isLastWeek}>
+            {nextMonthDay}
+          </Cell>
         );
       }
 
-      const isToday =
-        month === today.month() &&
-        year === today.year() &&
-        date === today.date();
-      const format = "YYYY-D-M";
-      const dateStr = `${year}-${date}-${month}`;
+      const dateObj = new Date(year, month, date);
+      const momentSelected = moment(selected);
+      const momentDate = moment(`${date}-${month + 1}-${year}`, "D-M-YYYY");
       return (
         <Cell
           active
-          selected={isToday}
-          key={`${day}-${week}-${month}-${year}`}
+          key={key}
+          isLastWeek={isLastWeek}
+          selected={momentSelected.isSame(momentDate, "d")}
           onClick={() => {
             if (typeof onClick === "function") {
-              onClick(moment(dateStr, format));
+              onClick(dateObj);
             }
           }}
         >

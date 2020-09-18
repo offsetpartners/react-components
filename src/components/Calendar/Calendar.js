@@ -1,27 +1,41 @@
 import moment from "moment";
-import "./styles/index.less";
+import PropTypes from "prop-types";
 import Week from "./components/Week";
 import Header from "./components/Header";
 import DaysLabel from "./components/DaysLabel";
 import React, { useState, useEffect, memo, useCallback } from "react";
 
-export default memo(function Calendar({
+const Calendar = ({
+  // State Props
+  selected,
+  setSelected,
   month,
   setMonth,
   year,
   setYear,
-  render,
+
+  // Data fetching Props
+  onCellClick,
   onDateChange,
-}) {
+  renderCellContent,
+
+  // UI Props
+  headerComponents,
+}) => {
   const [mounted, setMounted] = useState(false);
 
   // Make sure that appropriate Setter Functions are provided
   // if Calendar is a Controlled Component
-  if ((month && !setMonth) || (year && !setYear)) {
+  if (
+    (year && !setYear) ||
+    (month && !setMonth) ||
+    (selected && !setSelected)
+  ) {
     throw new Error("You must provide a setter fn for a Controlled Component!");
   }
 
   // Default State Setter
+  const [_selected, _setSelected] = useState(new Date());
   const [_month, _setMonth] = useState(moment().month());
   const [_year, _setYear] = useState(moment().year());
 
@@ -44,6 +58,12 @@ export default memo(function Calendar({
     if (setMonth && typeof setMonth === "function") return setMonth(_v);
 
     _setMonth(_v);
+  }, []);
+
+  const gatedSelector = useCallback((v) => {
+    if (setSelected && typeof setSelected === "function") return setSelected(v);
+
+    _setSelected(v);
   }, []);
 
   // Run onDateChange callback
@@ -70,6 +90,7 @@ export default memo(function Calendar({
                 setYear={gatedSetYear}
                 month={month ?? _month}
                 setMonth={gatedSetMonth}
+                components={headerComponents}
               />
             </th>
           </tr>
@@ -81,19 +102,107 @@ export default memo(function Calendar({
           </tr>
 
           <tr className="fig-calendar-container">
-            {/* Allow for a custom Render fn */}
-            {render && typeof render === "function" ? (
-              render(month || _month, year || _year)
-            ) : (
-              <Week
-                year={year || _year}
-                month={month || _month}
-                onClick={(date) => console.log(date)}
-              />
-            )}
+            <Week
+              year={year || _year}
+              month={month || _month}
+              selected={selected || _selected}
+              renderContent={renderCellContent}
+              onClick={(d) => {
+                if (typeof onCellClick === "function") {
+                  onCellClick(d);
+                }
+                gatedSelector(() => d);
+              }}
+            />
           </tr>
         </tbody>
       </table>
     </div>
   );
-});
+};
+
+Calendar.propTypes = {
+  /**
+   * Selected Date
+   */
+  selected: PropTypes.instanceOf(Date),
+  /**
+   * Setter for Selected Date
+   */
+  setSelected: PropTypes.func,
+
+  /**
+   * If provided you must also provide setter fns and year prop
+   * to allow the Component to be Controlled.
+   */
+  month: PropTypes.number,
+  /**
+   * Setter function for Month
+   */
+  setMonth: PropTypes.func,
+
+  /**
+   * If provided you must also provide setter fns and month prop
+   * to allow the Component to be Controlled.
+   */
+  year: PropTypes.number,
+  /**
+   * Setter function for Year
+   */
+  setYear: PropTypes.func,
+
+  /**
+   * Callback for when a cell is clicked
+   *
+   * @param {Date} date
+   */
+  onCellClick: PropTypes.func,
+
+  /**
+   * Callback for when Date Changes
+   *
+   * @param {Number} month
+   * @param {Number} year
+   */
+  onDateChange: PropTypes.func,
+
+  /**
+   * Control what is displayed on the Header
+   *
+   */
+  headerComponents: PropTypes.shape({
+    left: PropTypes.arrayOf(
+      /**
+       *
+       * @enum {("nextYear"|"nextMonth"|"previousYear"|"previousMonth")}
+       */
+      PropTypes.oneOf([
+        "nextYear",
+        "nextMonth",
+        "previousYear",
+        "previousMonth",
+      ])
+    ),
+    right: PropTypes.arrayOf(
+      /**
+       *
+       * @enum {("nextYear"|"nextMonth"|"previousYear"|"previousMonth")}
+       */
+      PropTypes.oneOf([
+        "nextYear",
+        "nextMonth",
+        "previousYear",
+        "previousMonth",
+      ])
+    ),
+  }),
+};
+
+Calendar.defaultProps = {
+  headerComponents: {
+    left: ["previousMonth"],
+    right: ["nextMonth"],
+  },
+};
+
+export default memo(Calendar);
