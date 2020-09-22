@@ -1,9 +1,10 @@
-import React from "react";
 import moment from "moment";
+import PropTypes from "prop-types";
+import React, { memo } from "react";
 import Cell from "components/Calendar/components/Cell";
 import { DAYS_ARRAY, WEEKS_ARRAY } from "components/Calendar/lib/constants";
 
-export default ({ month, year, onClick, selected, doesCellHaveEvent }) => {
+const Week = ({ month, year, onClick, selected, doesCellHaveEvent }) => {
   let date = 1;
 
   const formattedMonth = moment(`${month + 1}/${year}`, "M/YYYY");
@@ -47,8 +48,8 @@ export default ({ month, year, onClick, selected, doesCellHaveEvent }) => {
           isLastWeek={isLastWeek}
           hasEvent={
             typeof doesCellHaveEvent === "function"
-              ? doesCellHaveEvent(dateObj)
-              : doesCellHaveEvent
+              ? !!doesCellHaveEvent(dateObj)
+              : !!doesCellHaveEvent
           }
           selected={momentSelected.isSame(momentDate, "d")}
           onClick={() => {
@@ -63,3 +64,14 @@ export default ({ month, year, onClick, selected, doesCellHaveEvent }) => {
     });
   });
 };
+
+Week.propTypes = {
+  month: PropTypes.number.isRequired,
+  year: PropTypes.number.isRequired,
+  
+  onClick: PropTypes.func,
+  selected: PropTypes.instanceOf(Date),
+  doesCellHaveEvent: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
+};
+
+export default memo(Week);

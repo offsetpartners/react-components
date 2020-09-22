@@ -2,8 +2,9 @@ import PropTypes from "prop-types";
 import React, { memo } from "react";
 /**
  *
- * @param {Object} styles
  * @param {Boolean} active
+ * @param {Boolean} isToday
+ * @param {Boolean} isLastWeek
  */
 const getCellClass = (active, isToday, isLastWeek) => {
   const className = ["fig-calendar-cell"];
@@ -26,7 +27,6 @@ const getCellClass = (active, isToday, isLastWeek) => {
 
 /**
  *
- * @param {Object} styles
  * @param {Boolean} active
  * @param {Boolean} selected
  */
@@ -52,9 +52,14 @@ const Cell = ({
   hasEvent,
   isLastWeek,
 }) => {
+  const eventClassName = ["fig-calendar-event-indicator"];
+
+  hasEvent
+    ? eventClassName.push("fig-calendar-event-active")
+    : eventClassName.push("fig-calendar-event-inactive");
   return (
     <td
-      className={getCellClass(active, isToday, isLastWeek)}
+      className={getCellClass(active, isToday && !selected, isLastWeek)}
       onClick={() => {
         if (onClick && typeof onClick === "function") onClick();
       }}
@@ -65,8 +70,7 @@ const Cell = ({
             <div className="fig-calendar-day-cell">
               <span className="fig-calendar-day">{children}</span>
             </div>
-
-            {hasEvent && <div className="fig-calendar-event-indicator"></div>}
+            <span className={eventClassName.join(" ")} />
           </div>
         </div>
       </div>
@@ -81,17 +85,15 @@ Cell.propTypes = {
   isLastWeek: PropTypes.bool,
 
   onClick: PropTypes.func,
+  hasEvent: PropTypes.bool,
 };
 
 Cell.defaultProps = {
   active: false,
   isToday: false,
+  hasEvent: false,
   selected: false,
   isLastWeek: false,
-
-  onClick: () => {
-    console.log("HI");
-  },
 };
 
 export default memo(Cell);

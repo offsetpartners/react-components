@@ -20,6 +20,7 @@ const Calendar = ({
   doesCellHaveEvent,
 
   // UI Props
+  daysLabelType,
   headerComponents,
 }) => {
   const [mounted, setMounted] = useState(false);
@@ -98,7 +99,7 @@ const Calendar = ({
 
         <tbody className="fig-calendar-body">
           <tr className="fig-calendar-container">
-            <DaysLabel />
+            <DaysLabel type={daysLabelType} />
           </tr>
 
           <tr className="fig-calendar-container">
@@ -172,6 +173,12 @@ Calendar.propTypes = {
   doesCellHaveEvent: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
 
   /**
+   * Control what DaysLabel renders
+   *
+   * @example type="long" -> Monday, type="short" -> Mon, type="narrow" -> M
+   */
+  daysLabelType: PropTypes.oneOf(["long", "short", "narrow"]),
+  /**
    * Control what is displayed on the Header
    *
    */
@@ -204,6 +211,7 @@ Calendar.propTypes = {
 };
 
 Calendar.defaultProps = {
+  daysLabelType: "narrow",
   headerComponents: {
     left: ["previousMonth"],
     right: ["nextMonth"],

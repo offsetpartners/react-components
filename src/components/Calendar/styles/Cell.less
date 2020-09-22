@@ -27,7 +27,8 @@
 
 .fig-calendar-cell.fig-calendar-cell-today .fig-calendar-day-cell {
   &:not(.fig-calendar-grid-selected) {
-    border: 1px solid @border-color-base;
+    // border: 1px solid @border-color-base;
+    border: 1px solid #4F5268;
   }
 }
 
@@ -63,11 +64,6 @@
     box-shadow: @box-shadow-base;
     background-color: @text-color;
   }
-
-  .fig-calendar-day-cell {
-    box-shadow: @box-shadow-base;
-    background-color: @text-color;
-  }
 }
 
 .fig-calendar-grid-active {
@@ -75,7 +71,8 @@
 
   &:hover:not(.fig-calendar-grid-selected) {
     .fig-calendar-day-cell {
-      background-color: @item-hover-bg;
+      // background-color: @item-hover-bg;
+      background-color: darken(@item-hover-bg, 2%);
 
       .fig-calendar-day {
         color: @text-color !important;
@@ -129,9 +126,15 @@
   height: 6px;
   margin-top: 8px;
   border-radius: 50%;
+  transform: scale(0);
   background-color: @primary-color;
+  transition: 0.27s ease-in-out all 0.2s;
 
   @media only screen and (max-width: @screen-sm) {
     margin-top: 2px;
   }
+}
+
+.fig-calendar-event-indicator.fig-calendar-event-active {
+  transform: scale(1);
 }

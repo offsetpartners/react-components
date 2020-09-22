@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React, { memo } from "react";
 import { Row, Col, Space, Button } from "antd";
 import { MONTHS } from "components/Calendar/lib/constants";
@@ -101,8 +102,8 @@ const getComponents = (type = "left", components, props) => {
   }
 };
 
-export default memo((props) => {
-  const { month, setMonth, year, setYear, components } = props;
+const Header = (props) => {
+  const { month, year, components } = props;
 
   const Left = getComponents("left", components, props);
   const Right = getComponents("right", components, props);
@@ -127,4 +128,41 @@ export default memo((props) => {
       </Col>
     </Row>
   );
-});
+};
+
+Header.propTypes = {
+  month: PropTypes.number.isRequired,
+  setMonth: PropTypes.func.isRequired,
+
+  year: PropTypes.number.isRequired,
+  setYear: PropTypes.func.isRequired,
+
+  components: PropTypes.shape({
+    left: PropTypes.arrayOf(
+      /**
+       *
+       * @enum {("nextYear"|"nextMonth"|"previousYear"|"previousMonth")}
+       */
+      PropTypes.oneOf([
+        "nextYear",
+        "nextMonth",
+        "previousYear",
+        "previousMonth",
+      ])
+    ),
+    right: PropTypes.arrayOf(
+      /**
+       *
+       * @enum {("nextYear"|"nextMonth"|"previousYear"|"previousMonth")}
+       */
+      PropTypes.oneOf([
+        "nextYear",
+        "nextMonth",
+        "previousYear",
+        "previousMonth",
+      ])
+    ),
+  }),
+};
+
+export default memo(Header);
