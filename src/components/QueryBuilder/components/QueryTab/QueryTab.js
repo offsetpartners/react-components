@@ -19,7 +19,7 @@ export default ({ type, inputs }) => {
           <Typography.Title
             ellipsis
             level={4}
-            style={{ left: 0 }}
+            style={{ left: 0, fontSize: 25 }}
             editable={{
               icon: (
                 <Icon

@@ -1,37 +1,11 @@
 import React from "react";
-import Keyword from "../Keyword";
-import DateRule from "../DateRule";
-import NumberRule from "../NumberRule";
-import MultiSelect from "../MultiSelect";
-import BooleanSelect from "../BooleanSelect";
-import { DeleteOutlined } from "@ant-design/icons";
-import CountryRegionSelect from "../CountryRegionSelect";
+import Base from "./Base";
+import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Row, Col, Space, Button, Select, Popconfirm } from "antd";
-
-const ProperRule = ({ type, ...props }) => {
-  switch (type) {
-    case "date":
-      return <DateRule {...props} />;
-    case "number":
-      return <NumberRule {...props} />;
-    case "keyword":
-      return <Keyword {...props} />;
-    case "multi_select":
-      return <MultiSelect {...props} />;
-    case "boolean_select":
-      return <BooleanSelect {...props} />;
-    case "country_region_select":
-      return <CountryRegionSelect {...props} />;
-    default:
-      return null;
-  }
-};
 
 export default (props) => {
   const {
-    type,
     rules,
-    inputs,
 
     rule,
     index,
@@ -63,18 +37,7 @@ export default (props) => {
         </Select>
       </Col>
 
-      <ProperRule
-        type={type}
-        value={value}
-        condition={condition}
-        setValue={(val) => setRule("value", val, index)}
-        setCondition={(cond) => setRule("condition", cond, index)}
-        searchable={inputs[rule]?.type}
-        optionValues={inputs[rule]?.values?.map((v) => ({
-          label: v.label ? v.label : v,
-          value: v.value ? v.value : v,
-        }))}
-      />
+      <Base {...props} />
 
       <Col
         sm={4}
@@ -86,17 +49,17 @@ export default (props) => {
         }}
       >
         <Space>
-          {/* 
-          TODO: Implement OR Operators on the backend before
-          releasing this feature
+          {/* TODO: Implement OR Operators on the backend before releasing this
+          feature */}
           {condition && value && (
-            <Tooltip title="Coming Soon!">
-              <Button icon={<PlusOutlined />} onClick={onNewRule} disabled>
-                Or
-              </Button>
-            </Tooltip>
-          )} */}
-
+            <Button
+              icon={<PlusOutlined />}
+              onClick={onNewRule}
+              disabled={!isLastRule}
+            >
+              Or
+            </Button>
+          )}
           <Popconfirm
             onConfirm={() => onDelete(index)}
             title="Are you sure you want to delete this Rule?"
