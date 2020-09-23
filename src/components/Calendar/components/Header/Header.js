@@ -16,6 +16,7 @@ const PreviousYear = ({ year, setYear }) => {
       shape="circle"
       icon={<ChevronsLeft />}
       onClick={() => setYear(year - 1)}
+      className="fig-calendar-header-btn fig-calendar-header-btn-left"
     />
   );
 };
@@ -27,6 +28,7 @@ const PreviousMonth = ({ month, setMonth }) => {
       shape="circle"
       icon={<ChevronLeft />}
       onClick={() => setMonth(month - 1)}
+      className="fig-calendar-header-btn fig-calendar-header-btn-left"
     />
   );
 };
@@ -38,6 +40,7 @@ const NextYear = ({ year, setYear }) => {
       shape="circle"
       icon={<ChevronsRight />}
       onClick={() => setYear(year + 1)}
+      className="fig-calendar-header-btn fig-calendar-header-btn-right"
     />
   );
 };
@@ -49,6 +52,7 @@ const NextMonth = ({ month, setMonth }) => {
       shape="circle"
       icon={<ChevronRight />}
       onClick={() => setMonth(month + 1)}
+      className="fig-calendar-header-btn fig-calendar-header-btn-right"
     />
   );
 };
