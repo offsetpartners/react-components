@@ -3,14 +3,44 @@ import "./styles/index.less";
 import Calendar from "./Calendar";
 import { render } from "react-dom";
 
-// Allows for Component to mount via a normal DOM Id
-// Similary to jQuery libraries
+// Allows for Component to mount via a normal DOM Classname
+// Similar to jQuery
 const calendars = document.getElementsByClassName("fig-calendar");
 if (calendars) {
   const arr = [...calendars];
   arr.forEach((element, index) => {
-    const dateChange = element.getAttribute("data-ondatechange");
-    render(<Calendar onDateChange={window[dateChange]} />, element);
+    let calendarProps = {};
+
+    const validProps = [
+      "selected",
+      "setSelected",
+      "month",
+      "setMonth",
+      "year",
+      "setYear",
+
+      // Data fetching Props
+      "onCellClick",
+      "onDateChange",
+      "doesCellHaveEvent",
+
+      // UI Props
+      "daysLabelType",
+      "headerComponents",
+    ];
+
+    try {
+      if (FigureReact && FigureReact.Calendar) {
+        const { Calendar } = FigureReact;
+        validProps.map((prop) => {
+          if (Calendar[prop]) {
+            calendarProps[prop] = Calendar[prop];
+          }
+        });
+      }
+    } catch (e) {}
+
+    render(<Calendar {...calendarProps} />, element);
   });
 }
 

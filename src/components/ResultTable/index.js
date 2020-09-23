@@ -2,24 +2,28 @@ import React from "react";
 import { render } from "react-dom";
 import ResultTable from "./ResultTable";
 
-// Allows for Component to mount via a normal DOM Id
-// Similary to jQuery libraries
+// Allows for Component to mount via a normal DOM Classname
+// Similar to jQuery
 const resultTables = document.getElementsByClassName("fig-result-table");
 if (resultTables) {
   const arr = [...resultTables];
   arr.forEach((element, index) => {
-    const type = element.getAttribute("data-type");
-    const source = element.getAttribute("data-source");
+    let tableProps = {};
 
-    let parsed;
+    const validProps = ["type", "data"];
+
     try {
-      parsed = JSON.parse(source);
+      if (FigureReact && FigureReact.ResultTable) {
+        const { ResultTable } = FigureReact;
+        validProps.map((prop) => {
+          if (ResultTable[prop]) {
+            tableProps[prop] = ResultTable[prop];
+          }
+        });
+      }
+    } catch (e) {}
 
-      element.dataset.source = "";
-    } catch (e) {
-      parsed = [];
-    }
-    render(<ResultTable type={type} data={parsed} />, element);
+    render(<ResultTable {...tableProps} />, element);
   });
 }
 

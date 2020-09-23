@@ -2,8 +2,8 @@ import React from "react";
 import { render } from "react-dom";
 import QueryBuilder from "./QueryBuilder";
 
-// Allows for Component to mount via a normal DOM Id
-// Similary to jQuery libraries
+// Allows for Component to mount via a normal DOM ID
+// Similar to jQuery
 const queryBuilder = document.getElementById("fig-query-builder");
 if (queryBuilder) render(<QueryBuilder />, queryBuilder);
 
