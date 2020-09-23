@@ -25,7 +25,7 @@ const [events, changeEvents] = useState(() => {
   <Calendar
     selected={selectedDate}
     setSelected={(v) => setSelectedDate(v)}
-    onDateChange={(month, year) => {
+    onDateChange={(month, year, forceUpdate) => {
       const temp = [];
       for (let i = 1; i < 26; i++) {
         const rand = Math.floor(Math.random() * Math.floor(25));
@@ -37,7 +37,9 @@ const [events, changeEvents] = useState(() => {
           });
         }
       }
+
       changeEvents(temp);
+      forceUpdate();
     }}
     doesCellHaveEvent={(d) => {
       const d1 = new Date(d);

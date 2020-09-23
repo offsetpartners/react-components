@@ -1,6 +1,7 @@
 import moment from "moment";
 import PropTypes from "prop-types";
 import Week from "./components/Week";
+import { useDebounce } from "react-use";
 import Header from "./components/Header";
 import DaysLabel from "./components/DaysLabel";
 import React, { useState, useEffect, memo, useCallback } from "react";
@@ -23,6 +24,7 @@ const Calendar = ({
   daysLabelType,
   headerComponents,
 }) => {
+  const [, updateState] = useState();
   const [mounted, setMounted] = useState(false);
 
   // Make sure that appropriate Setter Functions are provided
@@ -67,14 +69,26 @@ const Calendar = ({
     _setSelected(v);
   }, []);
 
-  // Run onDateChange callback
-  useEffect(() => {
-    if (mounted && onDateChange && typeof onDateChange === "function")
-      onDateChange(month || _month, year || _year);
-  }, [month ?? _month, year ?? _year]);
+  // Force Component to Re-render
+  const forceUpdate = useCallback(() => {
+    return updateState({});
+  }, []);
+
+  // Run Debounced onDateChange callback
+  const [, cancel] = useDebounce(
+    () => {
+      if (mounted && onDateChange && typeof onDateChange === "function") {
+        onDateChange(month || _month, year || _year, () => forceUpdate());
+      }
+    },
+    800,
+    [month ?? _month, year ?? _year]
+  );
 
   // Run on Mount
   useEffect(() => {
+    // Cancel onDateChange Debounce on Mount
+    cancel();
     setMounted(true);
 
     return () => setMounted(false);
@@ -164,6 +178,7 @@ Calendar.propTypes = {
    *
    * @param {Number} month
    * @param {Number} year
+   * @param {Function} forceUpdate Force Component to re-render. Example after running a Network Request.
    */
   onDateChange: PropTypes.func,
 
@@ -213,8 +228,8 @@ Calendar.propTypes = {
 Calendar.defaultProps = {
   daysLabelType: "narrow",
   headerComponents: {
-    left: ["previousMonth"],
-    right: ["nextMonth"],
+    left: ["previousYear", "previousMonth"],
+    right: ["nextMonth", "nextYear"],
   },
 };
 
