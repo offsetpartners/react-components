@@ -24,7 +24,13 @@ ResultTable.propTypes = {
   /**
    * Data to display on the Table
    */
-  result: PropTypes.any,
+  data: PropTypes.any,
+};
+
+ResultTable.defaultProps = {
+  type: "orders",
+
+  data: [],
 };
 
 export default ResultTable;
