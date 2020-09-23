@@ -57,6 +57,14 @@ Via CDN Link:
   <!-- For QueryBuilder -->
   <div id="fig-query-builder"></div>
 
+  <!-- 
+    For any props that need to be pass to the Component.
+    This ALWAYS needs to be defined before the CDN Link
+  -->
+  <script type="text/javascript">
+    FigureReact = {};
+  </script>
+
   <!-- Make sure to include at the bottom of body to optimize load times -->
   <script src="https://unpkg.com/@offsetpartners/react-components@VERSION_NUMBER/dist/figure.js"></script>
 </body>
