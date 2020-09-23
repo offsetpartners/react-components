@@ -6,6 +6,7 @@ import { Row, Col, Space, Button, Select, Popconfirm } from "antd";
 export default (props) => {
   const {
     rules,
+    inputs,
 
     rule,
     index,
@@ -31,6 +32,7 @@ export default (props) => {
             // Reset Rule Values
             setRule("value", undefined, index);
             setRule("condition", undefined, index);
+            setRule("type", inputs[val].type, index);
           }}
         >
           {rules}
