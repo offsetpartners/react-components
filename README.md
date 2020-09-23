@@ -38,7 +38,7 @@ Via CDN Link:
   <!-- This is for Bundled CSS file -->
   <link
     rel="stylesheet"
-    href="https://unpkg.com/@offsetpartners/react-components@VERSION_NUMBER/dist/figure.css"
+    href="https://unpkg.com/@offsetpartners/react-components@latest/dist/figure.css"
   />
 
   <!-- Production React -->
@@ -66,7 +66,7 @@ Via CDN Link:
   </script>
 
   <!-- Make sure to include at the bottom of body to optimize load times -->
-  <script src="https://unpkg.com/@offsetpartners/react-components@VERSION_NUMBER/dist/figure.js"></script>
+  <script src="https://unpkg.com/@offsetpartners/react-components@latest/dist/figure.js"></script>
 </body>
 ```
 
@@ -100,4 +100,4 @@ npm run start
 
 ### **Version**
 
-v. 0.2.0
+v. 0.2.1
