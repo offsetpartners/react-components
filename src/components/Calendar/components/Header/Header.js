@@ -118,7 +118,7 @@ const Header = (props) => {
         span={8}
         className="fig-sm-body fig-sm-body-semibold fig-calendar-header-left"
       >
-        <Space>{Left}</Space>
+        <Space size={2}>{Left}</Space>
       </Col>
 
       <Col span={8} className="fig-calendar-header-month">
@@ -128,7 +128,7 @@ const Header = (props) => {
       </Col>
 
       <Col span={8} className="fig-sm-body-semibold fig-calendar-header-right">
-        <Space>{Right}</Space>
+        <Space size={2}>{Right}</Space>
       </Col>
     </Row>
   );

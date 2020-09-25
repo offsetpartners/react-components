@@ -81,7 +81,7 @@ const Calendar = ({
         onDateChange(month || _month, year || _year, () => forceUpdate());
       }
     },
-    800,
+    350,
     [month ?? _month, year ?? _year]
   );
 
@@ -96,7 +96,7 @@ const Calendar = ({
 
   return (
     <div className="fig-calendar-wrapper">
-      <table className="fig-calendar">
+      <table className="fig-calendar-table">
         <thead className="fig-calendar-header">
           <tr className="fig-calendar-header-row">
             <th className="fig-calendar-header-cell">

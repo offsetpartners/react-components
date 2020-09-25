@@ -40,7 +40,9 @@ if (calendars) {
       }
     } catch (e) {}
 
-    render(<Calendar {...calendarProps} />, element);
+    if (element instanceof Element) {
+      render(<Calendar {...calendarProps} />, element);
+    }
   });
 }
 
