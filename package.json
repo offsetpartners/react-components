@@ -45,9 +45,8 @@
   "scripts": {
     "clean": "rm -rf ./dist",
     "build": "npm run clean && webpack --mode=production",
-    "watch": "webpack --watch ",
     "start": "styleguidist server",
-    "docs:build": "styleguidist build"
+    "docs:build": "NODE_ENV=production && styleguidist build"
   },
   "keywords": [
     "Figure",
