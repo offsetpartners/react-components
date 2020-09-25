@@ -1,20 +1,11 @@
 import handlers from "./helpers";
 import React, { useMemo, useState, useContext, createContext } from "react";
 
-let uniqueId = 0;
-
-const QueryBuilderContext = createContext({
-  orders: {},
-  customers: {},
-  getObjectFromType: function () {},
-  handleSegmentChange: function () {},
-  handleNewSegment: function () {},
-  handleDelete: function () {},
-  handleRuleChange: function () {},
-  handleNewRule: function () {},
-});
+const QueryBuilderContext = createContext(0);
 
 const QueryBuilderProvider = ({ children }) => {
+  let uniqueId = 0;
+
   /**
    * @param {String} title
    * @returns {QueryBuilderType}
@@ -47,7 +38,7 @@ const QueryBuilderProvider = ({ children }) => {
     handleRuleChange,
     getObjectFromType,
     handleSegmentChange,
-  } = handlers(orders, changeOrders, customers, changeCustomers);
+  } = handlers(uniqueId, orders, changeOrders, customers, changeCustomers);
 
   const value = useMemo(
     () => ({
@@ -74,9 +65,9 @@ const QueryBuilderProvider = ({ children }) => {
   );
 };
 
-export default QueryBuilderProvider;
-
 /**
  * @returns {QueryBuilderContext}
  */
 export const useQueryBuilder = () => useContext(QueryBuilderContext);
+
+export default QueryBuilderProvider;

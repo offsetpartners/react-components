@@ -1,14 +1,13 @@
-import React from "react";
-import "./styles/index.css";
+import React, { memo } from "react";
 import { Tabs, Layout } from "antd";
 import QueryTab from "./components/QueryTab";
 import QueryBuilderProvider from "./lib/Provider";
 import { ORDERS_INPUTS, CUSTOMERS_INPUTS } from "./lib/inputs";
 
-export default function QueryBuilder() {
-  const { TabPane } = Tabs;
-  const { Content } = Layout;
+const { TabPane } = Tabs;
+const { Content } = Layout;
 
+const QueryBuilder = ({}) => {
   return (
     <Layout className="fig-query-builder-layout">
       <Content className="fig-query-builder-content">
@@ -25,4 +24,10 @@ export default function QueryBuilder() {
       </Content>
     </Layout>
   );
-}
+};
+
+QueryBuilder.propTypes = {};
+
+QueryBuilder.defaultProps = {};
+
+export default memo(QueryBuilder);

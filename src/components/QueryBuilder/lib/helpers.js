@@ -1,7 +1,7 @@
 import "./typeDefs";
 import { message } from "antd";
 
-export default (orders, changeOrders, customers, changeCustomers) => {
+export default (uniqueId, orders, changeOrders, customers, changeCustomers) => {
   /**
    * @type {GetObjectFromType}
    */

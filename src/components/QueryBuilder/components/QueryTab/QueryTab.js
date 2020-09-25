@@ -1,9 +1,9 @@
 import Segment from "../Segment";
 import { Edit3 } from "react-feather";
 import React, { Fragment } from "react";
+import ResultTable from "components/ResultTable";
 import { Row, Col, Button, Typography } from "antd";
 import Icon, { PlusOutlined } from "@ant-design/icons";
-import { ResultTable } from "@offsetpartners/react-components";
 import { useQueryBuilder } from "components/QueryBuilder/lib/Provider";
 
 export default ({ type, inputs }) => {
