@@ -1,8 +1,10 @@
 import React from "react";
 import { IconText } from "components";
 import { classNames } from "./tag.config";
-import formatMoney from "common/formatMoney";
 import { Row, Col, Tag, Typography, Popover } from "antd";
+import { common } from "@offsetpartners/react-components";
+
+const { formatMoney } = common;
 
 export const LinkTooltip = ({ type, href, text, record }) => {
   let Content;

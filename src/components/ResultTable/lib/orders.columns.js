@@ -1,10 +1,10 @@
 import React from "react";
 import moment from "moment";
-import common from "common";
 import { IconText } from "components";
 import { Typography, Space } from "antd";
 import { shipMethods } from "./tag.config";
 import { Label, LinkTooltip } from "./orders.components";
+import { common } from "@offsetpartners/react-components";
 
 const { formatMoney } = common;
 
