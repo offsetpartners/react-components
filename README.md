@@ -40,16 +40,6 @@ Via CDN Link:
     rel="stylesheet"
     href="https://unpkg.com/@offsetpartners/react-components@latest/dist/figure.css"
   />
-
-  <!-- Production React -->
-  <script
-    crossorigin
-    src="https://unpkg.com/react@16/umd/react.production.min.js"
-  ></script>
-  <script
-    crossorigin
-    src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"
-  ></script>
 </head>
 
 <!-- Fetch via CDN Link -->
@@ -66,6 +56,17 @@ Via CDN Link:
   </script>
 
   <!-- Make sure to include at the bottom of body to optimize load times -->
+
+  <!-- Production React -->
+  <script
+    crossorigin
+    src="https://unpkg.com/react@16/umd/react.production.min.js"
+  ></script>
+  <script
+    crossorigin
+    src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"
+  ></script>
+  
   <script src="https://unpkg.com/@offsetpartners/react-components@latest/dist/figure.js"></script>
 </body>
 ```
@@ -97,6 +98,7 @@ npm run start
 - Remove certain packages from global library and add them on a per component basis??
 - Add prop to add aditional Columns into ResultTable
 - Create different Column Components for ResultTable to increase "customizability"
+- Add onSelect method to ResultTable
 
 ### **Version**
 

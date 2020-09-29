@@ -57,3 +57,55 @@ const [events, changeEvents] = useState(() => {
   />
 </>;
 ```
+
+Done with HTML:
+
+```html
+<body>
+  ...
+  <div class="fig-calendar"></div>
+  ...
+
+  <script>
+    let events = [];
+
+    function changeEvents(e) {
+      events = e;
+    }
+    FigureReact = {
+      Calendar: {
+        onDateChange: function (month, year, forceUpdate) {
+          const temp = [];
+          for (let i = 1; i < 26; i++) {
+            const rand = Math.floor(Math.random() * Math.floor(25));
+
+            if (rand <= i) {
+              temp.push({
+                id: i,
+                timestamp: `${year}-${month + 1}-${i} 00:00:00`,
+              });
+            }
+          }
+          changeEvents(temp);
+          forceUpdate();
+        },
+        doesCellHaveEvent: function (d) {
+          const d1 = new Date(d);
+          const found = events.find((event) => {
+            const d2 = new Date(event.timestamp);
+
+            return (
+              d1.getFullYear() === d2.getFullYear() &&
+              d1.getMonth() === d2.getMonth() &&
+              d1.getDate() === d2.getDate()
+            );
+          });
+          return found;
+        },
+      },
+    };
+  </script>
+
+  <script src="https://unpkg.com/@offsetpartners/react-components@latest/dist/figure.js"></script>
+</body>
+```
