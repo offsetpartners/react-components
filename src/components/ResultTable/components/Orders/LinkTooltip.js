@@ -1,12 +1,9 @@
 import React from "react";
-import { IconText } from "components";
-import { classNames } from "./tag.config";
+import IconText from "components/IconText";
+import formatMoney from "common/formatMoney";
 import { Row, Col, Tag, Typography, Popover } from "antd";
-import { common } from "@offsetpartners/react-components";
 
-const { formatMoney } = common;
-
-export const LinkTooltip = ({ type, href, text, record }) => {
+export default ({ type, href, text, record }) => {
   let Content;
   const popoverProps = {};
   switch (type) {
@@ -93,14 +90,18 @@ export const LinkTooltip = ({ type, href, text, record }) => {
     case "message":
       const { gift_message = "", editable_notes = "" } = record;
       Content = (
-        <Row align="top" gutter={[8, 0]}>
-          <Col span={24}>
-            <IconText text={editable_notes} icon="MessageSquare" />
-          </Col>
+        <Row align="top" gutter={[0, 8]}>
+          {editable_notes && editable_notes.length > 0 && (
+            <Col span={24}>
+              <IconText icon="MessageSquare" text={editable_notes || "-"} />
+            </Col>
+          )}
 
-          <Col span={24}>
-            <IconText text={gift_message} icon="gift" />
-          </Col>
+          {gift_message && gift_message.length > 0 && (
+            <Col span={24}>
+              <IconText icon="gift" text={gift_message || "-"} />
+            </Col>
+          )}
         </Row>
       );
       popoverProps.overlayStyle = {
@@ -136,9 +137,4 @@ export const LinkTooltip = ({ type, href, text, record }) => {
       </Popover>
     );
   }
-};
-
-export const Label = ({ objKey, text }) => {
-  const className = classNames[objKey];
-  return <Tag className={className}>{text}</Tag>;
 };

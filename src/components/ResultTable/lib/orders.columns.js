@@ -1,12 +1,11 @@
 import React from "react";
 import moment from "moment";
-import { IconText } from "components";
 import { Typography, Space } from "antd";
+import IconText from "components/IconText";
 import { shipMethods } from "./tag.config";
-import { Label, LinkTooltip } from "./orders.components";
-import { common } from "@offsetpartners/react-components";
-
-const { formatMoney } = common;
+import formatMoney from "common/formatMoney";
+import Label from "components/ResultTable/components/Orders/Label";
+import LinkTooltip from "components/ResultTable/components/Orders/LinkTooltip";
 
 export default [
   {
@@ -145,10 +144,10 @@ export default [
           {(actual || requested) && (
             <Space size={14} align="center">
               {requested && (
-                <IconText size="sm" icon="LogOut" text={requested} />
+                <IconText size="small" icon="LogOut" text={requested} />
               )}
 
-              {actual && <IconText size="sm" icon="LogIn" text={actual} />}
+              {actual && <IconText size="small" icon="LogIn" text={actual} />}
             </Space>
           )}
         </>

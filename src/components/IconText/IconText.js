@@ -39,9 +39,8 @@ const getTypographyClassNames = (size, variant) => {
 };
 
 const setupIcon = (icon, iconProps) => {
-  let Icon;
   if (Feather[icon.charAt(0).toUpperCase().concat(icon.slice(1))]) {
-    Icon = Feather[icon.charAt(0).toUpperCase().concat(icon.slice(1))];
+    const Icon = Feather[icon.charAt(0).toUpperCase().concat(icon.slice(1))];
     if (iconProps.bordered) {
       const style = {
         padding: 4,
@@ -50,9 +49,7 @@ const setupIcon = (icon, iconProps) => {
         border: "1px solid",
         alignItems: "center",
         justifyContent: "center",
-        borderColor: iconProps.borderColor
-          ? iconProps.borderColor
-          : "rgba(79, 82, 104, 0.4)",
+        borderColor: iconProps.borderColor || "rgba(79, 82, 104, 0.4)",
       };
       return (
         <div style={style}>
@@ -81,11 +78,12 @@ const IconText = (props) => {
   const className = ["fig-typography"];
   className.push(getTypographyClassNames(size, variant));
 
+  const transformBordered = iconProps.bordered ? 1 : undefined;
   const validIconProps = {
     width: 12,
     height: 12,
-    bordered: false,
     ...iconProps,
+    bordered: transformBordered,
   };
 
   const Icon = setupIcon(icon, validIconProps);
@@ -118,7 +116,7 @@ IconText.propTypes = {
   /**
    * Refer to Feather Icon Pack to get all Icon Names
    */
-  icon: PropTypes.icon,
+  icon: PropTypes.string,
 
   /**
    * Vertical Alignment
@@ -142,7 +140,7 @@ IconText.propTypes = {
   /**
    * Placement of the Icon respective of the text
    */
-  iconPlacement: PropTypes.oneOf("left", "right"),
+  iconPlacement: PropTypes.oneOf(["left", "right"]),
 
   /**
    * Props to pass on to Icon Component
@@ -151,6 +149,7 @@ IconText.propTypes = {
     width: PropTypes.number,
     height: PropTypes.number,
     bordered: PropTypes.bool,
+    borderColor: PropTypes.string,
   }),
 };
 
@@ -159,14 +158,13 @@ IconText.defaultProps = {
   icon: "",
   spacing: 8,
   variant: "",
-  align: "top",
+  align: "start",
   size: "default",
   iconPlacement: "left",
   iconProps: {
     width: 12,
     height: 12,
-    bordered: false,
-    borderColor: false,
+    bordered: undefined,
   },
 };
 export default IconText;
