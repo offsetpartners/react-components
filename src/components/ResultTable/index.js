@@ -23,7 +23,9 @@ if (resultTables) {
       }
     } catch (e) {}
 
-    render(<ResultTable {...tableProps} />, element);
+    if (element instanceof Element) {
+      render(<ResultTable {...tableProps} />, element);
+    }
   });
 }
 

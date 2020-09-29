@@ -1,14 +1,28 @@
 import React from "react";
 import moment from "moment";
-import { Mail, Phone } from "react-feather";
-import { classNames, shipMethods } from "./tag.config";
-import { common } from "@offsetpartners/react-components";
-import { Col, Row, Tag, Avatar, Popover, Typography, Space } from "antd";
+import common from "common";
+import { IconText } from "components";
+import { Typography, Space } from "antd";
+import { shipMethods } from "./tag.config";
+import { Label, LinkTooltip } from "./orders.components";
 
 const { formatMoney } = common;
 
 export default [
-  { title: "ORDER #", dataIndex: "order_id" },
+  {
+    title: "ORDER #",
+    dataIndex: "order_id",
+    render: (text, record, index) => {
+      return (
+        <LinkTooltip
+          text={text}
+          type="order"
+          record={record}
+          href={`/orders/overview/${record.customer_id}`}
+        />
+      );
+    },
+  },
   {
     title: "STATUS",
     dataIndex: "status",
@@ -16,8 +30,37 @@ export default [
       const { payment_status, ship_status } = record;
       return (
         <>
-          <Tag className={classNames[payment_status]}>{payment_status}</Tag>
-          <Tag className={classNames[ship_status]}>{ship_status}</Tag>
+          <Label objKey={payment_status} text={payment_status} />
+          <Label objKey={ship_status} text={ship_status} />
+        </>
+      );
+    },
+  },
+  {
+    title: "MESSAGE",
+    dataIndex: "editable_notes",
+    render: (text, record, index) => {
+      const { gift_message = "", editable_notes = "" } = record;
+
+      return (
+        <>
+          <LinkTooltip
+            type="message"
+            record={record}
+            text={
+              <>
+                {editable_notes && editable_notes.length > 0 && (
+                  <IconText
+                    icon="MessageSquare"
+                    iconProps={{ bordered: true }}
+                  />
+                )}
+                {gift_message && gift_message.length > 0 && (
+                  <IconText icon="gift" iconProps={{ bordered: true }} />
+                )}
+              </>
+            }
+          />
         </>
       );
     },
@@ -26,59 +69,16 @@ export default [
     title: "CUSTOMER",
     dataIndex: "first_name",
     render: (text, record, index) => {
-      const { email, phone, first_name, last_name } = record;
+      const { first_name, last_name } = record;
       const fullName = `${first_name} ${last_name}`;
 
-      const customerPreview = (
-        <Row align="middle" gutter={[8, 0]}>
-          <Col>
-            <Avatar size="large" style={{ backgroundColor: "#AA7B71" }}>
-              {first_name[0]}
-              {last_name[0]}
-            </Avatar>
-          </Col>
-
-          <Col>
-            <Typography.Text strong style={{ fontSize: 14 }}>
-              {fullName}
-            </Typography.Text>
-          </Col>
-
-          <Col span={24} style={{ marginTop: 8 }}>
-            <Row align="middle">
-              <Mail size={12} />
-
-              <Col>
-                <Typography.Text
-                  ellipsis
-                  style={{ fontSize: 12, marginLeft: 8 }}
-                >
-                  {email || "-"}
-                </Typography.Text>
-              </Col>
-            </Row>
-          </Col>
-
-          <Col span={24}>
-            <Row align="middle">
-              <Phone size={12} />
-
-              <Col>
-                <Typography.Text style={{ fontSize: 12, marginLeft: 8 }}>
-                  {phone || "-"}
-                </Typography.Text>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-      );
-
       return (
-        <Popover content={customerPreview} overlayStyle={{ maxWidth: 260 }}>
-          <a href={`/customers/overview/${record.customer_id}`}>
-            <Typography.Text strong>{fullName}</Typography.Text>
-          </a>
-        </Popover>
+        <LinkTooltip
+          record={record}
+          text={fullName}
+          type="customer"
+          href={`/customers/overview/${record.customer_id}`}
+        />
       );
     },
   },
@@ -86,7 +86,29 @@ export default [
     title: "DATE",
     dataIndex: "datestamp",
     render: (text, record, index) => {
-      return moment(text).format("MMM DD, YYYY, hh:mm a");
+      return (
+        <Typography.Text className="fig-typography fig-body">
+          {moment(text, "YYYY-MM-DD hh:mm:ss").format("MMM DD, YYYY, hh:mm a")}
+        </Typography.Text>
+      );
+    },
+  },
+  {
+    title: "ITEMS",
+    dataIndex: "products",
+    render: (text, record, index) => {
+      try {
+        if (record.products && Array.isArray(record.products)) {
+          return (
+            <LinkTooltip
+              type="order"
+              record={record}
+              text={record.products.length}
+            />
+          );
+        }
+      } catch (e) {}
+      return 0;
     },
   },
   {
@@ -96,6 +118,8 @@ export default [
       const {
         shipping,
         shipping_state,
+        actual_ship_date,
+        requested_ship_date,
         shipping_method_code,
         shipping_method_name,
         shipping_method_carrier,
@@ -105,9 +129,28 @@ export default [
         shipMethods?.[shipping_method_carrier]?.[shipping_method_code] ||
         shipping_method_name ||
         "-";
+      const actual =
+        actual_ship_date &&
+        moment(actual_ship_date, "YYYY-MM-DD").format("MM/DD/YYYY");
+
+      const requested =
+        requested_ship_date &&
+        moment(requested_ship_date, "YYYY-MM-DD").format("MM/DD/YYYY");
       return (
         <>
-          <Tag>{shipping_state}</Tag>${formatMoney(shipping)}, {method}
+          <div>
+            <Label text={shipping_state} />${formatMoney(shipping)}, {method}
+          </div>
+
+          {(actual || requested) && (
+            <Space size={14} align="center">
+              {requested && (
+                <IconText size="sm" icon="LogOut" text={requested} />
+              )}
+
+              {actual && <IconText size="sm" icon="LogIn" text={actual} />}
+            </Space>
+          )}
         </>
       );
     },
