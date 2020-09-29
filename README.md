@@ -10,7 +10,7 @@ React Components for Figure and Offset.
 
 Main purpose is to slowly port complex custom components over to React where development will be much more efficient as opposed to limiting ourselves to vanilla js/jQuery.
 
-## **Usage(W.I.P Basic Concept)**
+## **Usage**
 
 Via React:
 
@@ -66,7 +66,7 @@ Via CDN Link:
     crossorigin
     src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"
   ></script>
-  
+
   <script src="https://unpkg.com/@offsetpartners/react-components@latest/dist/figure.js"></script>
 </body>
 ```
@@ -93,12 +93,16 @@ npm run start
 
 - Then viola you're ready to play around with all the Components
 
+## **Reference Libraries**
+
+- [AntDesign](https://ant.design/)
+- [React Feather](https://github.com/feathericons/react-feather)
+
 ## **Roadmap**
 
 - Remove certain packages from global library and add them on a per component basis??
 - Add prop to add aditional Columns into ResultTable
 - Create different Column Components for ResultTable to increase "customizability"
-- Add onSelect method to ResultTable
 
 ### **Version**
 
