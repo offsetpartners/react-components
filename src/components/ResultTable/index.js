@@ -10,7 +10,7 @@ if (resultTables) {
   arr.forEach((element, index) => {
     let tableProps = {};
 
-    const validProps = ["type", "data"];
+    const validProps = ["type", "data", "onSelect"];
 
     try {
       if (FigureReact && FigureReact.ResultTable) {
