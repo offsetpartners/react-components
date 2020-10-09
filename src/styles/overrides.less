@@ -21,6 +21,12 @@
     0px 0px 0px 1px rgba(60, 66, 87, 0.16), 0px 1px 1px rgba(0, 0, 0, 0.12);
 }
 
+.ant-btn-ghost:focus {
+  box-shadow: 0px 2px 5px rgba(60, 66, 87, 0.08),
+    0px 0px 0px 1px rgba(60, 66, 87, 0.16), 0px 1px 1px rgba(0, 0, 0, 0.12),
+    0px 0px 0px 3px rgba(255, 44, 3, 0.2);
+}
+
 .ant-btn-primary:hover {
   color: #fff;
   box-shadow: none;
@@ -45,6 +51,14 @@
 // ---
 .ant-card-bordered {
   border-color: #dee2e6;
+}
+
+// Dropdown
+// ---
+.ant-dropdown-menu-item-selected {
+  font-weight: 600;
+  color: @text-color;
+  background-color: @select-item-selected-bg;
 }
 
 // Select
@@ -82,12 +96,13 @@
 
 .ant-input-affix-wrapper {
   .ant-input {
-    box-shadow: none;;
+    box-shadow: none;
   }
 }
 
 .ant-input:focus,
-.ant-input-affix-wrapper-focused,
+.ant-select-focused:not(.ant-select-disabled):not(.ant-select-customize-input)
+  .ant-select-selector,
 .ant-select-focused:not(.ant-select-disabled).ant-select-single:not(.ant-select-customize-input)
   .ant-select-selector {
   border-color: transparent;
