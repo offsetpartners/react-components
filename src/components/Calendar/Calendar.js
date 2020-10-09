@@ -1,138 +1,35 @@
-import moment from "moment";
 import PropTypes from "prop-types";
+import React, { memo } from "react";
 import Week from "./components/Week";
-import { useDebounce } from "react-use";
 import Header from "./components/Header";
+import CalendarProvider from "./provider";
 import DaysLabel from "./components/DaysLabel";
-import React, { useState, useEffect, memo, useCallback } from "react";
 
-const Calendar = ({
-  // State Props
-  selected,
-  setSelected,
-  month,
-  setMonth,
-  year,
-  setYear,
-
-  // Data fetching Props
-  onCellClick,
-  onDateChange,
-  doesCellHaveEvent,
-
-  // UI Props
-  daysLabelType,
-  headerComponents,
-}) => {
-  const [, updateState] = useState();
-  const [mounted, setMounted] = useState(false);
-
-  // Make sure that appropriate Setter Functions are provided
-  // if Calendar is a Controlled Component
-  if (
-    (year && !setYear) ||
-    (month && !setMonth) ||
-    (selected && !setSelected)
-  ) {
-    throw new Error("You must provide a setter fn for a Controlled Component!");
-  }
-
-  // Default State Setter
-  const [_selected, _setSelected] = useState(new Date());
-  const [_month, _setMonth] = useState(moment().month());
-  const [_year, _setYear] = useState(moment().year());
-
-  const gatedSetYear = useCallback((v) => {
-    if (setYear && typeof setYear === "function") return setYear(v);
-
-    _setYear(v);
-  }, []);
-
-  const gatedSetMonth = useCallback((v) => {
-    let _v = v;
-    if (v < 0) {
-      _v = 11;
-      gatedSetYear((y) => y - 1);
-    } else if (v > 11) {
-      _v = 0;
-      gatedSetYear((y) => y + 1);
-    }
-
-    if (setMonth && typeof setMonth === "function") return setMonth(_v);
-
-    _setMonth(_v);
-  }, []);
-
-  const gatedSelector = useCallback((v) => {
-    if (setSelected && typeof setSelected === "function") return setSelected(v);
-
-    _setSelected(v);
-  }, []);
-
-  // Force Component to Re-render
-  const forceUpdate = useCallback(() => {
-    return updateState({});
-  }, []);
-
-  // Run Debounced onDateChange callback
-  const [, cancel] = useDebounce(
-    () => {
-      if (mounted && onDateChange && typeof onDateChange === "function") {
-        onDateChange(month || _month, year || _year, () => forceUpdate());
-      }
-    },
-    350,
-    [month ?? _month, year ?? _year]
-  );
-
-  // Run on Mount
-  useEffect(() => {
-    // Cancel onDateChange Debounce on Mount
-    cancel();
-    setMounted(true);
-
-    return () => setMounted(false);
-  }, []);
-
+const Calendar = (props) => {
   return (
-    <div className="fig-calendar-wrapper">
-      <table className="fig-calendar-table">
-        <thead className="fig-calendar-header">
-          <tr className="fig-calendar-header-row">
-            <th className="fig-calendar-header-cell">
-              <Header
-                year={year ?? _year}
-                setYear={gatedSetYear}
-                month={month ?? _month}
-                setMonth={gatedSetMonth}
-                components={headerComponents}
-              />
-            </th>
-          </tr>
-        </thead>
+    <CalendarProvider {...props}>
+      <div className="fig-calendar-wrapper">
+        <table className="fig-calendar-table">
+          <thead className="fig-calendar-header">
+            <tr className="fig-calendar-header-row">
+              <th className="fig-calendar-header-cell">
+                <Header />
+              </th>
+            </tr>
+          </thead>
 
-        <tbody className="fig-calendar-body">
-          <tr className="fig-calendar-container">
-            <DaysLabel type={daysLabelType} />
-          </tr>
+          <tbody className="fig-calendar-body">
+            <tr className="fig-calendar-container">
+              <DaysLabel />
+            </tr>
 
-          <tr className="fig-calendar-container">
-            <Week
-              year={year || _year}
-              month={month || _month}
-              selected={selected || _selected}
-              doesCellHaveEvent={doesCellHaveEvent}
-              onClick={(d) => {
-                if (typeof onCellClick === "function") {
-                  onCellClick(d);
-                }
-                gatedSelector(() => d);
-              }}
-            />
-          </tr>
-        </tbody>
-      </table>
-    </div>
+            <tr className="fig-calendar-container">
+              <Week />
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </CalendarProvider>
   );
 };
 
@@ -140,7 +37,10 @@ Calendar.propTypes = {
   /**
    * Selected Date
    */
-  selected: PropTypes.instanceOf(Date),
+  selected: PropTypes.oneOfType([
+    PropTypes.instanceOf(Date),
+    PropTypes.arrayOf(Date),
+  ]),
   /**
    * Setter for Selected Date
    */
@@ -183,7 +83,8 @@ Calendar.propTypes = {
   onDateChange: PropTypes.func,
 
   /**
-   * Check a Data Source to indicate whether Date has an Event
+   * Check a Data Source to indicate whether Date has an Event.
+   * If nothing is provided then Event Indicator will not render.
    */
   doesCellHaveEvent: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
 
@@ -223,6 +124,12 @@ Calendar.propTypes = {
       ])
     ),
   }),
+  /**
+   * Generate Custom Classname depending on the day
+   *
+   * @param {Date} date
+   */
+  generateClassNames: PropTypes.func,
 };
 
 Calendar.defaultProps = {
@@ -232,5 +139,24 @@ Calendar.defaultProps = {
     right: ["nextMonth", "nextYear"],
   },
 };
+
+Calendar.validProps = [
+  "selected",
+  "setSelected",
+  "month",
+  "setMonth",
+  "year",
+  "setYear",
+
+  // Data fetching Props
+  "onCellClick",
+  "onDateChange",
+  "doesCellHaveEvent",
+
+  // UI Props
+  "daysLabelType",
+  "headerComponents",
+  "generateClassNames"
+];
 
 export default memo(Calendar);

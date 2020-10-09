@@ -8,36 +8,28 @@ import { render } from "react-dom";
 const calendars = document.getElementsByClassName("fig-calendar");
 if (calendars) {
   const arr = [...calendars];
+  const validProps = Calendar.validProps;
+  let providedProps;
+  if (typeof FigureReact !== "undefined" && FigureReact.Calendar) {
+    providedProps = FigureReact.Calendar;
+  }
+
+  if (Array.isArray(providedProps) && providedProps.length !== arr.length) {
+    throw new Error(
+      "Each Calendar Component must have a prop object assigned to it. You can also provide a single object to use across all Components."
+    );
+  }
   arr.forEach((element, index) => {
     let calendarProps = {};
 
-    const validProps = [
-      "selected",
-      "setSelected",
-      "month",
-      "setMonth",
-      "year",
-      "setYear",
-
-      // Data fetching Props
-      "onCellClick",
-      "onDateChange",
-      "doesCellHaveEvent",
-
-      // UI Props
-      "daysLabelType",
-      "headerComponents",
-    ];
-
     try {
-      if (FigureReact && FigureReact.Calendar) {
-        const { Calendar } = FigureReact;
-        validProps.map((prop) => {
-          if (Calendar[prop]) {
-            calendarProps[prop] = Calendar[prop];
-          }
-        });
-      }
+      validProps.forEach((prop) => {
+        if (Array.isArray(providedProps)) {
+          calendarProps[prop] = providedProps[index][prop];
+        } else {
+          calendarProps[prop] = providedProps[prop];
+        }
+      });
     } catch (e) {}
 
     if (element instanceof Element) {

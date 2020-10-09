@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import React, { memo } from "react";
 import { Row, Col, Space, Button } from "antd";
 import { MONTHS } from "components/Calendar/lib/constants";
@@ -8,6 +7,7 @@ import {
   ChevronsLeft,
   ChevronsRight,
 } from "react-feather";
+import { useCalendar } from "components/Calendar/provider";
 
 const PreviousYear = ({ year, setYear }) => {
   return (
@@ -106,67 +106,33 @@ const getComponents = (type = "left", components, props) => {
   }
 };
 
-const Header = (props) => {
-  const { month, year, components } = props;
-
-  const Left = getComponents("left", components, props);
-  const Right = getComponents("right", components, props);
+const Header = () => {
+  // const { month, year, components } = props;
+  const { month, setMonth, year, setYear, headerComponents } = useCalendar();
+  const props = { month, setMonth, year, setYear };
+  const Left = getComponents("left", headerComponents, props);
+  const Right = getComponents("right", headerComponents, props);
 
   return (
     <Row align="middle">
       <Col
-        span={8}
+        span={6}
         className="fig-sm-body fig-sm-body-semibold fig-calendar-header-left"
       >
         <Space size={2}>{Left}</Space>
       </Col>
 
-      <Col span={8} className="fig-calendar-header-month">
+      <Col span={12} className="fig-calendar-header-month">
         <span className="fig-body fig-body-semibold">
           {MONTHS[month].displayName} {year}
         </span>
       </Col>
 
-      <Col span={8} className="fig-sm-body-semibold fig-calendar-header-right">
+      <Col span={6} className="fig-sm-body-semibold fig-calendar-header-right">
         <Space size={2}>{Right}</Space>
       </Col>
     </Row>
   );
-};
-
-Header.propTypes = {
-  month: PropTypes.number.isRequired,
-  setMonth: PropTypes.func.isRequired,
-
-  year: PropTypes.number.isRequired,
-  setYear: PropTypes.func.isRequired,
-
-  components: PropTypes.shape({
-    left: PropTypes.arrayOf(
-      /**
-       *
-       * @enum {("nextYear"|"nextMonth"|"previousYear"|"previousMonth")}
-       */
-      PropTypes.oneOf([
-        "nextYear",
-        "nextMonth",
-        "previousYear",
-        "previousMonth",
-      ])
-    ),
-    right: PropTypes.arrayOf(
-      /**
-       *
-       * @enum {("nextYear"|"nextMonth"|"previousYear"|"previousMonth")}
-       */
-      PropTypes.oneOf([
-        "nextYear",
-        "nextMonth",
-        "previousYear",
-        "previousMonth",
-      ])
-    ),
-  }),
 };
 
 export default memo(Header);

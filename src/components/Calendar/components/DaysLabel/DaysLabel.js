@@ -1,23 +1,16 @@
-import PropTypes from "prop-types";
 import React, { memo } from "react";
+import { useCalendar } from "components/Calendar/provider";
 import { GET_WEEKDAYS } from "components/Calendar/lib/constants";
 
-const DaysLabel = ({ type }) => {
-  return GET_WEEKDAYS(type).map((day, index) => {
+const DaysLabel = () => {
+  const { daysLabelType } = useCalendar();
+  return GET_WEEKDAYS(daysLabelType).map((day, index) => {
     return (
       <td key={`${day}-${index}`} className="fig-calendar-days-label">
         <span className="fig-label-title">{day}</span>
       </td>
     );
   });
-};
-
-DaysLabel.propTypes = {
-  type: PropTypes.oneOf(["long", "short", "narrow"]),
-};
-
-DaysLabel.defaultProps = {
-  type: "short",
 };
 
 export default memo(DaysLabel);

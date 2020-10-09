@@ -1,7 +1,8 @@
+import moment from "moment";
 import PropTypes from "prop-types";
 import React, { memo } from "react";
+import { useCalendar } from "components/Calendar/provider";
 /**
- *
  * @param {Boolean} active
  * @param {Boolean} isToday
  * @param {Boolean} isLastWeek
@@ -26,51 +27,133 @@ const getCellClass = (active, isToday, isLastWeek) => {
 };
 
 /**
- *
  * @param {Boolean} active
  * @param {Boolean} selected
  */
 const getGridClass = (active, selected) => {
   const className = ["fig-calendar-grid"];
-  if (active && selected) {
-    className.push("fig-calendar-grid-active", "fig-calendar-grid-selected");
-  } else if (active && !selected) {
+  if (active) {
     className.push("fig-calendar-grid-active");
-  } else if (!active) {
+  } else {
     className.push("fig-calendar-grid-inactive");
+  }
+
+  if (selected) {
+    className.push("fig-calendar-grid-selected");
   }
 
   return className.join(" ");
 };
 
-const Cell = ({
-  active,
-  selected,
-  children,
-  onClick,
-  isToday,
-  hasEvent,
-  isLastWeek,
-}) => {
-  const eventClassName = ["fig-calendar-event-indicator"];
+/**
+ * @param {Boolean} selected
+ * @param {Date} date
+ */
+const generateSelected = (selected, date) => {
+  if (Array.isArray(selected)) {
+    return (
+      selected.filter((s) => moment(s).isSame(moment(date), "d")).length > 0
+    );
+  } else {
+    return moment(selected).isSame(moment(date), "d");
+  }
+};
 
-  hasEvent
-    ? eventClassName.push("fig-calendar-event-active")
-    : eventClassName.push("fig-calendar-event-inactive");
+const hasClassnameGenerator = (generateClassNames, date) => {
+  return typeof generateClassNames === "function"
+    ? generateClassNames(date)
+    : undefined;
+};
+
+const Cell = (props) => {
+  const {
+    date,
+    active,
+    isLastWeek,
+
+    children,
+  } = props;
+  const {
+    selected,
+    onCellClick,
+    setSelected,
+    doesCellHaveEvent,
+    defaultClassNames,
+    generateClassNames,
+  } = useCalendar();
+
+  // Internal Properties
+  const isToday = moment(date).isSame(moment(), "d");
+  const isSelected = generateSelected(selected, date);
+  const additionalClassNames = {
+    ...defaultClassNames,
+    ...hasClassnameGenerator(generateClassNames, date),
+  };
+
+  // Setup DayLabel
+  const dayClassName = `fig-calendar-day ${
+    (additionalClassNames &&
+      additionalClassNames.day &&
+      additionalClassNames.day.index) ||
+    ""
+  }`;
+  const DayLabel = () => {
+    return <span className={dayClassName}>{children}</span>;
+  };
+
+  // Setup Event Indicator
+  const shouldRenderEvent =
+    typeof doesCellHaveEvent !== undefined &&
+    (typeof doesCellHaveEvent === "function" ||
+      typeof doesCellHaveEvent === "boolean");
+  const hasEvent = shouldRenderEvent && doesCellHaveEvent(date);
+  const eventClassName = [
+    "fig-calendar-event-indicator",
+    additionalClassNames.event || "",
+  ];
+  if (hasEvent) {
+    eventClassName.push("fig-calendar-event-active");
+  } else {
+    eventClassName.push("fig-calendar-event-inactive");
+  }
+  const EventIndicator = () => {
+    return shouldRenderEvent && <span className={eventClassName.join(" ")} />;
+  };
+
+  // Setup Container ClassNames
+  const cellClassName = `${getCellClass(
+    active,
+    isToday && !isSelected,
+    isLastWeek
+  )} ${additionalClassNames.cell}`;
+  const wrapperClassName = `fig-calendar-grid-wrapper ${
+    additionalClassNames.wrapper || ""
+  }`;
+  const gridClassName = `${getGridClass(active, isSelected)} ${
+    additionalClassNames.grid || ""
+  }`;
+  const dayWrapperClassName = `fig-calendar-day-wrapper ${
+    (additionalClassNames.day && additionalClassNames.day.wrapper) || ""
+  }`;
+  const dayCellClassName = `fig-calendar-day-cell ${
+    (additionalClassNames.day && additionalClassNames.day.cell) || ""
+  }`;
+
   return (
     <td
-      className={getCellClass(active, isToday && !selected, isLastWeek)}
+      className={cellClassName}
       onClick={() => {
-        if (onClick && typeof onClick === "function") onClick();
+        if (onCellClick && typeof onCellClick === "function") onCellClick(date);
+        setSelected(date);
       }}
     >
-      <div className="fig-calendar-grid-wrapper">
-        <div className={getGridClass(active, selected)}>
-          <div className="fig-calendar-day-wrapper">
-            <div className="fig-calendar-day-cell">
-              <span className="fig-calendar-day">{children}</span>
+      <div className={wrapperClassName}>
+        <div className={gridClassName}>
+          <div className={dayWrapperClassName}>
+            <div className={dayCellClassName}>
+              <DayLabel />
             </div>
-            <span className={eventClassName.join(" ")} />
+            <EventIndicator />
           </div>
         </div>
       </div>
@@ -80,19 +163,13 @@ const Cell = ({
 
 Cell.propTypes = {
   active: PropTypes.bool,
-  isToday: PropTypes.bool,
-  selected: PropTypes.bool,
   isLastWeek: PropTypes.bool,
-
-  onClick: PropTypes.func,
-  hasEvent: PropTypes.bool,
+  date: PropTypes.instanceOf(Date).isRequired,
 };
 
 Cell.defaultProps = {
   active: false,
-  isToday: false,
-  hasEvent: false,
-  selected: false,
+  date: undefined,
   isLastWeek: false,
 };
 
