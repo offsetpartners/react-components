@@ -1,25 +1,72 @@
+@import "../../../styles/index.less";
+
+// Container
+// ---
+.fig-datepicker-container {
+  border-radius: 4px;
+  box-shadow: @box-shadow-base;
+
+  .ant-btn {
+    border: none;
+  }
+}
+
 // Button
 // ---
-.ant-btn.fig-datepicker-button {
+.ant-btn.fig-datepicker-preset {
   flex-direction: row;
   align-items: center;
   display: inline-flex;
+
+  padding: 1px 6px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-right: 1px solid @border-color-base;
+
+  .ant-row {
+    width: 100%;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    .fig-datepicker-preset-label {
+      overflow: hidden;
+      text-align: start;
+      text-overflow: ellipsis;
+    }
+
+    .fig-datepicker-preset-icon {
+      display: inline-flex;
+    }
+  }
+}
+
+.ant-btn.fig-datepicker-calendar {
+  flex-direction: row;
+  align-items: center;
+  display: inline-flex;
+
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-left: 1px solid @border-color-base;
+
+  .fig-typography {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 }
 
 // Popover
 // ---
 .fig-datepicker-popover {
-  @bg-color: #f8f6fb;
-  @selected-color: #2a2f56;
-
   min-width: 300px;
   max-width: 300px;
 
   // Arrow
   // ---
   .ant-popover-arrow {
-    border-top-color: @bg-color !important;
-    border-left-color: @bg-color !important;
+    border-top-color: @item-hover-bg !important;
+    border-left-color: @item-hover-bg !important;
   }
 
   // Inner Content
@@ -29,7 +76,7 @@
 
     .fig-datepicker-input-group {
       padding: 8px;
-      background-color: @bg-color;
+      background-color: @item-hover-bg;
 
       .ant-input,
       .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-focused) {
@@ -56,8 +103,8 @@
 
   .fig-date-picker-between {
     border-radius: 0;
-    color: @selected-color;
-    background-color: darken(@bg-color, 4%);
+    color: @text-color;
+    background-color: darken(@item-hover-bg, 4%);
   }
 
   .fig-calendar-grid-active {
@@ -65,7 +112,7 @@
 
     &:hover:not(.fig-calendar-grid-selected) {
       &:not(.fig-date-picker-between) {
-        background-color: darken(@bg-color, 2%);
+        background-color: darken(@item-hover-bg, 2%);
       }
       .fig-calendar-day-cell {
         background-color: transparent;
@@ -74,7 +121,7 @@
   }
 
   .fig-calendar-grid-selected {
-    background-color: @selected-color;
+    background-color: @text-color;
     .fig-calendar-day-cell {
       box-shadow: none;
       background-color: transparent;
