@@ -1,0 +1,83 @@
+// Button
+// ---
+.ant-btn.fig-datepicker-button {
+  flex-direction: row;
+  align-items: center;
+  display: inline-flex;
+}
+
+// Popover
+// ---
+.fig-datepicker-popover {
+  @bg-color: #f8f6fb;
+  @selected-color: #2a2f56;
+
+  min-width: 300px;
+  max-width: 300px;
+
+  // Arrow
+  // ---
+  .ant-popover-arrow {
+    border-top-color: @bg-color !important;
+    border-left-color: @bg-color !important;
+  }
+
+  // Inner Content
+  // ---
+  .ant-popover-inner-content {
+    padding: 0;
+
+    .fig-datepicker-input-group {
+      padding: 8px;
+      background-color: @bg-color;
+
+      .ant-input,
+      .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-focused) {
+        box-shadow: none;
+        background-color: transparent;
+      }
+    }
+  }
+
+  // Calendar
+  // ---
+  .fig-calendar-wrapper {
+    border: none;
+    border-radius: 0px;
+  }
+
+  .fig-calendar-header-left {
+    padding-left: 5px;
+  }
+
+  .fig-calendar-header-right {
+    padding-right: 5px;
+  }
+
+  .fig-date-picker-between {
+    border-radius: 0;
+    color: @selected-color;
+    background-color: darken(@bg-color, 4%);
+  }
+
+  .fig-calendar-grid-active {
+    cursor: pointer;
+
+    &:hover:not(.fig-calendar-grid-selected) {
+      &:not(.fig-date-picker-between) {
+        background-color: darken(@bg-color, 2%);
+      }
+      .fig-calendar-day-cell {
+        background-color: transparent;
+      }
+    }
+  }
+
+  .fig-calendar-grid-selected {
+    background-color: @selected-color;
+    .fig-calendar-day-cell {
+      box-shadow: none;
+      background-color: transparent;
+    }
+  }
+}
