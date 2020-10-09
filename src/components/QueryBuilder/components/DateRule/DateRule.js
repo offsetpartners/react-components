@@ -1,6 +1,7 @@
 import moment from "moment";
 import React, { Fragment } from "react";
-import { Col, Select, DatePicker } from "antd";
+import { Col, Select } from "antd";
+import DatePicker from "components/DatePicker";
 import { DATE_CONDITIONS } from "components/QueryBuilder/lib/conditions";
 
 export default ({ value, setValue, condition, setCondition }) => {
@@ -13,11 +14,11 @@ export default ({ value, setValue, condition, setCondition }) => {
 
   const defaultProps = {
     value: value,
-    onChange: (date) => setValue(date),
+    setValue: (date) => setValue(date),
   };
 
   const rangePickerProps = {
-    onChange: (dates) => setValue(dates),
+    setValue: (dates) => setValue(dates),
     value:
       value && value.constructor === Array && value.length === 2
         ? [value[0], value[1]]
@@ -59,11 +60,9 @@ export default ({ value, setValue, condition, setCondition }) => {
 
       {condition && (
         <Col xs={12} sm={8}>
-          {condition !== "is between" && (
-            <DatePicker {...allyProps} {...defaultProps} />
-          )}
+          {condition !== "is between" && <DatePicker {...defaultProps} />}
           {condition === "is between" && (
-            <DatePicker.RangePicker {...allyProps} {...rangePickerProps} />
+            <DatePicker type="range" {...rangePickerProps} />
           )}
         </Col>
       )}
