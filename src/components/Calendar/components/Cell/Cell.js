@@ -143,6 +143,7 @@ const Cell = (props) => {
     <td
       className={cellClassName}
       onClick={() => {
+        if (!active) return;
         if (onCellClick && typeof onCellClick === "function") onCellClick(date);
         setSelected(date);
       }}
