@@ -1,13 +1,14 @@
 import React from "react";
 import IconText from "./IconText";
 import { render } from "react-dom";
+import propTypes from "./propTypes";
 
 // Allows for Component to mount via a normal DOM Classname
 // Similar to jQuery
 const iconTexts = document.getElementsByClassName("fig-icon-text");
 if (iconTexts) {
   const arr = [...iconTexts];
-  const validProps = IconText.validProps;
+  const validProps = Object.keys(propTypes);
   let providedProps;
   if (typeof FigureReact !== "undefined" && FigureReact.IconText) {
     providedProps = FigureReact.IconText;
@@ -36,7 +37,4 @@ if (iconTexts) {
     }
   });
 }
-
-// Also allows to be used within a React Application
-IconText.displayName = "IconText";
 export default IconText;

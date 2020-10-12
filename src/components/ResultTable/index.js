@@ -1,5 +1,6 @@
 import React from "react";
 import { render } from "react-dom";
+import propTypes from "./propTypes";
 import ResultTable from "./ResultTable";
 
 // Allows for Component to mount via a normal DOM Classname
@@ -7,7 +8,7 @@ import ResultTable from "./ResultTable";
 const resultTables = document.getElementsByClassName("fig-result-table");
 if (resultTables) {
   const arr = [...resultTables];
-  const validProps = ResultTable.validProps;
+  const validProps = Object.keys(propTypes);
   let providedProps;
   if (typeof FigureReact !== "undefined" && FigureReact.ResultTable) {
     providedProps = FigureReact.ResultTable;

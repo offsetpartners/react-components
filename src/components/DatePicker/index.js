@@ -1,5 +1,6 @@
 import React from "react";
 import { render } from "react-dom";
+import propTypes from "./propTypes";
 import DatePicker from "./DatePicker";
 
 // Allows for Component to mount via a normal DOM Classname
@@ -7,7 +8,7 @@ import DatePicker from "./DatePicker";
 const datepickers = document.getElementsByClassName("fig-datepicker");
 if (datepickers) {
   const arr = [...datepickers];
-  const validProps = DatePicker.validProps;
+  const validProps = Object.keys(propTypes);
   let providedProps;
   if (typeof FigureReact !== "undefined" && FigureReact.DatePicker) {
     providedProps = FigureReact.DatePicker;

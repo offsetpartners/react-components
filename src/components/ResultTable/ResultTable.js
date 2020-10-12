@@ -1,5 +1,5 @@
 import { Table } from "antd";
-import PropTypes from "prop-types";
+import propTypes from "./propTypes";
 import getColumn from "./lib/columns";
 import CommonProps from "./lib/common.js";
 import React, { useState, useEffect } from "react";
@@ -39,23 +39,7 @@ const ResultTable = ({ type = "orders", data, onSelect }) => {
   );
 };
 
-ResultTable.propTypes = {
-  /**
-   * A callback for when rowKeys are selected/unselected
-   * which passes all of the id's of the selectedRowKeys
-   * and their respected Data Object
-   *
-   * @param {Array.<Number>} selectedRowKeys
-   * @param {Any} records All the corresponding objects that are selected
-   */
-  onSelect: PropTypes.func,
-  type: PropTypes.oneOf(["orders", "customers"]).isRequired,
-
-  /**
-   * Data to display on the Table
-   */
-  data: PropTypes.any,
-};
+ResultTable.propTypes = propTypes;
 
 ResultTable.defaultProps = {
   type: "orders",
