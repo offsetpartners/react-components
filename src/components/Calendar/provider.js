@@ -114,6 +114,18 @@ const CalendarProvider = ({
   const [_selected, _setSelected] = useState(new Date());
   const [_month, _setMonth] = useState(moment().month());
   const [_year, _setYear] = useState(moment().year());
+  let actualSelected = _selected,
+    actualMonth = _month,
+    actualYear = _year;
+  if (typeof selected !== "undefined") {
+    actualSelected = selected;
+  }
+  if (typeof month !== "undefined") {
+    actualMonth = month;
+  }
+  if (typeof year !== "undefined") {
+    actualYear = year;
+  }
 
   // Handler Functions
   const handleYearChange = useCallback((v) => {
@@ -129,11 +141,11 @@ const CalendarProvider = ({
       _v = 0;
       handleYearChange((y) => y + 1);
     }
-    if (setMonth && typeof setMonth === "function") return setMonth(_v);
+    if (typeof setMonth === "function") return setMonth(_v);
     _setMonth(_v);
   }, []);
   const handleCellSelect = useCallback((v) => {
-    if (setSelected && typeof setSelected === "function") return setSelected(v);
+    if (typeof setSelected === "function") return setSelected(v);
     _setSelected(v);
   }, []);
   // Force Component to Re-render
@@ -143,15 +155,14 @@ const CalendarProvider = ({
 
   // Run useDateChange Hook
   const [, cancel] = useDateChange(
-    month || _month,
-    year || _year,
+    actualMonth,
+    actualYear,
     mounted,
     onDateChange,
     forceUpdate
   );
   // Run on Mount
   useCalendarMount(cancel, setMounted);
-
   const value = useMemo(
     () => ({
       // UI
@@ -161,11 +172,11 @@ const CalendarProvider = ({
       generateClassNames,
 
       // Component Wide State
-      selected: selected || _selected,
+      selected: actualSelected,
       setSelected: handleCellSelect,
-      month: month || _month,
+      month: actualMonth,
       setMonth: handleMonthChange,
-      year: year || _year,
+      year: actualYear,
       setYear: handleYearChange,
 
       // Cell Specific props
@@ -173,9 +184,9 @@ const CalendarProvider = ({
       doesCellHaveEvent,
     }),
     [
-      selected || _selected,
-      month || _month,
-      year || _year,
+      actualSelected,
+      actualMonth,
+      actualYear,
       doesCellHaveEvent,
       generateClassNames,
     ]

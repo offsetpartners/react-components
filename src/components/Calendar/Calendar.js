@@ -39,7 +39,7 @@ Calendar.propTypes = {
    */
   selected: PropTypes.oneOfType([
     PropTypes.instanceOf(Date),
-    PropTypes.arrayOf(Date),
+    PropTypes.arrayOf(PropTypes.instanceOf(Date)),
   ]),
   /**
    * Setter for Selected Date
