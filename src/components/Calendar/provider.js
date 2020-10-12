@@ -107,7 +107,7 @@ const CalendarProvider = ({
       wrapper: "",
     },
   };
-  const [, updateState] = useState();
+  const [updater, updateState] = useState();
   const [mounted, setMounted] = useState(false);
 
   // Default State Setter
@@ -184,7 +184,7 @@ const CalendarProvider = ({
       doesCellHaveEvent,
     }),
     [
-      forceUpdate,
+      updater,
       actualSelected,
       actualMonth,
       actualYear,

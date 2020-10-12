@@ -5,20 +5,28 @@ import { useState } from "react";
 import { Calendar } from "@offsetpartners/react-components";
 
 const [selectedDate, setSelectedDate] = useState(new Date());
-const [events, changeEvents] = useState(() => {
-  const temp = [];
-  for (let i = 1; i < 26; i++) {
-    const rand = Math.floor(Math.random() * Math.floor(25));
+// const [events, changeEvents] = useState(() => {
+//   const temp = [];
+//   for (let i = 1; i < 26; i++) {
+//     const rand = Math.floor(Math.random() * Math.floor(25));
 
-    if (rand <= i) {
-      temp.push({
-        id: i,
-        timestamp: `2020-${selectedDate.getMonth() + 1}-${i} 00:00:00`,
-      });
-    }
-  }
-  return temp;
-});
+//     if (rand <= i) {
+//       temp.push({
+//         id: i,
+//         timestamp: `2020-${selectedDate.getMonth() + 1}-${i} 00:00:00`,
+//       });
+//     }
+//   }
+//   return temp;
+// });
+const events = {
+  ["10-2020"]: [
+    {
+      id: 1,
+      timestamp: `2020-${selectedDate.getMonth() + 1}-${12} 00:00:00`,
+    },
+  ],
+};
 
 <>
   <p>The selected date: {selectedDate.toJSON()}</p>
@@ -27,25 +35,31 @@ const [events, changeEvents] = useState(() => {
     setSelected={(v) => setSelectedDate(v)}
     onDateChange={(month, year, forceUpdate) => {
       const temp = [];
-      for (let i = 1; i < 26; i++) {
-        const rand = Math.floor(Math.random() * Math.floor(25));
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          for (let i = 1; i < 26; i++) {
+            const rand = Math.floor(Math.random() * Math.floor(25));
 
-        if (rand <= i) {
-          temp.push({
-            id: i,
-            timestamp: `${year}-${month + 1}-${i} 00:00:00`,
-          });
-        }
-      }
+            if (rand <= i) {
+              temp.push({
+                id: i,
+                timestamp: `${year}-${month + 1}-${i} 00:00:00`,
+              });
+            }
+          }
+          // changeEvents(temp);
+          events[month + 1 + "-" + year] = temp;
+          forceUpdate();
 
-      changeEvents(temp);
-      forceUpdate();
+          resolve();
+        }, 1200);
+      });
     }}
     doesCellHaveEvent={(d) => {
       const d1 = new Date(d);
-      const found = events.find((event) => {
+      const temp = events[d1.getMonth() + 1 + "-" + d1.getFullYear()] || [];
+      const found = temp.find((event) => {
         const d2 = new Date(event.timestamp);
-
         return (
           d1.getFullYear() === d2.getFullYear() &&
           d1.getMonth() === d2.getMonth() &&
@@ -76,6 +90,7 @@ Done with HTML:
       Calendar: {
         onDateChange: function (month, year, forceUpdate) {
           const temp = [];
+
           for (let i = 1; i < 26; i++) {
             const rand = Math.floor(Math.random() * Math.floor(25));
 
