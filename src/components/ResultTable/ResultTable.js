@@ -63,4 +63,6 @@ ResultTable.defaultProps = {
   data: [],
 };
 
+ResultTable.validProps = Object.keys(ResultTable.propTypes);
+
 export default ResultTable;

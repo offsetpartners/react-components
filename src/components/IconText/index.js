@@ -1,35 +1,34 @@
 import React from "react";
+import IconText from "./IconText";
 import { render } from "react-dom";
-import { default as IconText } from "./IconText";
 
 // Allows for Component to mount via a normal DOM Classname
 // Similar to jQuery
 const iconTexts = document.getElementsByClassName("fig-icon-text");
 if (iconTexts) {
   const arr = [...iconTexts];
-  arr.forEach((element, index) => {
-    let props = {};
+  const validProps = IconText.validProps;
+  let providedProps;
+  if (typeof FigureReact !== "undefined" && FigureReact.IconText) {
+    providedProps = FigureReact.IconText;
+  }
 
-    const validProps = [
-      "text",
-      "size",
-      "icon",
-      "align",
-      "spacing",
-      "variant",
-      "iconProps",
-      "iconPlacement",
-    ];
+  if (Array.isArray(providedProps) && providedProps.length !== arr.length) {
+    throw new Error(
+      "Each IconText Component must have a prop object assigned to it. You can also provide a single object to use across all Components."
+    );
+  }
+  arr.forEach((element, index) => {
+    let iconTextProps = {};
 
     try {
-      if (FigureReact && FigureReact.IconText) {
-        const { IconText } = FigureReact;
-        validProps.map((prop) => {
-          if (IconText[prop]) {
-            props[prop] = IconText[prop];
-          }
-        });
-      }
+      validProps.forEach((prop) => {
+        if (Array.isArray(providedProps)) {
+          iconTextProps[prop] = providedProps[index][prop];
+        } else {
+          iconTextProps[prop] = providedProps[prop];
+        }
+      });
     } catch (e) {}
 
     if (element instanceof Element) {

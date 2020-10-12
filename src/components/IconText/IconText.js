@@ -167,4 +167,6 @@ IconText.defaultProps = {
     bordered: undefined,
   },
 };
+
+IconText.validProps = Object.keys(IconText.propTypes);
 export default IconText;
