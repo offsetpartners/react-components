@@ -1,5 +1,5 @@
 import moment from "moment";
-import { generateItems, getPresetFromValue, getValueFromPreset } from "./utils";
+import { generateItems, getPresetFromValue } from "./utils";
 import React, {
   useMemo,
   useState,
@@ -11,12 +11,17 @@ import React, {
 
 const DatePickerContext = createContext({
   format: "MMM D",
+  maxDateRange: 0,
   type: "single" || "range",
   items: [{ key: "", label: "", date: moment() }],
 
+  month: 0,
+  setMonth: () => {},
+  year: 0,
+  setYear: () => {},
+
   preset: [],
   setPreset: () => {},
-
   setValue: () => {},
   value: new Date() || [new Date()],
 
@@ -27,41 +32,90 @@ const DatePickerProvider = ({
   children,
 
   type,
-  value,
-  onSave,
-  setValue,
   format = "MMM D",
+  maxDateRange = 0,
   disabledPresets = [],
+
+  onSave,
+
+  value,
+  setValue,
+  initialValue,
 }) => {
   // Internal
-  const items = generateItems(type, disabledPresets);
+  const today = moment();
+  const items = generateItems(type, maxDateRange, disabledPresets);
+  const [_month, _setMonth] = useState(today.month());
+  const [_year, _setYear] = useState(today.year());
 
   const [_value, _setValue] = useState(() => {
-    return type === "range"
-      ? [moment().toDate(), moment().add(1, "d").toDate()]
-      : moment().toDate();
+    let value, month, year;
+    if (type === "range") {
+      if (
+        typeof initialValue !== "undefined" &&
+        Array.isArray(initialValue) &&
+        initialValue.length === 2
+      ) {
+        // Check that both values provided are Dates
+        if (
+          initialValue[0] instanceof Date &&
+          initialValue[1] instanceof Date
+        ) {
+          // Check if End Date is greater than Start Date
+          if (initialValue[0] > initialValue[1]) {
+            value = [initialValue[1], initialValue[0]];
+          } else {
+            value = initialValue;
+          }
+        }
+      } else {
+        value = [today.toDate(), today.clone().add(1, "d").toDate()];
+      }
+      month = value[0].getMonth();
+      year = value[0].getFullYear();
+    } else {
+      if (typeof initialValue !== "undefined" && initialValue instanceof Date) {
+        value = initialValue;
+      } else {
+        value = today.toDate();
+      }
+      month = value.getMonth();
+      year = value.getFullYear();
+    }
+    _setYear(year);
+    _setMonth(month);
+    return value;
   });
+  let actualValue = _value;
+  if (typeof value !== "undefined") {
+    actualValue = value;
+  }
   const [preset, setPreset] = useState(
     getPresetFromValue(type, items, value || _value) || items[0]
   );
+  // Callbacks to handle state Setters
   const handleValueChange = useCallback((v) => {
     if (typeof setValue === "function") return setValue(v);
     _setValue(v);
   });
   const handleSave = useCallback(() => {
-    if (typeof onSave === "function") onSave(value);
+    if (typeof onSave === "function") onSave(actualValue);
   });
 
+  // When type changes change values
+  // to fit appropriate structure
   useEffect(() => {
     let act = value || _value;
     if (type === "range" && !Array.isArray(act)) {
-      act = [act, moment(act).add(1, "d")];
+      act = [act, moment(act).add(1, "d").toDate()];
     } else if (type !== "range" && Array.isArray(act)) {
       act = act[0];
     }
-    const newPreset = getPresetFromValue(type, items, act) || items[0];
-    setPreset(newPreset);
-    getValueFromPreset(type, newPreset, setPreset, handleValueChange);
+
+    if (items && Array.isArray(items) && items.length > 0) {
+      setPreset(items[0]);
+    }
+    handleValueChange(act);
   }, [type]);
   const providerValue = useMemo(
     () => ({
@@ -71,12 +125,19 @@ const DatePickerProvider = ({
 
       onSave: handleSave,
 
+      // Calendar State
+      month: _month,
+      setMonth: _setMonth,
+      year: _year,
+      setYear: _setYear,
+
+      // Date Picker State
       preset,
       setPreset,
-      value: value || _value,
+      value: actualValue,
       setValue: handleValueChange,
     }),
-    [type, value || _value]
+    [_month, _year, type, value || _value]
   );
 
   return (

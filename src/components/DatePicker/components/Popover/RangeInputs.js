@@ -6,7 +6,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { useDatePicker } from "components/DatePicker/provider";
 
 export default () => {
-  const { value, setValue } = useDatePicker();
+  const { month, year, value, setValue, setMonth, setYear } = useDatePicker();
 
   const [focused, setFocused] = useState(0);
 
@@ -61,7 +61,11 @@ export default () => {
       </Row>
 
       <Calendar
+        year={year}
+        month={month}
         selected={value}
+        setYear={setYear}
+        setMonth={setMonth}
         headerComponents={{ left: ["previousMonth"], right: ["nextMonth"] }}
         generateClassNames={(d) => {
           const momentObj = moment(d);
@@ -90,8 +94,8 @@ export default () => {
           }
 
           const newValues = [];
-          newValues[focused] = newValue;
-          newValues[otherIndex] = oldValue;
+          newValues[focused] = newValue.toDate();
+          newValues[otherIndex] = oldValue.toDate();
 
           setValue(newValues);
           setFocused(otherIndex);

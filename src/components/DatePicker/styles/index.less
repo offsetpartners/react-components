@@ -58,9 +58,20 @@
 
 // Popover
 // ---
-.fig-datepicker-popover {
+.fig-datepicker-preset-popover {
   min-width: 300px;
   max-width: 300px;
+
+  .ant-dropdown-menu {
+    overflow-y: auto;
+    max-height: 300px;
+    overflow-x: hidden;
+  }
+}
+
+.fig-datepicker-calendar-popover {
+  width: 100%;
+  min-width: 300px;
 
   // Arrow
   // ---

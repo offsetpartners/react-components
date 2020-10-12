@@ -2,12 +2,18 @@ import moment from "moment";
 
 /**
  * @param {"range"|"single"} type
+ * @param {Number} maxDateRange
  * @param {Array.<String>} disabledPresets
  */
-export const generateItems = (type, disabledPresets = []) => {
+export const generateItems = (type, maxDateRange, disabledPresets = []) => {
+  /**
+   * @type {Array.<{key: String, label: String, date: moment.Moment|[moment.Moment, moment.Moment]}>} items
+   */
   let items;
   const today = moment();
   if (type === "range") {
+    const last2Days = [today.clone().subtract(2, "d"), today];
+    const last3Days = [today.clone().subtract(3, "d"), today];
     const last7Days = [today.clone().subtract(7, "d"), today];
     const last10Days = [today.clone().subtract(10, "d"), today];
     const last30Days = [today.clone().subtract(30, "d"), today];
@@ -24,6 +30,11 @@ export const generateItems = (type, disabledPresets = []) => {
     const lastMonth = [
       _lastMonth.clone().startOf("month"),
       _lastMonth.clone().endOf("month"),
+    ];
+    const _lastYear = today.clone().subtract(1, "year");
+    const lastYear = [
+      _lastYear.clone().startOf("year"),
+      _lastYear.clone().endOf("year"),
     ];
 
     const currentQuarter = [today.clone().startOf("quarter"), today];
@@ -53,12 +64,15 @@ export const generateItems = (type, disabledPresets = []) => {
       _quarterFour.clone().endOf("quarter"),
     ];
     items = [
+      { key: "LAST_2_DAYS", label: "Last 2 Days", date: last2Days },
+      { key: "LAST_3_DAYS", label: "Last 3 Days", date: last3Days },
       { key: "LAST_7_DAYS", label: "Last 7 Days", date: last7Days },
       { key: "LAST_10_DAYS", label: "Last 10 Days", date: last10Days },
       { key: "LAST_30_DAYS", label: "Last 30 Days", date: last30Days },
-      { key: "LAST_WEEK", label: "Last Week", date: lastWeek },
-      { key: "LAST_MONTH", label: "Last Month", date: lastMonth },
-      { key: "LAST_QUARTER", label: "Last Quarter", date: lastQuarter },
+      { key: "LAST_WEEK", label: "Previous Week", date: lastWeek },
+      { key: "LAST_MONTH", label: "Previous Month", date: lastMonth },
+      { key: "LAST_QUARTER", label: "Previous Quarter", date: lastQuarter },
+      { key: "LAST_YEAR", label: "Previous Year", date: lastYear },
       { key: "CURRENT_WEEK", label: "Week to Date", date: currentWeek },
       { key: "CURRENT_MONTH", label: "Month to Date", date: currentMonth },
       {
@@ -95,8 +109,15 @@ export const generateItems = (type, disabledPresets = []) => {
       { key: "END_OF_QUARTER", label: "End of Quarter", date: endOfQuarter },
     ];
   }
-  
-  return items.filter((i) => !disabledPresets.includes(i.key));
+  let filtered = items;
+
+  if (type === "range" && maxDateRange) {
+    filtered = items.filter((i) => {
+      return i.date[1].diff(i.date[0], "days") + 1 <= maxDateRange;
+    });
+  }
+
+  return filtered.filter((i) => !disabledPresets.includes(i.key));
 };
 
 /**
@@ -123,14 +144,18 @@ export const getPresetFromValue = (type, items, value) => {
  * @param {"range"|"single"} type
  * @param {{key: String, label: String, date: moment.Moment}} preset
  * @param {Function} setPreset
- * @param {Function} setValue
  */
-export const getValueFromPreset = (type, preset, setPreset, setValue) => {
+export const getValueFromPreset = (type, preset, setPreset) => {
   setPreset(preset);
 
   if (type === "range") {
-    setValue([preset.date[0].toDate(), preset.date[1].toDate()]);
+    const today = moment();
+
+    if (preset && preset.date && Array.isArray(preset.date)) {
+      return [preset.date[0].toDate(), preset.date[1].toDate()];
+    }
+    return [today.toDate(), today.clone().add(1, "d")];
   } else {
-    setValue(preset.date.toDate());
+    return preset.date.toDate();
   }
 };

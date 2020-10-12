@@ -17,7 +17,10 @@ export default ({ children }) => {
     <Popover
       trigger="click"
       content={Content}
-      overlayClassName="fig-datepicker-popover"
+      overlayClassName="fig-datepicker-calendar-popover"
+      getTooltipContainer={(n) =>
+        document.querySelector(".fig-datepicker-calendar-col")
+      }
       onVisibleChange={(visible) => !visible && onSave()}
     >
       {children}

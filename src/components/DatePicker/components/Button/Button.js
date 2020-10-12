@@ -14,13 +14,16 @@ export default () => {
     preset,
     format,
     onSave,
+    setYear,
+    setMonth,
     setValue,
     setPreset,
   } = useDatePicker();
 
   const [open, setOpen] = useState(false);
 
-  let dateText, Icon;
+  let dateText, Icon, LeftButton;
+  const hasDropdown = preset && Array.isArray(items) && items.length > 0;
   if (type === "range") {
     // Set Text
     dateText = `${moment(value[0]).format(format)}-${moment(value[1]).format(
@@ -43,13 +46,15 @@ export default () => {
       </span>
     );
   }
-  return (
-    <Row align="middle" className="fig-datepicker-container">
+
+  if (hasDropdown) {
+    LeftButton = (
       <Col span={12}>
         <Dropdown
           visible={open}
           trigger={["click"]}
           onVisibleChange={(v) => setOpen(v)}
+          overlayClassName="fig-datepicker-preset-popover"
           overlay={() => (
             <Menu
               selectedKeys={[preset.key]}
@@ -57,7 +62,16 @@ export default () => {
                 setOpen(false);
 
                 const newPreset = items.find((i) => i.key === clicked.key);
-                getValueFromPreset(type, newPreset, setPreset, setValue);
+                const newValue = getValueFromPreset(type, newPreset, setPreset);
+
+                if (Array.isArray(newValue) && newValue.length > 0) {
+                  setMonth(newValue[0].getMonth());
+                  setYear(newValue[0].getFullYear());
+                } else {
+                  setMonth(newValue.getMonth());
+                  setYear(newValue.getFullYear());
+                }
+                setValue(newValue);
                 onSave();
               }}
             >
@@ -69,14 +83,20 @@ export default () => {
         >
           <Button block type="ghost" className="fig-datepicker-preset">
             <Row>
-              <Col className="fig-datepicker-preset-label">{preset.label}</Col>
+              <Col className="fig-datepicker-preset-label">
+                {preset && preset.label}
+              </Col>
               <Col className="fig-datepicker-preset-icon">{Icon}</Col>
             </Row>
           </Button>
         </Dropdown>
       </Col>
-
-      <Col span={12}>
+    );
+  }
+  return (
+    <Row align="middle" className="fig-datepicker-container">
+      {LeftButton}
+      <Col span={hasDropdown ? 12 : 24} className="fig-datepicker-calendar-col">
         <Popover>
           <Button
             block
