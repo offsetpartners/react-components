@@ -184,6 +184,7 @@ const CalendarProvider = ({
       doesCellHaveEvent,
     }),
     [
+      forceUpdate,
       actualSelected,
       actualMonth,
       actualYear,
