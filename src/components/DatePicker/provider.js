@@ -98,9 +98,9 @@ const DatePickerProvider = ({
     if (typeof setValue === "function") return setValue(v);
     _setValue(v);
   });
-  const handleSave = useCallback(() => {
-    if (typeof onSave === "function") onSave(actualValue);
-  });
+  const handleSave = useCallback((val) => {
+    if (typeof onSave === "function") onSave(val);
+  }, []);
 
   // When type changes change values
   // to fit appropriate structure

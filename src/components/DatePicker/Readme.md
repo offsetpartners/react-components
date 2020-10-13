@@ -23,6 +23,9 @@ const [type, setType] = useState("range");
       new Date(new Date().setMonth(1)),
       new Date(new Date(new Date().setMonth(1)).setDate(11)),
     ]}
+    onSave={(v) => {
+      console.log(v)
+    }}
   />
 </>;
 ```

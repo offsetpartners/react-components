@@ -72,7 +72,7 @@ export default () => {
                   setYear(newValue.getFullYear());
                 }
                 setValue(newValue);
-                onSave();
+                onSave(newValue);
               }}
             >
               {items.map((i) => (

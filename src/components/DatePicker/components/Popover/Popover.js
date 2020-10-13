@@ -5,7 +5,7 @@ import RangeInputs from "./RangeInputs";
 import { useDatePicker } from "components/DatePicker/provider";
 
 export default ({ children }) => {
-  const { type, onSave } = useDatePicker();
+  const { type, value, onSave } = useDatePicker();
   let Content;
 
   if (type === "range") {
@@ -21,7 +21,7 @@ export default ({ children }) => {
       getTooltipContainer={(n) =>
         document.querySelector(".fig-datepicker-calendar-col")
       }
-      onVisibleChange={(visible) => !visible && onSave()}
+      onVisibleChange={(visible) => !visible && onSave(value)}
     >
       {children}
     </Popover>
