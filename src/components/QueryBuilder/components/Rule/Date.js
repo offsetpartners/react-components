@@ -5,13 +5,6 @@ import DatePicker from "components/DatePicker";
 import { DATE_CONDITIONS } from "components/QueryBuilder/lib/conditions";
 
 export default ({ value, setValue, condition, setCondition }) => {
-  const allyProps = {
-    autoFocus: true,
-    allowClear: false,
-    format: "MMM D, YYYY",
-    style: { width: "100%" },
-  };
-
   const defaultProps = {
     value: value,
     setValue: (date) => setValue(date),
@@ -36,13 +29,13 @@ export default ({ value, setValue, condition, setCondition }) => {
           onSelect={(cond, option) => {
             // When transitioning from between
             if (condition === "is between") {
-              const newDate = value && value[0] ? value[0] : moment();
+              const newDate = value && value[0] ? value[0] : moment().toDate();
               setValue(newDate);
             } else if (cond === "is between") {
               // Transitioning to between
               const newDate = value
-                ? [value, moment(value).add(1, "d")]
-                : [moment(), moment().add(1, "d")];
+                ? [value, moment(value).add(1, "d").toDate()]
+                : [moment().toDate(), moment().add(1, "d").toDate()];
               setValue(newDate);
             }
             setCondition(cond);

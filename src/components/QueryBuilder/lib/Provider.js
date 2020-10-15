@@ -1,11 +1,9 @@
 import handlers from "./helpers";
 import React, { useMemo, useState, useContext, createContext } from "react";
 
+let uniqueId = 0;
 const QueryBuilderContext = createContext(0);
-
 const QueryBuilderProvider = ({ children }) => {
-  let uniqueId = 0;
-
   /**
    * @param {String} title
    * @returns {QueryBuilderType}

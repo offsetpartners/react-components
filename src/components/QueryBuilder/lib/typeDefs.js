@@ -8,7 +8,7 @@
  */
 
 /**
- * @typedef {{rule: String, value: *, condition: String, type: RuleTypes,}} Rule
+ * @typedef {{rule: String, value: *, condition: String, type: RuleTypes}} Rule
  */
 
 /**

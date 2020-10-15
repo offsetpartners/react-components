@@ -63,13 +63,10 @@ export default (props) => {
                 <Button
                   block
                   type="text"
-                  style={{ color: "#4F5268" }}
                   icon={
-                    <Icon
-                      component={() => (
-                        <Trash width={16} height={16} type="outlined" />
-                      )}
-                    />
+                    <span className="anticon">
+                      <Trash width={16} height={16} type="outlined" />
+                    </span>
                   }
                 >
                   Delete Segment

@@ -1,13 +1,12 @@
 import Segment from "../Segment";
-import { Edit3 } from "react-feather";
 import React, { Fragment } from "react";
+import { Edit3, Plus } from "react-feather";
 import ResultTable from "components/ResultTable";
 import { Row, Col, Button, Typography } from "antd";
-import Icon, { PlusOutlined } from "@ant-design/icons";
 import { useQueryBuilder } from "components/QueryBuilder/lib/Provider";
 
 export default ({ type, inputs }) => {
-  const { getObjectFromType, handleNewSegment } = useQueryBuilder();
+  const { orders, getObjectFromType, handleNewSegment } = useQueryBuilder();
 
   const { object, handlerFunction } = getObjectFromType(type);
   const { title, segments } = object;
@@ -21,13 +20,7 @@ export default ({ type, inputs }) => {
             level={4}
             style={{ left: 0, fontSize: 25 }}
             editable={{
-              icon: (
-                <Icon
-                  component={() => (
-                    <Edit3 width={16} height={16} type="outlined" />
-                  )}
-                />
-              ),
+              icon: <Edit3 size={16} />,
               onChange: (str) => {
                 handlerFunction((prevState) => {
                   return { ...prevState, title: str };
@@ -58,9 +51,13 @@ export default ({ type, inputs }) => {
                 <Button
                   type="ghost"
                   disabled={!isLastItem}
-                  icon={<PlusOutlined />}
                   onClick={() => handleNewSegment(type)}
                   className="fig-query-builder-and-button"
+                  icon={
+                    <span className="anticon">
+                      <Plus size="1em" />
+                    </span>
+                  }
                 >
                   And
                 </Button>
@@ -72,7 +69,14 @@ export default ({ type, inputs }) => {
 
       <Row style={{ marginTop: 30 }}>
         <Col>
-          <Button type="primary">Save and Preview</Button>
+          <Button
+            type="primary"
+            onClick={() => {
+              console.log(orders);
+            }}
+          >
+            Save and Preview
+          </Button>
         </Col>
       </Row>
 

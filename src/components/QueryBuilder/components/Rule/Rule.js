@@ -1,6 +1,6 @@
 import React from "react";
 import Base from "./Base";
-import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
+import { Plus, Trash } from "react-feather";
 import { Row, Col, Space, Button, Select, Popconfirm } from "antd";
 
 export default (props) => {
@@ -19,7 +19,7 @@ export default (props) => {
     isLastRule,
   } = props;
   return (
-    <Row align="middle" gutter={[8, 0]}>
+    <Row align="middle" gutter={[8, 8]}>
       <Col xs={24} sm={8}>
         <Select
           showSearch
@@ -51,13 +51,15 @@ export default (props) => {
         }}
       >
         <Space>
-          {/* TODO: Implement OR Operators on the backend before releasing this
-          feature */}
           {condition && value && (
             <Button
-              icon={<PlusOutlined />}
               onClick={onNewRule}
               disabled={!isLastRule}
+              icon={
+                <span className="anticon">
+                  <Plus size="1em" />
+                </span>
+              }
             >
               Or
             </Button>
@@ -70,7 +72,11 @@ export default (props) => {
               danger
               type="text"
               shape="circle"
-              icon={<DeleteOutlined />}
+              icon={
+                <span className="anticon">
+                  <Trash size="1em" />
+                </span>
+              }
             ></Button>
           </Popconfirm>
         </Space>

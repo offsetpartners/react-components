@@ -1,10 +1,10 @@
-import Keyword from "../Keyword";
-import DateRule from "../DateRule";
+import Date from "./Date";
+import Number from "./Number";
+import Boolean from "./Boolean";
+import Country from "./Country";
+import Keyword from "./Keyword";
 import React, { memo } from "react";
-import NumberRule from "../NumberRule";
-import MultiSelect from "../MultiSelect";
-import BooleanSelect from "../BooleanSelect";
-import CountryRegionSelect from "../CountryRegionSelect";
+import MultiSelect from "./MultiSelect";
 
 export default memo(({ type, ...props }) => {
   const {
@@ -31,17 +31,17 @@ export default memo(({ type, ...props }) => {
   };
   switch (type) {
     case "date":
-      return <DateRule {...formatProps} />;
+      return <Date {...formatProps} />;
     case "number":
-      return <NumberRule {...formatProps} />;
+      return <Number {...formatProps} />;
     case "keyword":
       return <Keyword {...formatProps} />;
     case "multi_select":
       return <MultiSelect {...formatProps} />;
     case "boolean_select":
-      return <BooleanSelect {...formatProps} />;
+      return <Boolean {...formatProps} />;
     case "country_region_select":
-      return <CountryRegionSelect {...formatProps} />;
+      return <Country {...formatProps} />;
     default:
       return null;
   }

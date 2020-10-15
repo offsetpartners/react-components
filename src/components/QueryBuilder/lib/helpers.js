@@ -160,10 +160,34 @@ export default (uniqueId, orders, changeOrders, customers, changeCustomers) => {
 
     const { segments } = object;
 
+    // Get Rules from each Segment
     const rules = segments.map((segment) => segment.rules);
 
-    const ruleToElasticSearch = (type, condition) => {
+    // "date",
+    // "number",
+    // "keyword",
+    // "multi_select",
+    // "boolean_select",
+    // "country_region_select",
+    const Types = {
+      date: "range",
+      number: "range",
+      keyword: "term",
+      multi_select: "terms"
+    };
+    /**
+     * 
+     * @param {RuleTypes} type 
+     * @param {String} condition 
+     * @param {Any} value 
+    //  * @returns
+     */
+    const ruleToElasticSearch = (type, condition, value) => {
       switch (type) {
+        case "date":
+          return {
+            
+          }
       }
     };
 
