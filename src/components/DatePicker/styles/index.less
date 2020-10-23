@@ -11,6 +11,10 @@
   }
 }
 
+.fig-datepicker-input-group {
+  margin-bottom: 0px !important;
+}
+
 // Button
 // ---
 .ant-btn.fig-datepicker-preset {
@@ -19,9 +23,13 @@
   display: inline-flex;
 
   padding: 1px 6px;
-  border-top-right-radius: 0px;
-  border-bottom-right-radius: 0px;
-  border-right: 1px solid @border-color-base;
+  // border-top-right-radius: 0px;
+  // border-bottom-right-radius: 0px;
+  // border-right: 1px solid @border-color-base;
+
+  &:focus {
+    background-color: #fff;
+  }
 
   .ant-row {
     width: 100%;

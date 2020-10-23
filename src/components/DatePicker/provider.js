@@ -91,7 +91,7 @@ const DatePickerProvider = ({
     actualValue = value;
   }
   const [preset, setPreset] = useState(
-    getPresetFromValue(type, items, value || _value) || items[0]
+    getPresetFromValue(type, items, value || _value) || false
   );
   // Callbacks to handle state Setters
   const handleValueChange = useCallback((v) => {
@@ -108,12 +108,12 @@ const DatePickerProvider = ({
     let act = value || _value;
     if (type === "range" && !Array.isArray(act)) {
       act = [act, moment(act).add(1, "d").toDate()];
-    } else if (type !== "range" && Array.isArray(act)) {
+    } else if (type === "single" && Array.isArray(act)) {
       act = act[0];
     }
 
     if (items && Array.isArray(items) && items.length > 0) {
-      setPreset(items[0]);
+      setPreset(getPresetFromValue(type, items, act) || false);
     }
     handleValueChange(act);
   }, [type]);
@@ -137,7 +137,7 @@ const DatePickerProvider = ({
       value: actualValue,
       setValue: handleValueChange,
     }),
-    [_month, _year, type, value || _value]
+    [_month, _year, type, value, _value]
   );
 
   return (

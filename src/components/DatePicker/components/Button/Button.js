@@ -23,7 +23,7 @@ export default () => {
   const [open, setOpen] = useState(false);
 
   let dateText, Icon, LeftButton;
-  const hasDropdown = preset && Array.isArray(items) && items.length > 0;
+  const hasDropdown = true;
   if (type === "range") {
     // Set Text
     dateText = `${moment(value[0]).format(format)}-${moment(value[1]).format(
@@ -84,7 +84,7 @@ export default () => {
           <Button block type="ghost" className="fig-datepicker-preset">
             <Row>
               <Col className="fig-datepicker-preset-label">
-                {preset && preset.label}
+                {preset && preset.label ? preset.label : "Custom"}
               </Col>
               <Col className="fig-datepicker-preset-icon">{Icon}</Col>
             </Row>

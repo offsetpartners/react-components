@@ -4,9 +4,20 @@ import * as Feather from "react-feather";
 import Calendar from "components/Calendar";
 import React, { useRef, useState, useEffect } from "react";
 import { useDatePicker } from "components/DatePicker/provider";
+import { getPresetFromValue } from "components/DatePicker/utils";
 
 export default () => {
-  const { month, year, value, setValue, setMonth, setYear } = useDatePicker();
+  const {
+    type,
+    items,
+    month,
+    year,
+    value,
+    setValue,
+    setMonth,
+    setYear,
+    setPreset,
+  } = useDatePicker();
 
   const [focused, setFocused] = useState(0);
 
@@ -99,6 +110,7 @@ export default () => {
 
           setValue(newValues);
           setFocused(otherIndex);
+          setPreset(getPresetFromValue(type, items, newValues) || false);
         }}
       />
     </>
