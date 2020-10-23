@@ -1,13 +1,14 @@
 import React, { memo } from "react";
 import { Row, Col, Space, Button } from "antd";
-import { MONTHS } from "components/Calendar/lib/constants";
 import {
   ChevronLeft,
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
 } from "react-feather";
+import Dropdown from "./Dropdown";
 import { useCalendar } from "components/Calendar/provider";
+import { MONTHS, YEARS_ARRAY } from "components/Calendar/lib/constants";
 
 const PreviousYear = ({ year, setYear }) => {
   return (
@@ -124,7 +125,19 @@ const Header = () => {
 
       <Col span={12} className="fig-calendar-header-month">
         <span className="fig-body fig-body-semibold">
-          {MONTHS[month].displayName} {year}
+          <Dropdown
+            label={MONTHS[month].displayName}
+            menuProps={{ selectedKeys: [month.toString()] }}
+            onClick={(clicked) => setMonth(Number(clicked.key))}
+            items={MONTHS.map((m, i) => ({ key: i, label: m.displayName }))}
+          />
+
+          <Dropdown
+            label={year}
+            menuProps={{ selectedKeys: [year.toString()] }}
+            onClick={(clicked) => setYear(Number(clicked.key))}
+            items={YEARS_ARRAY().map((y) => ({ key: y, label: y }))}
+          />
         </span>
       </Col>
 
