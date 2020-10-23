@@ -36,7 +36,7 @@ const Content = () => {
   );
 };
 
-QueryBuilder.propTypes = propTypes;
+QueryBuilder.propTypes = {...propTypes};
 
 QueryBuilder.defaultProps = {
   disabled: false,

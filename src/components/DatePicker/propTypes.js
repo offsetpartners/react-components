@@ -3,34 +3,34 @@ import { MomentFormatSpecification } from "moment";
 
 export default {
   /**
-   * @description Type of picker
+   * Type of picker
    */
   type: PropTypes.oneOf(["single", "range"]),
   /**
-   * @description Format of Date in Button
+   * Format of Date in Button
    */
   format: PropTypes.instanceOf(MomentFormatSpecification),
 
   /**
-   * @description Initial Value to load
+   * Initial Value to load
    */
   initialValue: PropTypes.oneOfType([
     PropTypes.instanceOf(Date),
     PropTypes.arrayOf(PropTypes.instanceOf(Date)),
   ]),
   /**
-   * @description value of DatePicker
+   * value of DatePicker
    */
   value: PropTypes.oneOfType([
     PropTypes.instanceOf(Date),
     PropTypes.arrayOf(PropTypes.instanceOf(Date)),
   ]),
   /**
-   * @description Setter function for value state
+   * Setter function for value state
    */
   setValue: PropTypes.func,
   /**
-   * @description callback to when preset is selected or Calendar is closed
+   * callback to when preset is selected or Calendar is closed
    */
   onSave: PropTypes.func,
 

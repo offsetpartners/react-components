@@ -84,11 +84,15 @@ export default [
   },
   {
     title: "JOINED",
-    dataIndex: "created_date",
+    dataIndex: "created",
     render: (text, record, index) => {
-      const format = moment(text, "YYYY-MM-DD").format("MM/DD/YYYY");
-
-      return format || "-";
+      const momentObj = moment(text, "YYYY-MM-DD hh:mm:ss");
+      const date = momentObj.format("MM/DD/YYYY");
+      return (
+        <Row>
+          <Col span={24}>{date || "-"}</Col>
+        </Row>
+      );
     },
   },
   {
