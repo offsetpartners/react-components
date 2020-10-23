@@ -8,7 +8,7 @@ import { default as QueryBuilder } from "./QueryBuilder";
 // Similar to jQuery
 const domElement = document.getElementById("fig-query-builder");
 if (domElement) {
-  let providerProps;
+  let providedProps;
   const validProps = Object.keys(propTypes);
   if (typeof FigureReact !== "undefined" && FigureReact.QueryBuilder) {
     providedProps = FigureReact.QueryBuilder;
@@ -18,7 +18,7 @@ if (domElement) {
 
   try {
     validProps.forEach((prop) => {
-      queryBuilderProps[prop] = providerProps[prop];
+      queryBuilderProps[prop] = providedProps[prop];
     });
   } catch (e) {}
 
