@@ -20,8 +20,8 @@ export default ({
           value={condition}
           onChange={setCondition}
           placeholder="Condition"
-          style={{ width: "100%" }}
-          options={BOOLEAN_SELECT_CONDITION.map((v) => ({
+          className="fig-query-builder-select"
+          options={Object.keys(BOOLEAN_SELECT_CONDITION).map((v) => ({
             label: v.label ? v.label : v,
             value: v.value ? v.value : v,
           }))}
@@ -35,7 +35,7 @@ export default ({
             value={value}
             placeholder="Value"
             options={optionValues}
-            style={{ width: "100%" }}
+            className="fig-query-builder-select"
             onChange={(val, options) => {
               setValue(val);
             }}

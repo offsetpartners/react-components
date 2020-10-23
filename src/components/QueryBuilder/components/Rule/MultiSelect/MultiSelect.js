@@ -32,10 +32,10 @@ export default ({
           autoFocus
           value={condition}
           placeholder="Condition"
-          style={{ width: "100%" }}
           dropdownMatchSelectWidth={false}
+          className="fig-query-builder-select"
           onChange={(val) => setCondition(val)}
-          options={MULTI_SELECT_CONDITIONS.map((v) => ({
+          options={Object.keys(MULTI_SELECT_CONDITIONS).map((v) => ({
             label: v.label ? v.label : v,
             value: v.value ? v.value : v,
           }))}
@@ -51,8 +51,8 @@ export default ({
             placeholder="Values"
             options={optionValues}
             showSearch={searchable}
-            style={{ width: "100%" }}
             maxTagCount={selectMaxTagCount}
+            className="fig-query-builder-select"
             onChange={(val, options) => {
               const sortedVal = handleChange(
                 val,

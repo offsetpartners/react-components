@@ -10,11 +10,11 @@ export default ({ value, setValue, condition, setCondition }) => {
           autoFocus
           value={condition}
           placeholder="Condition"
-          style={{ width: "100%" }}
           dropdownMatchSelectWidth={false}
+          className="fig-query-builder-select"
           onSelect={(value) => setCondition(value)}
         >
-          {KEYWORD_CONDITIONS.map((key, index) => {
+          {Object.keys(KEYWORD_CONDITIONS).map((key, index) => {
             return (
               <Select.Option key={`${key}-${index}`} value={key}>
                 {key}

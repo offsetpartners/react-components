@@ -1,33 +1,100 @@
+import PropTypes from "prop-types";
 import React, { memo } from "react";
 import { Tabs, Layout } from "antd";
 import QueryTab from "./components/QueryTab";
-import QueryBuilderProvider from "./lib/Provider";
-import { ORDERS_INPUTS, CUSTOMERS_INPUTS } from "./lib/inputs";
+import QueryBuilderProvider, { useQueryBuilder } from "./lib/Provider";
 
-const { TabPane } = Tabs;
-const { Content } = Layout;
+const QueryBuilder = (props) => {
+  return (
+    <QueryBuilderProvider {...props}>
+      <Content />
+    </QueryBuilderProvider>
+  );
+};
 
-const QueryBuilder = ({}) => {
+const Content = () => {
+  const { TabPane } = Tabs;
+  const { inputs, loading, disabled, initial } = useQueryBuilder();
+
   return (
     <Layout className="fig-query-builder-layout">
-      <Content className="fig-query-builder-content">
-        <QueryBuilderProvider>
-          <Tabs animated>
-            <TabPane key="0" tab="Orders">
-              <QueryTab type="orders" inputs={ORDERS_INPUTS} />
-            </TabPane>
-            <TabPane key="1" tab="Customers">
-              <QueryTab type="customers" inputs={CUSTOMERS_INPUTS} />
-            </TabPane>
-          </Tabs>
-        </QueryBuilderProvider>
-      </Content>
+      <Layout.Content className="fig-query-builder-content">
+        <Tabs animated defaultActiveKey={initial.type}>
+          <TabPane disabled={loading || disabled} key="orders" tab="Orders">
+            <QueryTab type="orders" inputs={inputs.orders} />
+          </TabPane>
+          <TabPane
+            key="customers"
+            tab="Customers"
+            disabled={loading || disabled}
+          >
+            <QueryTab type="customers" inputs={inputs.customers} />
+          </TabPane>
+        </Tabs>
+      </Layout.Content>
     </Layout>
   );
 };
 
-QueryBuilder.propTypes = {};
+QueryBuilder.propTypes = {
+  /**
+   * A callback function that will be executed once Query
+   * @typedef {Function|Null} onSave
+   * @param {"orders"|"customers"} type Type of Query <br/>
+   * @param {Array} query Converted Rules to Elastic Search Query <br/>
+   * @param {Function} setRule Function that will re-render the Component as well as
+   * change the Result internal State for the Component. When called, you must pass
+   * an array for function to execute. <br />
+   */
+  onSave: PropTypes.func,
 
-QueryBuilder.defaultProps = {};
+  /**
+   * Sets the ability for Users to change Tabs, Segments/Rules, and Save Button
+   */
+  disabled: PropTypes.bool,
+
+  /**
+   * Inputs
+   * @typedef {{orders: QueryBuilderInput, customers: QueryBuilderInput}} inputs
+   */
+  inputs: PropTypes.shape({
+    orders: PropTypes.object,
+    customers: PropTypes.object,
+  }),
+
+  /**
+   * Initial State of Component
+   * @property {Types} type
+   * @property {Object} query
+   * @property {{orders: Array, customers: Array}} result
+   */
+  initial: PropTypes.shape({
+    type: PropTypes.string,
+    query: PropTypes.object,
+    result: PropTypes.shape({
+      orders: PropTypes.array,
+      customers: PropTypes.array,
+    }),
+  }),
+};
+
+QueryBuilder.defaultProps = {
+  disabled: false,
+  onSave: undefined,
+
+  inputs: {
+    orders: null,
+    customers: null,
+  },
+
+  initial: {
+    type: "orders",
+    query: undefined,
+    result: {
+      orders: null,
+      customers: null,
+    },
+  },
+};
 
 export default memo(QueryBuilder);

@@ -24,8 +24,8 @@ export default ({ value, setValue, condition, setCondition }) => {
           autoFocus
           value={condition}
           placeholder="Condition"
-          style={{ width: "100%" }}
           dropdownMatchSelectWidth={false}
+          className="fig-query-builder-select"
           onSelect={(cond, option) => {
             // When transitioning from between
             if (condition === "is between") {
@@ -41,7 +41,7 @@ export default ({ value, setValue, condition, setCondition }) => {
             setCondition(cond);
           }}
         >
-          {DATE_CONDITIONS.map((key, index) => {
+          {Object.keys(DATE_CONDITIONS).map((key, index) => {
             return (
               <Select.Option autoFocus key={`${key}-${index}`} value={key}>
                 {key}

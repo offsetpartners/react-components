@@ -2,36 +2,41 @@ import Segment from "../Segment";
 import React, { Fragment } from "react";
 import { Edit3, Plus } from "react-feather";
 import ResultTable from "components/ResultTable";
-import { Row, Col, Button, Typography } from "antd";
+import { Row, Col, Button, Typography, Skeleton } from "antd";
 import { useQueryBuilder } from "components/QueryBuilder/lib/Provider";
 
 export default ({ type, inputs }) => {
-  const { orders, getObjectFromType, handleNewSegment } = useQueryBuilder();
+  const {
+    result,
+    loading,
+    disabled,
+    handleSave,
+    getObjectFromType,
+    handleNewSegment,
+  } = useQueryBuilder();
 
   const { object, handlerFunction } = getObjectFromType(type);
   const { title, segments } = object;
 
   return (
     <Fragment>
-      <Row justify="end" gutter={[8, 16]}>
-        <Col span={24}>
-          <Typography.Title
-            ellipsis
-            level={4}
-            style={{ left: 0, fontSize: 25 }}
-            editable={{
-              icon: <Edit3 size={16} />,
-              onChange: (str) => {
-                handlerFunction((prevState) => {
-                  return { ...prevState, title: str };
-                });
-              },
-            }}
-          >
-            {title}
-          </Typography.Title>
-        </Col>
-      </Row>
+      <Typography.Title
+        ellipsis
+        level={4}
+        disabled={loading || disabled}
+        style={{ left: 0, fontSize: 25 }}
+        editable={{
+          icon: <Edit3 size={16} />,
+          onChange: (str) => {
+            (!loading && !disabled) &&
+              handlerFunction((prevState) => {
+                return { ...prevState, title: str };
+              });
+          },
+        }}
+      >
+        {title}
+      </Typography.Title>
 
       <Row justify="center" gutter={[8, 16]}>
         {segments.map((segment, index) => {
@@ -50,9 +55,9 @@ export default ({ type, inputs }) => {
               <Col span={24}>
                 <Button
                   type="ghost"
-                  disabled={!isLastItem}
                   onClick={() => handleNewSegment(type)}
                   className="fig-query-builder-and-button"
+                  disabled={loading || disabled || !isLastItem}
                   icon={
                     <span className="anticon">
                       <Plus size="1em" />
@@ -67,24 +72,41 @@ export default ({ type, inputs }) => {
         })}
       </Row>
 
-      <Row style={{ marginTop: 30 }}>
+      <Row className="fig-query-builder-save-row">
         <Col>
           <Button
             type="primary"
-            onClick={() => {
-              console.log(orders);
-            }}
+            disabled={loading || disabled}
+            onClick={() => handleSave(type)}
           >
             Save and Preview
           </Button>
         </Col>
       </Row>
 
-      <Row style={{ marginTop: 30 }}>
+      {/* {result[type] && ( */}
+      <Row className="fig-query-builder-result-row">
         <Col span={24}>
-          <ResultTable type={type} />
+          {loading ? (
+            <Skeleton
+              active
+              loading
+              title={{
+                width: "100%",
+                className: "fig-query-builder-skeleton-head",
+              }}
+              paragraph={{
+                rows: 2,
+                width: "100%",
+                className: "fig-query-builder-skeleton-body",
+              }}
+            />
+          ) : (
+            result[type] && <ResultTable type={type} data={result[type]} />
+          )}
         </Col>
       </Row>
+      {/* )} */}
     </Fragment>
   );
 };

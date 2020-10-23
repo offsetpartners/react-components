@@ -1,9 +1,21 @@
 import handlers from "./helpers";
-import React, { useMemo, useState, useContext, createContext } from "react";
+import React, {
+  useMemo,
+  useState,
+  useContext,
+  useCallback,
+  createContext,
+} from "react";
 
 let uniqueId = 0;
 const QueryBuilderContext = createContext(0);
-const QueryBuilderProvider = ({ children }) => {
+const QueryBuilderProvider = ({
+  inputs,
+  onSave,
+  initial,
+  disabled,
+  children,
+}) => {
   /**
    * @param {String} title
    * @returns {QueryBuilderType}
@@ -29,22 +41,59 @@ const QueryBuilderProvider = ({ children }) => {
     getDefaultState("Customers Search")
   );
 
+  const [loading, setLoading] = useState(false);
+
+  if (!inputs.orders || !inputs.customers) {
+    throw new Error("You must provide an input for both Orders and Customers!");
+  }
+
+  const [result, setResult] = useState(() => {
+    if (initial && typeof initial.result === "object") {
+      const { result } = initial;
+
+      if (
+        (result.orders && Array.isArray(result.orders)) ||
+        (result.customers && Array.isArray(result.customers))
+      ) {
+        return result;
+      }
+    }
+
+    return {};
+  });
+
   const {
+    handleSave,
     handleDelete,
     handleNewRule,
     handleNewSegment,
     handleRuleChange,
     getObjectFromType,
     handleSegmentChange,
-  } = handlers(uniqueId, orders, changeOrders, customers, changeCustomers);
+  } = handlers(uniqueId, inputs, orders, changeOrders, customers, changeCustomers);
+
+  const gatedSave = useCallback((type) => {
+    if (disabled) return;
+
+    setLoading(true);
+    handleSave(type, setResult, setLoading, onSave);
+  });
 
   const value = useMemo(
     () => ({
+      inputs,
+      initial,
+      loading,
+      disabled,
+
       orders,
       changeOrders,
 
       customers,
       changeCustomers,
+
+      result,
+      setResult,
 
       handleDelete,
       handleNewRule,
@@ -52,10 +101,10 @@ const QueryBuilderProvider = ({ children }) => {
       handleRuleChange,
       getObjectFromType,
       handleSegmentChange,
+      handleSave: gatedSave,
     }),
-    [orders, customers]
+    [loading, result, orders, customers]
   );
-
   return (
     <QueryBuilderContext.Provider value={value}>
       {children}

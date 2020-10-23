@@ -46,7 +46,13 @@ export default (props) => {
   const { type, index, rules, inputs } = props;
 
   const ruleKeys = getRules(inputs);
-  const { handleDelete, handleNewRule, handleRuleChange } = useQueryBuilder();
+  const {
+    loading,
+    disabled,
+    handleDelete,
+    handleNewRule,
+    handleRuleChange,
+  } = useQueryBuilder();
   return (
     <Card
       bordered
@@ -63,6 +69,7 @@ export default (props) => {
                 <Button
                   block
                   type="text"
+                  disabled={loading || disabled}
                   icon={
                     <span className="anticon">
                       <Trash width={16} height={16} type="outlined" />
@@ -86,6 +93,7 @@ export default (props) => {
                 index={i}
                 inputs={inputs}
                 rules={ruleKeys}
+                disabled={loading || disabled}
                 isLastRule={i === rules.length - 1}
                 type={inputs[v.rule] && inputs[v.rule].type}
                 setRule={(key, value) =>

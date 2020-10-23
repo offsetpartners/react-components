@@ -4,34 +4,47 @@
  */
 
 /**
+ * Inputs
+ * @typedef {{label: String, type: RuleTypes, values: Any|Null, keys: String[]|Null} QueryBuilderInput
+ */
+
+/**
+ * Types
  * @typedef {("orders"|"customers")} Types
  */
 
 /**
+ * Rule
  * @typedef {{rule: String, value: *, condition: String, type: RuleTypes}} Rule
  */
 
 /**
+ * RuleKeys
  * @typedef {("rule"|"value"|"condition")} RuleKeys
  */
 
 /**
+ * RuleTypes
  * @typedef {("date"|"number"|"keyword"|"multi_select"|"boolean_select"|"country_region_select")} RuleTypes
  */
 
 /**
+ * QueryBuilderType
  * @typedef {Object} QueryBuilderType
  * @property {String} title
  * @property {Array.<{id: Number, rules: Array.<Rule>}>} segments
  */
 
 /**
+ * ObjectFromType
  * @typedef {Object} ObjectFromType
+ * @property {Object} inputs
  * @property {QueryBuilderType} object
  * @property {Function} handlerFunction
  */
 
 /**
+ * GetObjectFromType
  * Returns appropriate Object given a type
  * @typedef {(type: Types) => ObjectFromType} GetObjectFromType
  */
@@ -62,6 +75,15 @@
  */
 
 /**
+ * @typedef {{type: String, key: String|Null, value: Any|Null, from: Number|Date|Null, to: Number|Date|Null}} ElasticSearchQuery
+ */
+
+/**
+ * On Save handler
+ * @typedef {(type: Type, setResult: Function, onSave: Function) => void} SaveHandler
+ */
+
+/**
  * @typedef {Object} QueryBuilderContext
  * @property {QueryBuilderType} orders
  * @property {QueryBuilderType} customers
@@ -71,4 +93,5 @@
  * @property {DeleteHandler} handleDelete
  * @property {ChangeRuleHandler} handleRuleChange
  * @property {NewRuleHandler} handleNewRule
+ * @property {SaveHandler} handleSave
  */

@@ -7,6 +7,7 @@ export default (props) => {
   const {
     rules,
     inputs,
+    disabled,
 
     rule,
     index,
@@ -24,6 +25,7 @@ export default (props) => {
         <Select
           showSearch
           value={rule}
+          disabled={disabled}
           placeholder="Rule Type"
           style={{ width: "100%" }}
           onSelect={(val) => {
@@ -53,6 +55,7 @@ export default (props) => {
         <Space>
           {condition && value && (
             <Button
+              disabled={disabled}
               onClick={onNewRule}
               disabled={!isLastRule}
               icon={
@@ -72,6 +75,7 @@ export default (props) => {
               danger
               type="text"
               shape="circle"
+              disabled={disabled}
               icon={
                 <span className="anticon">
                   <Trash size="1em" />
