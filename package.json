@@ -42,9 +42,10 @@
     "react-dom": "^16.13.1"
   },
   "scripts": {
+    "test": "",
     "clean": "rm -rf ./dist",
-    "build": "npm run clean && webpack --mode=production",
     "start": "styleguidist server",
+    "build": "npm run clean && webpack --mode=production",
     "docs:build": "NODE_ENV=production && styleguidist build"
   },
   "keywords": [
