@@ -23,7 +23,7 @@ if (domElement) {
   } catch (e) {}
 
   if (domElement instanceof Element) {
-    render(<QueryBuilder />, domElement);
+    render(<QueryBuilder {...queryBuilderProps} />, domElement);
   }
 }
 
