@@ -26,7 +26,7 @@ const HeaderDropdown = ({ label, items, onClick, menuProps }) => {
         </Menu>
       )}
     >
-      <Button type="ghost" className="fig-datepicker-preset">
+      <Button type="ghost" className="fig-datepicker-header-dropdown">
         <span className="fig-typography fig-sm-body-semibold fig-datepicker-preset-label">
           {label}
         </span>
