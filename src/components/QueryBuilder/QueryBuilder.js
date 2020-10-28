@@ -4,13 +4,13 @@ import { Tabs, Layout } from "antd";
 import QueryTab from "./components/QueryTab";
 import QueryBuilderProvider, { useQueryBuilder } from "./lib/Provider";
 
-const QueryBuilder = (props) => {
+const QueryBuilder = memo((props) => {
   return (
     <QueryBuilderProvider {...props}>
       <Content />
     </QueryBuilderProvider>
   );
-};
+});
 
 const Content = () => {
   const { TabPane } = Tabs;
@@ -97,4 +97,4 @@ QueryBuilder.propTypes = {
   }),
 };
 
-export default memo(QueryBuilder);
+export default QueryBuilder;
