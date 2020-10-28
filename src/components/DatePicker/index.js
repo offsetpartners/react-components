@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 import { render } from "react-dom";
 import DatePicker from "./DatePicker";
 
@@ -7,7 +8,7 @@ import DatePicker from "./DatePicker";
 const datepickers = document.getElementsByClassName("fig-datepicker");
 if (datepickers) {
   const arr = [...datepickers];
-  const validDataSets = ["format", "inputId", "initialValue"];
+  const validDataSets = ["type", "format", "inputId", "initialValue"];
   const validProps = Object.keys(DatePicker.propTypes);
   let providedProps;
   if (typeof FigureReact !== "undefined" && FigureReact.DatePicker) {
@@ -36,9 +37,54 @@ if (datepickers) {
           }
         });
 
-        const dataSets = element[0].dataset;
+        const dataSets = element.dataset;
         validDataSets.forEach((prop) => {
-          datepickerProps[prop] = dataSets[prop];
+          switch (prop) {
+            case "inputId":
+              try {
+                const parsed = JSON.parse(dataSets[prop]);
+                if (Array.isArray(parsed) && parsed.length === 2) {
+                  datepickerProps[prop] = parsed;
+                }
+              } catch (e) {}
+              datepickerProps[prop] = dataSets[prop];
+              return;
+            case "initialValue":
+              if (!dataSets["initialValueFormat"]) return;
+
+              const initialValueFormat = dataSets["initialValueFormat"];
+              let initialValue;
+
+              if (moment(dataSets[prop], initialValueFormat).isValid()) {
+                initialValue = moment(
+                  dataSets[prop],
+                  initialValueFormat
+                ).toDate();
+              }
+
+              try {
+                const parsed = JSON.parse(dataSets[prop]);
+                if (Array.isArray(parsed) && parsed.length === 2) {
+                  const from = moment(parsed[0], initialValueFormat);
+                  const to = moment(parsed[1], initialValueFormat);
+
+                  if (from.isAfter(to) || to.isBefore(from)) {
+                    initialValue = [to.toDate(), from.toDate()];
+                  } else {
+                    initialValue = [from.toDate(), to.toDate()];
+                  }
+                  datepickerProps["type"] = "range";
+                }
+              } catch (e) {}
+
+              if (!Array.isArray(initialValue)) {
+                datepickerProps["type"] = "single";
+              }
+              datepickerProps[prop] = initialValue;
+              return;
+            default:
+              datepickerProps[prop] = dataSets[prop];
+          }
         });
       } catch (e) {}
 

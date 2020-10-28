@@ -21,7 +21,10 @@ DatePicker.propTypes = {
   /**
    * Input Id
    */
-  inputId: PropTypes.string,
+  inputId: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
   /**
    * Disables Component
    */
@@ -36,7 +39,11 @@ DatePicker.propTypes = {
   format: PropTypes.instanceOf(MomentFormatSpecification),
 
   /**
-   * Initial Value to load
+   * Initial Value to load.
+   * If providing via data attribute(data-initial-value) make sure
+   * to also provide a data-initial-value-format
+   * or else date won't be read correctly and will
+   * ultimately just be ommited
    */
   initialValue: PropTypes.oneOfType([
     PropTypes.instanceOf(Date),
