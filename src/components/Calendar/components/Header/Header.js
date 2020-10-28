@@ -108,8 +108,14 @@ const getComponents = (type = "left", components, props) => {
 };
 
 const Header = () => {
-  // const { month, year, components } = props;
-  const { month, setMonth, year, setYear, headerComponents } = useCalendar();
+  const {
+    maxDate,
+    month,
+    setMonth,
+    year,
+    setYear,
+    headerComponents,
+  } = useCalendar();
   const props = { month, setMonth, year, setYear };
   const Left = getComponents("left", headerComponents, props);
   const Right = getComponents("right", headerComponents, props);
@@ -136,7 +142,10 @@ const Header = () => {
             label={year}
             menuProps={{ selectedKeys: [year.toString()] }}
             onClick={(clicked) => setYear(Number(clicked.key))}
-            items={YEARS_ARRAY().map((y) => ({ key: y, label: y }))}
+            items={YEARS_ARRAY(maxDate.getFullYear()).map((y) => ({
+              key: y,
+              label: y,
+            }))}
           />
         </span>
       </Col>

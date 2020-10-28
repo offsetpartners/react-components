@@ -1,4 +1,5 @@
 import moment from "moment";
+import { message } from "antd";
 import { useDebounce } from "react-use";
 import React, {
   useMemo,
@@ -46,6 +47,7 @@ const useCalendarMount = (cancel, setMounted) => {
 
 const CalendarContext = createContext({
   // UI
+  maxDate: new Date(),
   daysLabelType: "narrow",
   defaultClassNames: {
     cell: "",
@@ -91,12 +93,20 @@ const CalendarProvider = ({
   doesCellHaveEvent,
 
   // UI Props
+  maxDate,
   children,
   daysLabelType,
   headerComponents,
   generateClassNames,
 }) => {
   // Internal
+  /**
+   * @type {Date}
+   */
+  const _maxDate =
+    typeof maxDate !== "undefined" && maxDate instanceof Date
+      ? maxDate
+      : moment().add(5, "year").endOf("year").toDate();
   const defaultClassNames = {
     cell: "",
     grid: "",
@@ -129,11 +139,30 @@ const CalendarProvider = ({
 
   // Handler Functions
   const handleYearChange = useCallback((v) => {
+    if (v > _maxDate.getFullYear()) {
+      message.warning(
+        `Cannot the max date of ${moment(_maxDate).format("MMM D, YYYY")}!`
+      );
+      return;
+    }
+
     if (setYear && typeof setYear === "function") return setYear(v);
     _setYear(v);
   }, []);
   const handleMonthChange = useCallback((v) => {
     let _v = v;
+
+    let setterFn = _setMonth;
+    if (typeof setMonth === "function") setterFn = setMonth;
+
+    if (_v > _maxDate.getMonth() && actualYear >= _maxDate.getFullYear()) {
+      message.warning(
+        `Cannot the max date of ${moment(_maxDate).format("MMM D, YYYY")}!`
+      );
+      setterFn(_maxDate.getMonth());
+      return;
+    }
+
     if (v < 0) {
       _v = 11;
       handleYearChange((y) => y - 1);
@@ -141,9 +170,9 @@ const CalendarProvider = ({
       _v = 0;
       handleYearChange((y) => y + 1);
     }
-    if (typeof setMonth === "function") return setMonth(_v);
-    _setMonth(_v);
-  }, []);
+
+    setterFn(_v);
+  });
   const handleCellSelect = useCallback((v) => {
     if (typeof setSelected === "function") return setSelected(v);
     _setSelected(v);
@@ -169,6 +198,7 @@ const CalendarProvider = ({
       daysLabelType,
       headerComponents,
       defaultClassNames,
+      maxDate: _maxDate,
       generateClassNames,
 
       // Component Wide State

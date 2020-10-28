@@ -2,14 +2,13 @@ import React from "react";
 import "./styles/index.less";
 import Calendar from "./Calendar";
 import { render } from "react-dom";
-import propTypes from "./propTypes";
 
 // Allows for Component to mount via a normal DOM Classname
 // Similar to jQuery
 const calendars = document.getElementsByClassName("fig-calendar");
 if (calendars) {
   const arr = [...calendars];
-  const validProps = Object.keys(propTypes);
+  const validProps = Object.keys(Calendar.propTypes);
   let providedProps;
   if (typeof FigureReact !== "undefined" && FigureReact.Calendar) {
     providedProps = FigureReact.Calendar;

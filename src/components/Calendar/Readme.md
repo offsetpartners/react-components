@@ -5,20 +5,6 @@ import { useState } from "react";
 import { Calendar } from "@offsetpartners/react-components";
 
 const [selectedDate, setSelectedDate] = useState(new Date());
-// const [events, changeEvents] = useState(() => {
-//   const temp = [];
-//   for (let i = 1; i < 26; i++) {
-//     const rand = Math.floor(Math.random() * Math.floor(25));
-
-//     if (rand <= i) {
-//       temp.push({
-//         id: i,
-//         timestamp: `2020-${selectedDate.getMonth() + 1}-${i} 00:00:00`,
-//       });
-//     }
-//   }
-//   return temp;
-// });
 const events = {
   ["10-2020"]: [
     {

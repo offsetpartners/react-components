@@ -19,12 +19,16 @@ export const DAYS_ARRAY = [0, 1, 2, 3, 4, 5, 6];
 export const MIN_YEAR = 1970;
 
 /**
+ * @param {Number|Null} maxYear
  * @returns {Array<number>} YEARS
  */
-export const YEARS_ARRAY = () => {
-  const year = new Date().getFullYear();
-  const len = year - MIN_YEAR + 1;
-  return Array.from(new Array(len), (val, index) => MIN_YEAR + index);
+export const YEARS_ARRAY = (maxYear) => {
+  const year = new Date().getFullYear() + 5;
+  const len =
+    typeof maxYear === "undefined"
+      ? year - MIN_YEAR + 1
+      : maxYear - MIN_YEAR + 1;
+  return Array.from(new Array(len), (val, index) => MIN_YEAR + index).reverse();
 };
 
 /**
