@@ -10,8 +10,10 @@ import React, {
 } from "react";
 
 const DatePickerContext = createContext({
+  inputId: "",
   format: "MMM D",
   maxDateRange: 0,
+  maxDate: new Date(),
   type: "single" || "range",
   items: [{ key: "", label: "", date: moment() }],
 
@@ -28,23 +30,31 @@ const DatePickerContext = createContext({
   onSave: () => {},
 });
 
-const DatePickerProvider = ({
-  children,
+const DatePickerProvider = (props) => {
+  // Props
+  const {
+    children,
 
-  type,
-  format = "MMM D",
-  maxDateRange = 0,
-  disabledPresets = [],
+    type,
+    inputId,
+    maxDate,
+    disabled,
+    format = "MMM D",
+    maxDateRange = 0,
+    disabledPresets = [],
 
-  onSave,
+    onSave,
 
-  value,
-  setValue,
-  initialValue,
-}) => {
+    value,
+    setValue,
+    initialValue,
+  } = props;
+
   // Internal
+  const _maxDate = maxDate instanceof Date ? maxDate : null;
+  const _maxDateRange = typeof maxDateRange === "number" ? maxDateRange : false;
   const today = moment();
-  const items = generateItems(type, maxDateRange, disabledPresets);
+  const items = generateItems(type, _maxDateRange, disabledPresets);
   const [_month, _setMonth] = useState(today.month());
   const [_year, _setYear] = useState(today.year());
 
@@ -95,12 +105,36 @@ const DatePickerProvider = ({
   );
   // Callbacks to handle state Setters
   const handleValueChange = useCallback((v) => {
-    if (typeof setValue === "function") return setValue(v);
-    _setValue(v);
+    let setterFn = _setValue;
+    if (typeof setValue === "function") setterFn = setValue;
+
+    if (type === "range" && _maxDateRange) {
+      const fromDate = moment(v[0]);
+      const toDate = moment(v[1]);
+
+      const diff = toDate.diff(fromDate, "d");
+      if (diff > _maxDateRange) {
+        setterFn([
+          toDate.toDate(),
+          toDate.clone().add(_maxDateRange, "d").toDate(),
+        ]);
+        return;
+      }
+    } else if (type === "single" && _maxDate) {
+      const momentNew = moment(v);
+      const momentMax = moment(_maxDate);
+
+      if (momentNew.isAfter(momentMax, "d")) {
+        setterFn(momentMax.toDate());
+        return;
+      }
+    }
+
+    setterFn(v);
   });
   const handleSave = useCallback((val) => {
-    if (typeof onSave === "function") onSave(val);
-  }, []);
+    if (typeof onSave === "function") onSave(inputId, val);
+  });
 
   // When type changes change values
   // to fit appropriate structure
@@ -122,6 +156,10 @@ const DatePickerProvider = ({
       type,
       items,
       format,
+      inputId,
+      disabled,
+      maxDate: _maxDate,
+      maxDateRange: _maxDateRange,
 
       onSave: handleSave,
 
@@ -137,7 +175,7 @@ const DatePickerProvider = ({
       value: actualValue,
       setValue: handleValueChange,
     }),
-    [_month, _year, type, value, _value]
+    [disabled, _month, _year, type, value, _value]
   );
 
   return (

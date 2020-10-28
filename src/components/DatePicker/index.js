@@ -1,6 +1,5 @@
 import React from "react";
 import { render } from "react-dom";
-import propTypes from "./propTypes";
 import DatePicker from "./DatePicker";
 
 // Allows for Component to mount via a normal DOM Classname
@@ -8,7 +7,8 @@ import DatePicker from "./DatePicker";
 const datepickers = document.getElementsByClassName("fig-datepicker");
 if (datepickers) {
   const arr = [...datepickers];
-  const validProps = Object.keys(propTypes);
+  const validDataSets = ["format", "inputId", "initialValue"];
+  const validProps = Object.keys(DatePicker.propTypes);
   let providedProps;
   if (typeof FigureReact !== "undefined" && FigureReact.DatePicker) {
     providedProps = FigureReact.DatePicker;
@@ -19,23 +19,34 @@ if (datepickers) {
       "Each DatePicker Component must have a prop object assigned to it. You can also provide a single object to use across all Components."
     );
   }
-  arr.forEach((element, index) => {
-    let datepickerProps = {};
+  arr.forEach(
+    /**
+     * @param {Element} element
+     * @param {Number} index
+     */
+    (element, index) => {
+      let datepickerProps = {};
 
-    try {
-      validProps.forEach((prop) => {
-        if (Array.isArray(providedProps)) {
-          datepickerProps[prop] = providedProps[index][prop];
-        } else {
-          datepickerProps[prop] = providedProps[prop];
-        }
-      });
-    } catch (e) {}
+      try {
+        validProps.forEach((prop) => {
+          if (Array.isArray(providedProps)) {
+            datepickerProps[prop] = providedProps[index][prop];
+          } else {
+            datepickerProps[prop] = providedProps[prop];
+          }
+        });
 
-    if (element instanceof Element) {
-      render(<DatePicker {...datepickerProps} />, element);
+        const dataSets = element[0].dataset;
+        validDataSets.forEach((prop) => {
+          datepickerProps[prop] = dataSets[prop];
+        });
+      } catch (e) {}
+
+      if (element instanceof Element) {
+        render(<DatePicker {...datepickerProps} />, element);
+      }
     }
-  });
+  );
 }
 
 // Also allows to be used within a React Application

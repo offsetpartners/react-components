@@ -3,9 +3,13 @@ import moment from "moment";
 /**
  * @param {"range"|"single"} type
  * @param {Number} maxDateRange
- * @param {Array.<String>} disabledPresets
+ * @param {"all"|Array.<String>|function} disabledPresets
  */
-export const generateItems = (type, maxDateRange, disabledPresets = []) => {
+export const generateItems = (type, maxDateRange, disabledPresets = null) => {
+  if (disabledPresets === "all") {
+    return [];
+  }
+
   /**
    * @type {Array.<{key: String, label: String, date: moment.Moment|[moment.Moment, moment.Moment]}>} items
    */
@@ -117,7 +121,11 @@ export const generateItems = (type, maxDateRange, disabledPresets = []) => {
     });
   }
 
-  return filtered.filter((i) => !disabledPresets.includes(i.key));
+  if (Array.isArray(disabledPresets)) {
+    return filtered.filter((i) => !disabledPresets.includes(i.key));
+  }
+
+  return filtered;
 };
 
 /**

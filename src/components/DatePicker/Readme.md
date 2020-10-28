@@ -5,7 +5,7 @@ import { Select } from "antd";
 import { useState } from "react";
 import { DatePicker } from "@offsetpartners/react-components";
 
-const [type, setType] = useState("range");
+const [type, setType] = useState("single");
 <>
   <Select
     value={type}
@@ -23,8 +23,10 @@ const [type, setType] = useState("range");
       new Date(new Date().setMonth(1)),
       new Date(new Date(new Date().setMonth(1)).setDate(11)),
     ]}
-    onSave={(v) => {
-      console.log(v)
+    // maxDate={new Date()}
+    maxDateRange={5}
+    onSave={(inutId, value) => {
+      console.log(value)
     }}
   />
 </>;

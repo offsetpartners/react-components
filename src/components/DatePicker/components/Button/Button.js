@@ -13,6 +13,7 @@ export default () => {
     value,
     preset,
     format,
+    disabled,
     onSave,
     setYear,
     setMonth,
@@ -23,7 +24,7 @@ export default () => {
   const [open, setOpen] = useState(false);
 
   let dateText, Icon, LeftButton;
-  const hasDropdown = true;
+  const hasDropdown = Array.isArray(items) && items.length > 0;
   if (type === "range") {
     // Set Text
     dateText = `${moment(value[0]).format(format)}-${moment(value[1]).format(
@@ -52,6 +53,7 @@ export default () => {
       <Col span={12}>
         <Dropdown
           visible={open}
+          disabled={disabled}
           trigger={["click"]}
           onVisibleChange={(v) => setOpen(v)}
           overlayClassName="fig-datepicker-preset-popover"
@@ -81,7 +83,12 @@ export default () => {
             </Menu>
           )}
         >
-          <Button block type="ghost" className="fig-datepicker-preset">
+          <Button
+            block
+            type="ghost"
+            disabled={disabled}
+            className="fig-datepicker-preset"
+          >
             <Row>
               <Col className="fig-datepicker-preset-label">
                 {preset && preset.label ? preset.label : "Custom"}
@@ -101,14 +108,17 @@ export default () => {
           <Button
             block
             type="ghost"
+            disabled={disabled}
             className="fig-datepicker-calendar"
-            icon={
-              <span className="anticon ant-select-prefix">
-                <Calendar width={18} height={18} />
-              </span>
-            }
           >
-            <span className="fig-typography fig-body">{dateText}</span>
+            <Row align="middle" className="fig-datepicker-calendar-row">
+              <Col className="fig-datepicker-calendar-icon">
+                <Calendar width={18} height={18} />
+              </Col>
+              <Col className="fig-datepicker-calendar-label">
+                <span className="fig-typography fig-body">{dateText}</span>
+              </Col>
+            </Row>
           </Button>
         </Popover>
       </Col>

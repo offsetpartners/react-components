@@ -1,7 +1,7 @@
 import moment from "moment";
-import { Row, Col, Input } from "antd";
 import * as Feather from "react-feather";
 import Calendar from "components/Calendar";
+import { Row, Col, Input, message } from "antd";
 import React, { useRef, useState, useEffect } from "react";
 import { useDatePicker } from "components/DatePicker/provider";
 import { getPresetFromValue } from "components/DatePicker/utils";
@@ -13,6 +13,8 @@ export default () => {
     month,
     year,
     value,
+    maxDate,
+    maxDateRange,
     setValue,
     setMonth,
     setYear,
@@ -75,6 +77,7 @@ export default () => {
         year={year}
         month={month}
         selected={value}
+        maxDate={maxDate}
         setYear={setYear}
         setMonth={setMonth}
         headerComponents={{ left: ["previousMonth"], right: ["nextMonth"] }}
@@ -89,6 +92,10 @@ export default () => {
           }
         }}
         onCellClick={(d) => {
+          // Flag for indicating if an invalid date
+          // was selected. Ie, Start Date is after End Date
+          // or vice versa
+          let invalidDateFlag = false;
           const otherIndex = focused === 0 ? 1 : 0;
           let newValue = moment(d);
           let oldValue = moment(value[otherIndex]);
@@ -98,18 +105,49 @@ export default () => {
             const _old = oldValue.clone();
             oldValue = newValue;
             newValue = _old;
-          } else if (focused === 0 && newValue.isSameOrAfter(oldValue)) {
+
+            invalidDateFlag = true;
+          }
+          // If Start Date Selected is After End Date
+          else if (focused === 0 && newValue.isSameOrAfter(oldValue)) {
             const _old = oldValue.clone();
             oldValue = newValue;
             newValue = _old;
+
+            invalidDateFlag = true;
           }
 
           const newValues = [];
-          newValues[focused] = newValue.toDate();
-          newValues[otherIndex] = oldValue.toDate();
+          newValues[focused] = newValue;
+          newValues[otherIndex] = oldValue;
 
-          setValue(newValues);
+          // Ensure that the Value selected is within the maxDateRange provided
+          const isToDateTooFar =
+            maxDateRange && newValues[1].diff(newValues[0], "d") > maxDateRange;
+          if (isToDateTooFar) {
+            message.warning(
+              `You cannot exceed the max date range of ${maxDateRange}!`
+            );
+
+            if (focused === 0) {
+              if (invalidDateFlag) {
+                newValues[0] = newValues[1];
+              }
+              newValues[1] = newValues[0].clone().add(maxDateRange, "d");
+            } else {
+              if (invalidDateFlag) {
+                newValues[1] = newValues[0];
+              }
+              newValues[0] = newValues[1].clone().subtract(maxDateRange, "d");
+            }
+          }
+
+          // Focus on other element
           setFocused(otherIndex);
+          // Map through New Values and ensure a Date is
+          // passed as opposed to a moment object
+          setValue(newValues.map((value) => value.toDate()));
+          // Check if Value falls within a Preset
           setPreset(getPresetFromValue(type, items, newValues) || false);
         }}
       />
