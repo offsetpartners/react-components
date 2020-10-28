@@ -5,6 +5,7 @@ import { NUMBER_CONDITIONS } from "components/QueryBuilder/lib/conditions";
 export default ({
   min = 0,
   max = 5000,
+  disabled,
 
   value,
   setValue,
@@ -14,6 +15,7 @@ export default ({
   const defaultProps = {
     min,
     max,
+    disabled,
     autoFocus: true,
     value: value || 0,
     onChange: (val) => setValue(val),
@@ -25,6 +27,7 @@ export default ({
         <Select
           autoFocus
           value={condition}
+          disabled={disabled}
           placeholder="Condition"
           dropdownMatchSelectWidth={false}
           className="fig-query-builder-select"

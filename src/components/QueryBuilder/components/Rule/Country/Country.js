@@ -5,17 +5,20 @@ import { MULTI_SELECT_CONDITIONS } from "components/QueryBuilder/lib/conditions"
 
 export default ({
   value,
+  disabled,
   setValue,
   condition,
   setCondition,
   inputProps = {},
 }) => {
+  const options = parseCountryRegion();
   return (
     <Fragment>
       <Col xs={12} sm={4}>
         <Select
           autoFocus
           value={condition}
+          disabled={disabled}
           placeholder="Condition"
           dropdownMatchSelectWidth={false}
           className="fig-query-builder-select"
@@ -34,7 +37,8 @@ export default ({
             changeOnSelect
             {...inputProps}
             showSearch={10}
-            options={parseCountryRegion()}
+            options={options}
+            disabled={disabled}
             onChange={(val) => setValue(val)}
           />
         </Col>

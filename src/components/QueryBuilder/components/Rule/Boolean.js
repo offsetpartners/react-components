@@ -4,6 +4,7 @@ import { BOOLEAN_SELECT_CONDITION } from "components/QueryBuilder/lib/conditions
 
 export default ({
   value,
+  disabled,
   setValue,
   condition,
   setCondition,
@@ -18,6 +19,7 @@ export default ({
         <Select
           autoFocus
           value={condition}
+          disabled={disabled}
           onChange={setCondition}
           placeholder="Condition"
           className="fig-query-builder-select"
@@ -33,6 +35,7 @@ export default ({
           <Select
             autoFocus
             value={value}
+            disabled={disabled}
             placeholder="Value"
             options={optionValues}
             className="fig-query-builder-select"

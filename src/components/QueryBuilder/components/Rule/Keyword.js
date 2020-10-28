@@ -2,13 +2,14 @@ import React, { Fragment } from "react";
 import { Col, Input, Select } from "antd";
 import { KEYWORD_CONDITIONS } from "components/QueryBuilder/lib/conditions";
 
-export default ({ value, setValue, condition, setCondition }) => {
+export default ({ value, setValue, disabled, condition, setCondition }) => {
   return (
     <Fragment>
       <Col xs={12} sm={4}>
         <Select
           autoFocus
           value={condition}
+          disabled={disabled}
           placeholder="Condition"
           dropdownMatchSelectWidth={false}
           className="fig-query-builder-select"
@@ -29,6 +30,7 @@ export default ({ value, setValue, condition, setCondition }) => {
           <Input
             autoFocus
             value={value}
+            disabled={disabled}
             placeholder="Keyword"
             onChange={(e) => setValue(e.target.value)}
           />

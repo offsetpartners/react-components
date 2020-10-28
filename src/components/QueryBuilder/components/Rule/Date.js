@@ -4,13 +4,15 @@ import { Col, Select } from "antd";
 import DatePicker from "components/DatePicker";
 import { DATE_CONDITIONS } from "components/QueryBuilder/lib/conditions";
 
-export default ({ value, setValue, condition, setCondition }) => {
+export default ({ value, disabled, setValue, condition, setCondition }) => {
   const defaultProps = {
     value: value,
+    disabled: disabled,
     setValue: (date) => setValue(date),
   };
 
   const rangePickerProps = {
+    disabled: disabled,
     setValue: (dates) => setValue(dates),
     value:
       value && value.constructor === Array && value.length === 2
@@ -23,6 +25,7 @@ export default ({ value, setValue, condition, setCondition }) => {
         <Select
           autoFocus
           value={condition}
+          disabled={disabled}
           placeholder="Condition"
           dropdownMatchSelectWidth={false}
           className="fig-query-builder-select"

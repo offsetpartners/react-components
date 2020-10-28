@@ -13,6 +13,7 @@ export default memo(({ type, ...props }) => {
     rule,
     index,
     value,
+    disabled,
 
     setRule,
     condition,
@@ -20,6 +21,7 @@ export default memo(({ type, ...props }) => {
 
   const formatProps = {
     value,
+    disabled,
     condition,
     searchable: inputs[rule]?.type,
     setValue: (val) => setRule("value", val, index),

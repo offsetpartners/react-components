@@ -1,7 +1,6 @@
 import React from "react";
 import "./styles/index.css";
 import { render } from "react-dom";
-import propTypes from "./propTypes";
 import { default as QueryBuilder } from "./QueryBuilder";
 
 // Allows for Component to mount via a normal DOM Classname
@@ -9,7 +8,7 @@ import { default as QueryBuilder } from "./QueryBuilder";
 const domElement = document.getElementById("fig-query-builder");
 if (domElement) {
   let providedProps;
-  const validProps = Object.keys(propTypes);
+  const validProps = Object.keys(QueryBuilder.propTypes);
   if (typeof FigureReact !== "undefined" && FigureReact.QueryBuilder) {
     providedProps = FigureReact.QueryBuilder;
   }

@@ -55,9 +55,8 @@ export default (props) => {
         <Space>
           {condition && value && (
             <Button
-              disabled={disabled}
-              onClick={onNewRule}
-              disabled={!isLastRule}
+              disabled={disabled || !isLastRule}
+              onClick={!(disabled || !isLastRule) && onNewRule}
               icon={
                 <span className="anticon">
                   <Plus size="1em" />
@@ -68,6 +67,7 @@ export default (props) => {
             </Button>
           )}
           <Popconfirm
+            disabled={disabled}
             onConfirm={() => onDelete(index)}
             title="Are you sure you want to delete this Rule?"
           >
@@ -81,7 +81,7 @@ export default (props) => {
                   <Trash size="1em" />
                 </span>
               }
-            ></Button>
+            />
           </Popconfirm>
         </Space>
       </Col>
