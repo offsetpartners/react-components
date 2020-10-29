@@ -1,4 +1,3 @@
-import React from "react";
 import "./styles/index.less";
 import Calendar from "./Calendar";
 import { render } from "react-dom";

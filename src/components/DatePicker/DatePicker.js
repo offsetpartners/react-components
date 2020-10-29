@@ -1,6 +1,6 @@
 import "./styles/index.less";
 import PropTypes from "prop-types";
-import React, { memo } from "react";
+import { memo } from "react";
 import Button from "./components/Button";
 import Popover from "./components/Popover";
 import DatePickerProvider from "./provider";

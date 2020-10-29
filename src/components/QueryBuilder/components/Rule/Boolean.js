@@ -1,5 +1,5 @@
 import { Col, Select } from "antd";
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import { BOOLEAN_SELECT_CONDITION } from "components/QueryBuilder/lib/conditions";
 
 export default ({

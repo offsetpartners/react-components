@@ -1,7 +1,7 @@
 import { useSelectRef } from "./hooks";
 import { Col, Select, Grid } from "antd";
 import { handleChange } from "./helpers";
-import React, { useRef, useEffect, useState, Fragment } from "react";
+import { useRef, useEffect, useState, Fragment } from "react";
 import { MULTI_SELECT_CONDITIONS } from "components/QueryBuilder/lib/conditions";
 
 export default ({

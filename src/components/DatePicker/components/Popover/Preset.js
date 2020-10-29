@@ -1,5 +1,5 @@
 import moment from "moment";
-import React, { useState } from "react";
+import { useState } from "react";
 import { ChevronUp, ChevronDown } from "react-feather";
 import { Row, Col, Menu, Button, Dropdown } from "antd";
 import { useDatePicker } from "components/DatePicker/provider";

@@ -3,7 +3,7 @@ import Number from "./Number";
 import Boolean from "./Boolean";
 import Country from "./Country";
 import Keyword from "./Keyword";
-import React, { memo } from "react";
+import { memo } from "react";
 import MultiSelect from "./MultiSelect";
 
 export default memo(({ type, ...props }) => {

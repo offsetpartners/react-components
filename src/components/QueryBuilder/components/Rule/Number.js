@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import { Col, Select, Slider } from "antd";
 import { NUMBER_CONDITIONS } from "components/QueryBuilder/lib/conditions";
 

@@ -1,4 +1,3 @@
-import React from "react";
 import IconText from "components/IconText";
 import formatMoney from "common/formatMoney";
 import { Row, Col, Tag, Typography, Popover } from "antd";

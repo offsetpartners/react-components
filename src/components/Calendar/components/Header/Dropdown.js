@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import { memo, useState } from "react";
 import { Menu, Button, Dropdown } from "antd";
 
 const HeaderDropdown = ({ label, items, onClick, menuProps }) => {

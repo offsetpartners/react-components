@@ -2,7 +2,7 @@ import { Table } from "antd";
 import PropTypes from "prop-types";
 import getColumn from "./lib/columns";
 import CommonProps from "./lib/common.js";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const ResultTable = ({ type = "orders", data, onSelect }) => {
   const [isMounted, setMounted] = useState(false);

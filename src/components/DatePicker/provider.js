@@ -1,13 +1,6 @@
 import moment from "moment";
 import { generateItems, getPresetFromValue } from "./utils";
-import React, {
-  useMemo,
-  useState,
-  useEffect,
-  useContext,
-  createContext,
-  useCallback,
-} from "react";
+import { useMemo, useState, useEffect, useContext, createContext, useCallback } from "react";
 
 const DatePickerContext = createContext({
   inputId: "",

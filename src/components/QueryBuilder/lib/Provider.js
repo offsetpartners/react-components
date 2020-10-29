@@ -1,11 +1,5 @@
 import handlers from "./helpers";
-import React, {
-  useMemo,
-  useState,
-  useContext,
-  useCallback,
-  createContext,
-} from "react";
+import { useMemo, useState, useContext, useCallback, createContext } from "react";
 
 let uniqueId = 0;
 const QueryBuilderContext = createContext(0);

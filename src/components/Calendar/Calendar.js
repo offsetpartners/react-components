@@ -1,6 +1,6 @@
 import moment from "moment";
+import { memo } from "react";
 import PropTypes from "prop-types";
-import React, { memo } from "react";
 import Week from "./components/Week";
 import Header from "./components/Header";
 import CalendarProvider from "./provider";

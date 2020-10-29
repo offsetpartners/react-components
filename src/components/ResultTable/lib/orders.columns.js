@@ -1,4 +1,3 @@
-import React from "react";
 import moment from "moment";
 import { Typography, Space } from "antd";
 import IconText from "components/IconText";

@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import * as Feather from "react-feather";
 import { Space, Typography } from "antd";

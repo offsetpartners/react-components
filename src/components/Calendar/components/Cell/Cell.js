@@ -1,6 +1,6 @@
 import moment from "moment";
 import PropTypes from "prop-types";
-import React, { memo } from "react";
+import { memo } from "react";
 import { useCalendar } from "components/Calendar/provider";
 /**
  * @param {Boolean} active

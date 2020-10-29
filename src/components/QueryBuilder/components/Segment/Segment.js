@@ -1,4 +1,3 @@
-import React from "react";
 import Rule from "../Rule";
 import Icon from "@ant-design/icons";
 import { Trash } from "react-feather";

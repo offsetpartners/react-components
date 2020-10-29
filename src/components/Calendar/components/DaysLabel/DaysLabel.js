@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 import { useCalendar } from "components/Calendar/provider";
 import { GET_WEEKDAYS } from "components/Calendar/lib/constants";
 

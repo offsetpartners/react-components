@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import { Col, Input, Select } from "antd";
 import { KEYWORD_CONDITIONS } from "components/QueryBuilder/lib/conditions";
 

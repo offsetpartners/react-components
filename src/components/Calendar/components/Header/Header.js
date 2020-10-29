@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 import { Row, Col, Space, Button } from "antd";
 import {
   ChevronLeft,

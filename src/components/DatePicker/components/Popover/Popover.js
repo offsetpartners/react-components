@@ -1,4 +1,3 @@
-import React from "react";
 import { Popover } from "antd";
 import SingleInput from "./SingleInput";
 import RangeInputs from "./RangeInputs";

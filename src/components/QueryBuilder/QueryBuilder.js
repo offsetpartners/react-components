@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { memo } from "react";
+import { memo } from "react";
 import { Tabs, Layout } from "antd";
 import QueryTab from "./components/QueryTab";
 import QueryBuilderProvider, { useQueryBuilder } from "./lib/Provider";

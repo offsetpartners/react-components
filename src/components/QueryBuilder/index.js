@@ -1,4 +1,3 @@
-import React from "react";
 import "./styles/index.css";
 import { render } from "react-dom";
 import { default as QueryBuilder } from "./QueryBuilder";

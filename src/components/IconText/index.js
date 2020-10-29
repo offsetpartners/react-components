@@ -1,4 +1,3 @@
-import React from "react";
 import IconText from "./IconText";
 import { render } from "react-dom";
 

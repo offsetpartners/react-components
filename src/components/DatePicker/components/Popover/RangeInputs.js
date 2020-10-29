@@ -2,7 +2,7 @@ import moment from "moment";
 import * as Feather from "react-feather";
 import Calendar from "components/Calendar";
 import { Row, Col, Input, message } from "antd";
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useDatePicker } from "components/DatePicker/provider";
 import { getPresetFromValue } from "components/DatePicker/utils";
 

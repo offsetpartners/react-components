@@ -1,4 +1,3 @@
-import React from "react";
 import moment from "moment";
 import common from "common";
 import { classNames } from "./tag.config";

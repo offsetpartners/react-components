@@ -1,5 +1,5 @@
 import moment from "moment";
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import { Col, Select } from "antd";
 import DatePicker from "components/DatePicker";
 import { DATE_CONDITIONS } from "components/QueryBuilder/lib/conditions";

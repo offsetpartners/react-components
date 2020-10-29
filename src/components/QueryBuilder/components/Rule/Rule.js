@@ -1,4 +1,3 @@
-import React from "react";
 import Base from "./Base";
 import { Plus, Trash } from "react-feather";
 import { Row, Col, Space, Button, Select, Popconfirm } from "antd";

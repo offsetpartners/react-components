@@ -1,6 +1,6 @@
 import moment from "moment";
 import Popover from "../Popover";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Row, Col, Menu, Button, Dropdown } from "antd";
 import { useDatePicker } from "components/DatePicker/provider";
 import { Calendar, ChevronUp, ChevronDown } from "react-feather";

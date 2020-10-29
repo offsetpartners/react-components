@@ -1,5 +1,5 @@
 import Segment from "../Segment";
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import { Edit3, Plus } from "react-feather";
 import ResultTable from "components/ResultTable";
 import { Row, Col, Button, Typography, Skeleton } from "antd";

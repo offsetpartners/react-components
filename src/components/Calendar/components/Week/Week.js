@@ -1,5 +1,5 @@
 import moment from "moment";
-import React, { memo } from "react";
+import { memo } from "react";
 import Cell from "components/Calendar/components/Cell";
 import { useCalendar } from "components/Calendar/provider";
 import { DAYS_ARRAY, WEEKS_ARRAY } from "components/Calendar/lib/constants";
