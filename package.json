@@ -8,16 +8,16 @@
     "access": "public"
   },
   "dependencies": {
-    "antd": "^4.7.0",
+    "antd": "^4.7.3",
     "moment": "^2.27.0",
     "prop-types": "^15.7.2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "react-feather": "^2.0.8",
     "react-use": "^15.3.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.6",
+    "@babel/core": "^7.12.3",
     "@babel/plugin-proposal-optional-chaining": "^7.11.0",
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
@@ -38,8 +38,8 @@
     "webpack-cli": "^3.3.12"
   },
   "peerDependencies": {
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   },
   "scripts": {
     "test": "npm run clean",
