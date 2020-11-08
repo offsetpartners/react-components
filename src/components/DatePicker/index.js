@@ -82,7 +82,7 @@ if (datepickers) {
               datepickerProps[prop] = initialValue;
               return;
             default:
-              datepickerProps[prop] = dataSets[prop];
+              datepickerProps[prop] ||= dataSets[prop];
           }
         });
       } catch (e) {}
