@@ -1,7 +1,14 @@
 import moment from "moment";
 import { message } from "antd";
 import { useDebounce } from "react-use";
-import { useMemo, useState, useEffect, useContext, useCallback, createContext } from "react";
+import {
+  useMemo,
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+  createContext,
+} from "react";
 
 /**
  * Hook to debounce onDateChange
@@ -40,6 +47,7 @@ const useCalendarMount = (cancel, setMounted) => {
 
 const CalendarContext = createContext({
   // UI
+  view: "",
   maxDate: new Date(),
   daysLabelType: "narrow",
   defaultClassNames: {
@@ -54,8 +62,14 @@ const CalendarContext = createContext({
   },
   generateClassNames: undefined,
   headerComponents: {
-    left: ["previousYear", "previousMonth"],
-    right: ["nextMonth", "nextYear"],
+    calendar: {
+      left: ["previousYear", "previousMonth"],
+      right: ["nextMonth", "nextYear"],
+    },
+    day: {
+      left: ["previousWeek", "previousDay"],
+      right: ["nextDay", "nextWeek"],
+    },
   },
 
   // Component Wide State
@@ -86,6 +100,7 @@ const CalendarProvider = ({
   doesCellHaveEvent,
 
   // UI Props
+  view,
   maxDate,
   children,
   daysLabelType,
@@ -132,25 +147,43 @@ const CalendarProvider = ({
 
   // Handler Functions
   const handleYearChange = useCallback((v) => {
-    if (v > _maxDate.getFullYear()) {
+    let setterFn = _setYear;
+
+    if (setYear && typeof setYear === "function") setterFn = setYear;
+
+    if (actualMonth > _maxDate.getMonth() && v >= _maxDate.getFullYear()) {
       message.warning(
-        `Cannot the max date of ${moment(_maxDate).format("MMM D, YYYY")}!`
+        `Cannot exceed the max date of ${moment(_maxDate).format(
+          "MMM D, YYYY"
+        )}!`
       );
+      setterFn(_maxDate.getFullYear());
+      handleMonthChange(_maxDate.getMonth());
       return;
     }
 
-    if (setYear && typeof setYear === "function") return setYear(v);
-    _setYear(v);
-  }, []);
+    if (v > _maxDate.getFullYear()) {
+      message.warning(
+        `Cannot exceed the max date of ${moment(_maxDate).format(
+          "MMM D, YYYY"
+        )}!`
+      );
+      setterFn(_maxDate.getFullYear());
+      return;
+    }
+
+    setterFn(v);
+  });
   const handleMonthChange = useCallback((v) => {
     let _v = v;
-
     let setterFn = _setMonth;
     if (typeof setMonth === "function") setterFn = setMonth;
 
     if (_v > _maxDate.getMonth() && actualYear >= _maxDate.getFullYear()) {
       message.warning(
-        `Cannot the max date of ${moment(_maxDate).format("MMM D, YYYY")}!`
+        `Cannot exceed the max date of ${moment(_maxDate).format(
+          "MMM D, YYYY"
+        )}!`
       );
       setterFn(_maxDate.getMonth());
       return;
@@ -167,9 +200,21 @@ const CalendarProvider = ({
     setterFn(_v);
   });
   const handleCellSelect = useCallback((v) => {
-    if (typeof setSelected === "function") return setSelected(v);
-    _setSelected(v);
-  }, []);
+    let setterFn = _setSelected;
+    if (typeof setSelected === "function") setterFn = setSelected;
+
+    if (v > _maxDate) {
+      message.warning(
+        `Cannot exceed the max date of ${moment(_maxDate).format(
+          "MMM D, YYYY"
+        )}!`
+      );
+      setterFn(_maxDate);
+      return;
+    }
+    setterFn(v);
+  });
+
   // Force Component to Re-render
   const forceUpdate = useCallback(() => {
     return updateState({});
@@ -188,6 +233,7 @@ const CalendarProvider = ({
   const value = useMemo(
     () => ({
       // UI
+      view,
       daysLabelType,
       headerComponents,
       defaultClassNames,
@@ -208,9 +254,9 @@ const CalendarProvider = ({
     }),
     [
       updater,
-      actualSelected,
-      actualMonth,
       actualYear,
+      actualMonth,
+      actualSelected,
       doesCellHaveEvent,
       generateClassNames,
     ]

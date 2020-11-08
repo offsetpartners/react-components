@@ -1,9 +1,12 @@
 Calendar Example
 
 ```jsx
+import moment from "moment";
+import { Select } from "antd";
 import { useState } from "react";
 import { Calendar } from "@offsetpartners/react-components";
 
+const [view, setView] = useState("day");
 const [selectedDate, setSelectedDate] = useState(new Date());
 const events = {
   ["10-2020"]: [
@@ -15,9 +18,19 @@ const events = {
 };
 
 <>
-  <p>The selected date: {selectedDate.toJSON()}</p>
+  <Select
+    defaultValue="day"
+    onChange={(v) => setView(v)}
+    options={[
+      { label: "Day View", value: "day" },
+      { label: "Month View", value: "month" },
+    ]}
+  />
+  <p>The selected date: {moment(selectedDate).format("MMMM DD, YYYY")}</p>
   <Calendar
+    view={view}
     selected={selectedDate}
+    maxDate={new Date()}
     setSelected={(v) => setSelectedDate(v)}
     onDateChange={(month, year, forceUpdate) => {
       const temp = [];

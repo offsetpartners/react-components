@@ -21,12 +21,18 @@ const HeaderDropdown = ({ label, items, onClick, menuProps }) => {
           }}
         >
           {items.map((i) => (
-            <Menu.Item key={i.key}>{i.label}</Menu.Item>
+            <Menu.Item key={i.key} {...i.props}>
+              {i.label}
+            </Menu.Item>
           ))}
         </Menu>
       )}
     >
-      <Button size="small" type="ghost" className="fig-datepicker-header-dropdown">
+      <Button
+        size="small"
+        type="ghost"
+        className="fig-datepicker-header-dropdown"
+      >
         <span className="fig-typography fig-sm-body-semibold fig-datepicker-preset-label">
           {label}
         </span>

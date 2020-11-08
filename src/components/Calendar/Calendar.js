@@ -7,6 +7,7 @@ import CalendarProvider from "./provider";
 import DaysLabel from "./components/DaysLabel";
 
 const Calendar = memo((props) => {
+  const { view } = props;
   return (
     <CalendarProvider {...props}>
       <div className="fig-calendar-wrapper">
@@ -19,15 +20,17 @@ const Calendar = memo((props) => {
             </tr>
           </thead>
 
-          <tbody className="fig-calendar-body">
-            <tr className="fig-calendar-container">
-              <DaysLabel />
-            </tr>
+          {view === "month" && (
+            <tbody className="fig-calendar-body">
+              <tr className="fig-calendar-container">
+                <DaysLabel />
+              </tr>
 
-            <tr className="fig-calendar-container">
-              <Week />
-            </tr>
-          </tbody>
+              <tr className="fig-calendar-container">
+                <Week />
+              </tr>
+            </tbody>
+          )}
         </table>
       </div>
     </CalendarProvider>
@@ -36,11 +39,18 @@ const Calendar = memo((props) => {
 
 Calendar.displayName = "Calendar";
 Calendar.defaultProps = {
+  view: "month",
   maxDate: moment().add(5, "y").endOf("year").toDate(),
   daysLabelType: "narrow",
   headerComponents: {
-    left: ["previousYear", "previousMonth"],
-    right: ["nextMonth", "nextYear"],
+    day: {
+      left: ["previousWeek", "previousDay"],
+      right: ["nextDay", "nextWeek"],
+    },
+    month: {
+      left: ["previousYear", "previousMonth"],
+      right: ["nextMonth", "nextYear"],
+    },
   },
 };
 Calendar.propTypes = {
@@ -109,36 +119,63 @@ Calendar.propTypes = {
    * @example type="long" -> Monday, type="short" -> Mon, type="narrow" -> M
    */
   daysLabelType: PropTypes.oneOf(["long", "short", "narrow"]),
+
   /**
    * Control what is displayed on the Header
    *
    */
   headerComponents: PropTypes.shape({
-    left: PropTypes.arrayOf(
-      /**
-       *
-       * @enum {("nextYear"|"nextMonth"|"previousYear"|"previousMonth")}
-       */
-      PropTypes.oneOf([
-        "nextYear",
-        "nextMonth",
-        "previousYear",
-        "previousMonth",
-      ])
-    ),
-    right: PropTypes.arrayOf(
-      /**
-       *
-       * @enum {("nextYear"|"nextMonth"|"previousYear"|"previousMonth")}
-       */
-      PropTypes.oneOf([
-        "nextYear",
-        "nextMonth",
-        "previousYear",
-        "previousMonth",
-      ])
-    ),
+    month: PropTypes.shape({
+      left: PropTypes.arrayOf(
+        /**
+         *
+         * @enum {("nextYear"|"nextMonth"|"previousYear"|"previousMonth")}
+         */
+        PropTypes.oneOf([
+          "nextYear",
+          "nextMonth",
+          "previousYear",
+          "previousMonth",
+        ])
+      ),
+      right: PropTypes.arrayOf(
+        /**
+         *
+         * @enum {("nextYear"|"nextMonth"|"previousYear"|"previousMonth")}
+         */
+        PropTypes.oneOf([
+          "nextYear",
+          "nextMonth",
+          "previousYear",
+          "previousMonth",
+        ])
+      ),
+    }),
+    day: PropTypes.shape({
+      left: PropTypes.arrayOf(
+        /**
+         *
+         * @enum {("nextWeek"|"nextDay"|"previousWeek"|"previousDay")}
+         */
+        PropTypes.oneOf(["nextWeek", "nextDay", "previousWeek", "previousDay"])
+      ),
+      right: PropTypes.arrayOf(
+        /**
+         *
+         * @enum {("nextWeek"|"nextDay"|"previousWeek"|"previousDay")}
+         */
+        PropTypes.oneOf(["nextWeek", "nextDay", "previousWeek", "previousDay"])
+      ),
+    }),
   }),
+
+  /**
+   * The type of View to render
+   *
+   * @todo Create more views, ie: "week", etc.
+   */
+  view: PropTypes.oneOf(["day", "month"]),
+
   /**
    * Generate Custom Classname depending on the day
    *
