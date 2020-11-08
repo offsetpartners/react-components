@@ -80,7 +80,9 @@ export default () => {
         maxDate={maxDate}
         setYear={setYear}
         setMonth={setMonth}
-        headerComponents={{ left: ["previousMonth"], right: ["nextMonth"] }}
+        headerComponents={{
+          month: { left: ["previousMonth"], right: ["nextMonth"] },
+        }}
         generateClassNames={(d) => {
           const momentObj = moment(d);
           const isAfter = momentObj.isAfter(startDate);

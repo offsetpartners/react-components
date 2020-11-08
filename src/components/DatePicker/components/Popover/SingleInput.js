@@ -26,7 +26,9 @@ export default () => {
       maxDate={maxDate}
       setYear={setYear}
       setMonth={setMonth}
-      headerComponents={{ left: ["previousMonth"], right: ["nextMonth"] }}
+      headerComponents={{
+        month: { left: ["previousMonth"], right: ["nextMonth"] },
+      }}
       onCellClick={(d) => {
         let newValue = moment(d);
 
