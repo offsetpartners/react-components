@@ -53,7 +53,7 @@ if (datepickers) {
             datepickerProps[prop] = dataSets[prop];
             break;
           case "initialValue":
-            if (!dataSets["initialValueFormat"]) {
+            if (dataSets["initialValue"] && !dataSets["initialValueFormat"]) {
               throw new Error(
                 "You must specify an initialValueFormat(data-initial-value-format) if you're passing an initial value!"
               );
