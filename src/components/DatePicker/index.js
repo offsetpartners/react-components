@@ -19,6 +19,10 @@ if (datepickers) {
       "Each DatePicker Component must have a prop object assigned to it. You can also provide a single object to use across all Components."
     );
   }
+
+  // If nothing was provided then just default to an empty Object
+  providedProps ||= {};
+
   arr.forEach(
     /**
      * @param {Element} element
@@ -27,65 +31,70 @@ if (datepickers) {
     (element, index) => {
       let datepickerProps = {};
 
-      try {
-        validProps.forEach((prop) => {
-          if (Array.isArray(providedProps)) {
-            datepickerProps[prop] = providedProps[index][prop];
-          } else {
-            datepickerProps[prop] = providedProps[prop];
-          }
-        });
+      validProps.forEach((prop) => {
+        if (Array.isArray(providedProps)) {
+          datepickerProps[prop] = providedProps[index][prop];
+        } else {
+          datepickerProps[prop] = providedProps[prop];
+        }
+      });
 
-        const dataSets = element.dataset;
-        validDataSets.forEach((prop) => {
-          switch (prop) {
-            case "inputId":
-              try {
-                const parsed = JSON.parse(dataSets[prop]);
-                if (Array.isArray(parsed) && parsed.length === 2) {
-                  datepickerProps[prop] = parsed;
-                }
-              } catch (e) {}
-              datepickerProps[prop] = dataSets[prop];
-              return;
-            case "initialValue":
-              if (!dataSets["initialValueFormat"]) return;
-
-              const initialValueFormat = dataSets["initialValueFormat"];
-              let initialValue;
-
-              if (moment(dataSets[prop], initialValueFormat).isValid()) {
-                initialValue = moment(
-                  dataSets[prop],
-                  initialValueFormat
-                ).toDate();
+      const dataSets = element.dataset;
+      validDataSets.forEach((prop) => {
+        switch (prop) {
+          case "inputId":
+            try {
+              const parsed = JSON.parse(dataSets[prop]);
+              if (Array.isArray(parsed) && parsed.length === 2) {
+                datepickerProps[prop] = parsed;
+                break;
               }
+            } catch (e) {}
+            datepickerProps[prop] = dataSets[prop];
+            break;
+          case "initialValue":
+            if (!dataSets["initialValueFormat"]) {
+              throw new Error(
+                "You must specify an initialValueFormat(data-initial-value-format) if you're passing an initial value!"
+              );
+            }
 
-              try {
-                const parsed = JSON.parse(dataSets[prop]);
-                if (Array.isArray(parsed) && parsed.length === 2) {
-                  const from = moment(parsed[0], initialValueFormat);
-                  const to = moment(parsed[1], initialValueFormat);
+            const initialValueFormat = dataSets["initialValueFormat"];
+            let initialValue;
 
-                  if (from.isAfter(to) || to.isBefore(from)) {
-                    initialValue = [to.toDate(), from.toDate()];
-                  } else {
-                    initialValue = [from.toDate(), to.toDate()];
-                  }
-                  datepickerProps["type"] = "range";
+            if (moment(dataSets[prop], initialValueFormat).isValid()) {
+              initialValue = moment(
+                dataSets[prop],
+                initialValueFormat
+              ).toDate();
+            }
+
+            try {
+              // Check if an array was provided for initialValue
+              const parsed = JSON.parse(dataSets[prop]);
+              if (Array.isArray(parsed) && parsed.length === 2) {
+                const from = moment(parsed[0], initialValueFormat);
+                const to = moment(parsed[1], initialValueFormat);
+
+                if (from.isAfter(to) || to.isBefore(from)) {
+                  initialValue = [to.toDate(), from.toDate()];
+                } else {
+                  initialValue = [from.toDate(), to.toDate()];
                 }
-              } catch (e) {}
-
-              if (!Array.isArray(initialValue)) {
-                datepickerProps["type"] = "single";
+                datepickerProps["type"] = "range";
+                break;
               }
-              datepickerProps[prop] = initialValue;
-              return;
-            default:
-              datepickerProps[prop] ||= dataSets[prop];
-          }
-        });
-      } catch (e) {}
+            } catch (e) {}
+
+            if (!Array.isArray(initialValue)) {
+              datepickerProps["type"] = "single";
+            }
+            datepickerProps[prop] = initialValue;
+            break;
+          default:
+            datepickerProps[prop] ||= dataSets[prop];
+        }
+      });
 
       if (element instanceof Element) {
         render(<DatePicker {...datepickerProps} />, element);
