@@ -1,10 +1,10 @@
 import "./style.less";
 import moment from "moment";
 import PropTypes from "prop-types";
-import BaseTimePicker from "./BaseTimePicker";
 import { useState, useCallback } from "react";
+import BaseTimePicker from "./_BaseTimePicker";
 
-const Timepicker = (props) => {
+const TimePicker = (props) => {
   const { type, onSave, value, onChange, initialValue } = props;
 
   const [_value, _onChange] = useState(() => initialValue);
@@ -56,11 +56,11 @@ const Timepicker = (props) => {
   );
 };
 
-Timepicker.defaultProps = {
+TimePicker.defaultProps = {
   format: "hh:mm A",
 };
 
-Timepicker.propTypes = {
+TimePicker.propTypes = {
   ...BaseTimePicker.propTypes,
   /**
    * Type of TimePicker
@@ -94,4 +94,4 @@ Timepicker.propTypes = {
   onSave: PropTypes.func,
 };
 
-export default Timepicker;
+export default TimePicker;
