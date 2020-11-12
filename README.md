@@ -101,8 +101,6 @@ npm run start
 ## **Roadmap**
 
 - Remove certain packages from global library and add them on a per component basis??
-- Add prop to add aditional Columns into ResultTable
-- Create different Column Components for ResultTable to increase "customizability"
 
 ### **Version**
 
