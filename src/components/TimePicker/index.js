@@ -89,7 +89,6 @@ if (timepickers) {
                 }
 
                 timepickerProps["type"] = "range";
-                break;
               }
             } catch (e) {}
 
@@ -99,7 +98,11 @@ if (timepickers) {
             timepickerProps[prop] = initialValue;
             break;
           default:
-            timepickerProps[prop] ||= dataSets[prop];
+            // Ensure that we're not just unsetting
+            // this particular prop
+            if (dataSets[prop]) {
+              timepickerProps[prop] ||= dataSets[prop];
+            }
         }
       });
 

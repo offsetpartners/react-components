@@ -46,7 +46,10 @@
 .fig-datepicker-calendar {
   border-top-left-radius: 0px !important;
   border-bottom-left-radius: 0px !important;
-  border-left: 1px solid @border-color-base !important;
+
+  &:not(.no-preset) {
+    border-left: 1px solid @border-color-base !important;
+  }
 
   .fig-datepicker-calendar-icon {
     display: inline-flex;

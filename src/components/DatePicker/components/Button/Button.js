@@ -109,7 +109,9 @@ export default () => {
             block
             type="ghost"
             disabled={disabled}
-            className="fig-datepicker-calendar"
+            className={`fig-datepicker-calendar ${
+              hasDropdown ? "" : "no-preset"
+            }`}
           >
             <Row align="middle" className="fig-datepicker-calendar-row">
               <Col className="fig-datepicker-calendar-icon">

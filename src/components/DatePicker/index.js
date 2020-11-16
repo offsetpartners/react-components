@@ -82,7 +82,6 @@ if (datepickers) {
                   initialValue = [from.toDate(), to.toDate()];
                 }
                 datepickerProps["type"] = "range";
-                break;
               }
             } catch (e) {}
 
@@ -92,7 +91,11 @@ if (datepickers) {
             datepickerProps[prop] = initialValue;
             break;
           default:
-            datepickerProps[prop] ||= dataSets[prop];
+            // Ensure that we're not just unsetting
+            // this particular prop
+            if (dataSets[prop]) {
+              datepickerProps[prop] ||= dataSets[prop];
+            }
         }
       });
 
