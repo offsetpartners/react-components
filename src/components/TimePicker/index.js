@@ -65,6 +65,11 @@ if (timepickers) {
               );
             }
 
+            // If already set then just skip
+            if (timepickerProps[prop]) {
+              return;
+            }
+
             const initialValueFormat = dataSets["initialValueFormat"];
             let initialValue;
 

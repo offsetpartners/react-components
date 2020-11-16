@@ -59,6 +59,11 @@ if (datepickers) {
               );
             }
 
+            // If already set then just skip
+            if (datepickerProps[prop]) {
+              return;
+            }
+
             const initialValueFormat = dataSets["initialValueFormat"];
             let initialValue;
 
