@@ -8,7 +8,7 @@ React Components for Figure and Offset.
 
 ## **Main Purpose**
 
-Main purpose is to slowly port complex custom components over to React where development will be much more efficient as opposed to limiting ourselves to vanilla js/jQuery.
+Allows dev team to slowly port complex custom components over to React where development will be much more efficient.
 
 ## **Usage**
 
@@ -104,4 +104,4 @@ npm run start
 
 ### **Version**
 
-v. 0.5.2
+v. 0.6.0
