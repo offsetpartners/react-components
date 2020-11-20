@@ -24,6 +24,7 @@
     "babel-loader": "^8.1.0",
     "babel-plugin-module-resolver": "^4.0.0",
     "css-loader": "^4.2.2",
+    "css-minimizer-webpack-plugin": "^1.1.5",
     "file-loader": "^6.1.0",
     "less": "^3.12.2",
     "less-loader": "^7.0.1",

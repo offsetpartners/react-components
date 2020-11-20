@@ -3,6 +3,7 @@ const { resolve } = require("path");
 const pkg = require("./package.json");
 const TerserPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = function () {
   return {
@@ -23,13 +24,7 @@ module.exports = function () {
 
     optimization: {
       minimize: true,
-      minimizer: [
-        new TerserPlugin({
-          cache: true,
-          parallel: true,
-          sourceMap: true,
-        }),
-      ],
+      minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
     },
 
     // Modules
@@ -53,12 +48,7 @@ module.exports = function () {
           test: /\.(css|less)$/, // .less and .css
           use: [
             MiniCssExtractPlugin.loader,
-            {
-              loader: "css-loader",
-              options: {
-                importLoaders: 1,
-              },
-            },
+            "css-loader",
             {
               loader: "less-loader",
               options: {
@@ -70,7 +60,7 @@ module.exports = function () {
         {
           test: /\.s[ac]ss$/i,
           use: [
-            "style-loader",
+            MiniCssExtractPlugin.loader,
             "css-loader",
             {
               loader: "sass-loader",
