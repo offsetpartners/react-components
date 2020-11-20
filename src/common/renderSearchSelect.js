@@ -56,8 +56,10 @@ export default () => {
             case "options":
               try {
                 const options = dataSets[prop];
-                console.log(options);
-                if (typeof options === "string") {
+                if (
+                  typeof options === "string" ||
+                  typeof options === "object"
+                ) {
                   const parsed = JSON.parse(options);
                   if (Array.isArray(parsed)) {
                     searchSelectProps[prop] = parsed;
@@ -65,9 +67,7 @@ export default () => {
                 } else if (Array.isArray(options)) {
                   searchSelectProps[prop] = options;
                 }
-              } catch (e) {
-                console.log(e);
-              }
+              } catch (e) {}
               break;
             default:
               // Ensure that we're not just unsetting
