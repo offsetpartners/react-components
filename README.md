@@ -104,4 +104,4 @@ npm run start
 
 ### **Version**
 
-v. 0.6.1
+v. 0.6.2

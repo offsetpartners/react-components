@@ -53,12 +53,6 @@ const SearchSelect = ({
   useEffect(() => {
     handleChange(actualValue, selectWidth, fixedOptions, setSelectMaxTagCount);
   }, [selectWidth]);
-  // Hook for onSetValue callback function
-  useEffect(() => {
-    if (typeof onSetValue === "function") {
-      onSetValue(inputId, actualValue);
-    }
-  }, [actualValue]);
 
   // 5. Render Component
   return (
@@ -85,6 +79,9 @@ const SearchSelect = ({
           );
 
           actualSetterFn(sortedVal);
+          if (typeof onSetValue === "function") {
+            onSetValue(inputId, sortedVal);
+          }
         }}
       />
     </div>
