@@ -1,3 +1,4 @@
+const glob = require("glob");
 const webpack = require("webpack");
 const { resolve } = require("path");
 const pkg = require("./package.json");
@@ -6,9 +7,20 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = function () {
+  const componentsDir = resolve(__dirname, "src/components");
+  const dir = resolve(__dirname, "src/components/*/index.js");
+  const entries = glob.sync(dir).reduce((acc, path) => {
+    const entry = path
+      .replace(componentsDir, "")
+      .replace("/index.js", "")
+      .replace("/", "");
+    acc[entry] = path;
+    return acc;
+  }, {});
   return {
     entry: {
       figure: resolve(__dirname, "src/index.js"),
+      ...entries,
     },
 
     output: {
