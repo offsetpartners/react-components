@@ -27,7 +27,6 @@ const TimePicker = (props) => {
       {...props}
       showNow
       use12Hours
-      suffixIcon={null}
       onChange={gatedOnChange}
       className="figure-timepicker"
       onSave={typeof onSave === "function" && onSave}

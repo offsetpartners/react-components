@@ -1,8 +1,10 @@
+import "./style.less";
 import PropTypes from "prop-types";
 import { Select, Grid } from "antd";
 import { useSelectRef } from "./hooks";
-import { fixOptions, handleChange } from "./helpers";
+import { ChevronDown } from "react-feather";
 import { useRef, useEffect, useState } from "react";
+import { fixOptions, handleChange } from "./helpers";
 
 const SearchSelect = ({
   value,
@@ -15,6 +17,7 @@ const SearchSelect = ({
   multiple = false,
   className = "search-select",
   placeholder = "Select a value...",
+  suffixIcon = <ChevronDown />,
 }) => {
   // 1. Ensure that the Component does not have the same className
   // as the mountNode
@@ -34,6 +37,11 @@ const SearchSelect = ({
   const breakpoint = useBreakpoint();
 
   let actualValue, actualSetterFn;
+  const wrappedIcon = (
+    <span role="img" className="anticon ant-select-suffix">
+      {suffixIcon}
+    </span>
+  );
   const [_value, _setValue] = useState(initialValue);
   const [selectWidth, setSelectWidth] = useState(0);
   const [selectMaxTagCount, setSelectMaxTagCount] = useState(null);
@@ -56,7 +64,11 @@ const SearchSelect = ({
 
   // 5. Render Component
   return (
-    <div ref={selectRef} className="fig-search-select-container">
+    <div
+      ref={selectRef}
+      style={{ width: "100%" }}
+      className="fig-search-select-container"
+    >
       <Select
         autoFocus
         showArrow
@@ -66,11 +78,13 @@ const SearchSelect = ({
         disabled={disabled}
         className={className}
         options={fixedOptions}
+        suffixIcon={wrappedIcon}
         optionFilterProp="label"
+        style={{ width: "100%" }}
         placeholder={placeholder}
         maxTagCount={selectMaxTagCount}
         mode={multiple ? "multiple" : null}
-        onChange={(val, options) => {
+        onChange={(val) => {
           const sortedVal = handleChange(
             val,
             selectWidth,
