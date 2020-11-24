@@ -1,6 +1,6 @@
 {
   "name": "@offsetpartners/react-components",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "React Components for Figure and Offset",
   "main": "./dist/figure.js",
   "module": "./dist/figure.js",
@@ -14,7 +14,6 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-feather": "^2.0.8",
-    "react-styleguidist": "^11.0.11",
     "react-use": "^15.3.4"
   },
   "devDependencies": {
@@ -30,6 +29,7 @@
     "less": "^3.12.2",
     "less-loader": "^7.0.1",
     "mini-css-extract-plugin": "^0.11.0",
+    "react-styleguidist": "^11.1.3",
     "sass": "^1.26.10",
     "sass-loader": "^10.0.2",
     "style-loader": "^1.2.1",
