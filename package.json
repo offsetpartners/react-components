@@ -1,6 +1,6 @@
 {
   "name": "@offsetpartners/react-components",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "React Components for Figure and Offset",
   "main": "./dist/figure.js",
   "module": "./dist/figure.js",
@@ -48,7 +48,7 @@
     "start": "styleguidist server",
     "build": "npm run clean && webpack --mode=production",
     "docs:clean": "rm -rf ./dist-docs",
-    "docs:build": "npm run docs:clean && styleguidist build"
+    "docs:build": "npm run docs:clean && NODE_ENV=production && npx styleguidist build"
   },
   "keywords": [
     "Figure",
