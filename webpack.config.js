@@ -4,6 +4,8 @@ const pkg = require("./package.json");
 const TerserPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
 
 module.exports = function () {
   return {
@@ -114,6 +116,11 @@ module.exports = function () {
     plugins: [
       new MiniCssExtractPlugin(),
       new webpack.HashedModuleIdsPlugin(), // so that file hashes don't change unexpectedly
+      new BundleAnalyzerPlugin({
+        generateStatsFile: true,
+        analyzerMode: "disabled",
+        statsOptions: { source: false },
+      }),
     ],
   };
 };
