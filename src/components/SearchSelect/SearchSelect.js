@@ -71,7 +71,6 @@ const SearchSelect = ({
       className="fig-search-select-container"
     >
       <Select
-        autoFocus
         showArrow
         allowClear
         showSearch
@@ -128,7 +127,7 @@ SearchSelect.propTypes = {
   /**
    * Options for Select
    */
-  options: PropTypes.arrayOf([PropTypes.string, PropTypes.number]),
+  options: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
   /**
    * Initial Value
    */
