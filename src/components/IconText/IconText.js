@@ -1,6 +1,6 @@
+import Space from "antd/lib/space";
 import PropTypes from "prop-types";
-import * as Feather from "react-feather";
-import { Space, Typography } from "antd";
+import Typography from "antd/lib/typography";
 
 /**
  * Returns appropriate Typography classes
@@ -37,29 +37,26 @@ const getTypographyClassNames = (size, variant) => {
   return classNames;
 };
 
-const setupIcon = (icon, iconProps) => {
-  if (Feather[icon.charAt(0).toUpperCase().concat(icon.slice(1))]) {
-    const Icon = Feather[icon.charAt(0).toUpperCase().concat(icon.slice(1))];
-    if (iconProps.bordered) {
-      const style = {
-        padding: 4,
-        borderRadius: 4,
-        display: "flex",
-        border: "1px solid",
-        alignItems: "center",
-        justifyContent: "center",
-        borderColor: iconProps.borderColor || "rgba(79, 82, 104, 0.4)",
-      };
-      return (
-        <div style={style}>
-          <Icon {...iconProps} color="#4F5268" />
-        </div>
-      );
-    } else {
-      return <Icon {...iconProps} />;
-    }
+const setupIcon = (Icon, iconProps) => {
+  if (!Icon) return null;
+
+  if (iconProps.bordered) {
+    const style = {
+      padding: 4,
+      borderRadius: 4,
+      display: "flex",
+      border: "1px solid",
+      alignItems: "center",
+      justifyContent: "center",
+      borderColor: iconProps.borderColor || "rgba(79, 82, 104, 0.4)",
+    };
+    return (
+      <div style={style}>
+        <Icon {...iconProps} color="#4F5268" />
+      </div>
+    );
   } else {
-    return null;
+    return <Icon {...iconProps} />;
   }
 };
 
@@ -67,7 +64,7 @@ const IconText = (props) => {
   const {
     text,
     size,
-    icon,
+    Icon,
     align,
     spacing,
     variant,
@@ -85,7 +82,7 @@ const IconText = (props) => {
     bordered: transformBordered,
   };
 
-  const Icon = setupIcon(icon, validIconProps);
+  const RefIcon = setupIcon(Icon, validIconProps);
 
   if (iconPlacement === "right") {
     return (
@@ -93,14 +90,14 @@ const IconText = (props) => {
         <Typography.Text className={className.join(" ")}>
           {text}
         </Typography.Text>
-        {Icon}
+        {RefIcon}
       </Space>
     );
   }
 
   return (
     <Space size={spacing} align={align}>
-      {Icon}
+      {RefIcon}
       <Typography.Text className={className.join(" ")}>{text}</Typography.Text>
     </Space>
   );
@@ -130,7 +127,7 @@ IconText.propTypes = {
   /**
    * Refer to Feather Icon Pack to get all Icon Names
    */
-  icon: PropTypes.string,
+  Icon: PropTypes.oneOfType([PropTypes.element, PropTypes.object]),
 
   /**
    * Vertical Alignment

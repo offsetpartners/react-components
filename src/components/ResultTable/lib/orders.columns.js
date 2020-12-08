@@ -4,6 +4,7 @@ import { shipMethods } from "./tag.config";
 import IconText from "components/IconText";
 import formatMoney from "common/formatMoney";
 import Typography from "antd/lib/typography";
+import { Gift, LogIn, LogOut, MessageSquare } from "react-feather";
 import Label from "components/ResultTable/components/Orders/Label";
 import LinkTooltip from "components/ResultTable/components/Orders/LinkTooltip";
 
@@ -50,12 +51,12 @@ export default [
               <>
                 {editable_notes && editable_notes.length > 0 && (
                   <IconText
-                    icon="MessageSquare"
+                    Icon={MessageSquare}
                     iconProps={{ bordered: true }}
                   />
                 )}
                 {gift_message && gift_message.length > 0 && (
-                  <IconText icon="gift" iconProps={{ bordered: true }} />
+                  <IconText Icon={Gift} iconProps={{ bordered: true }} />
                 )}
               </>
             }
@@ -144,10 +145,10 @@ export default [
           {(actual || requested) && (
             <Space size={14} align="center">
               {requested && (
-                <IconText size="small" icon="LogOut" text={requested} />
+                <IconText size="small" Icon={LogOut} text={requested} />
               )}
 
-              {actual && <IconText size="small" icon="LogIn" text={actual} />}
+              {actual && <IconText size="small" Icon={LogIn} text={actual} />}
             </Space>
           )}
         </>

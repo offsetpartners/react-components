@@ -1,6 +1,7 @@
 import IconText from "components/IconText";
 import formatMoney from "common/formatMoney";
 import { Row, Col, Tag, Typography, Popover } from "antd";
+import { Gift, Mail, MessageSquare, Phone } from "react-feather";
 
 export default ({ type, href, text, record }) => {
   let Content;
@@ -10,8 +11,8 @@ export default ({ type, href, text, record }) => {
       const { email, phone } = record;
       Content = (
         <>
-          <IconText icon="mail" text={email} />
-          <IconText icon="phone" text={phone} />
+          <IconText Icon={Mail} text={email} />
+          <IconText Icon={Phone} text={phone} />
         </>
       );
       popoverProps.overlayStyle = {
@@ -92,13 +93,13 @@ export default ({ type, href, text, record }) => {
         <Row align="top" gutter={[0, 8]}>
           {editable_notes && editable_notes.length > 0 && (
             <Col span={24}>
-              <IconText icon="MessageSquare" text={editable_notes || "-"} />
+              <IconText Icon={MessageSquare} text={editable_notes || "-"} />
             </Col>
           )}
 
           {gift_message && gift_message.length > 0 && (
             <Col span={24}>
-              <IconText icon="gift" text={gift_message || "-"} />
+              <IconText Icon={Gift} text={gift_message || "-"} />
             </Col>
           )}
         </Row>
