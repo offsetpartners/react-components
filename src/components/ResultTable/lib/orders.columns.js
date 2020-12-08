@@ -1,8 +1,9 @@
 import moment from "moment";
-import { Typography, Space } from "antd";
-import IconText from "components/IconText";
+import Space from "antd/lib/space";
 import { shipMethods } from "./tag.config";
+import IconText from "components/IconText";
 import formatMoney from "common/formatMoney";
+import Typography from "antd/lib/typography";
 import Label from "components/ResultTable/components/Orders/Label";
 import LinkTooltip from "components/ResultTable/components/Orders/LinkTooltip";
 

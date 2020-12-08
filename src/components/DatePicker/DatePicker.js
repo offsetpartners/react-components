@@ -1,10 +1,9 @@
 import "./styles/index.less";
-import PropTypes from "prop-types";
 import { memo } from "react";
+import PropTypes from "prop-types";
 import Button from "./components/Button";
 import Popover from "./components/Popover";
 import DatePickerProvider from "./provider";
-import { MomentFormatSpecification } from "moment";
 
 const DatePicker = memo((props) => {
   return (
@@ -36,7 +35,7 @@ DatePicker.propTypes = {
   /**
    * Format of Date in Button
    */
-  format: PropTypes.instanceOf(MomentFormatSpecification),
+  format: PropTypes.string,
 
   /**
    * Initial Value to load.

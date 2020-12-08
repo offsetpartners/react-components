@@ -1,7 +1,10 @@
 import moment from "moment";
 import common from "common";
 import { classNames } from "./tag.config";
-import { Row, Col, Tag, Typography } from "antd";
+import Row from "antd/lib/row";
+import Col from "antd/lib/col";
+import Tag from "antd/lib/tag";
+import Typography from "antd/lib/typography";
 
 const { formatMoney } = common;
 

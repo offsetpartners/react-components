@@ -1,5 +1,5 @@
 import moment from "moment";
-import { message } from "antd";
+import message from "antd/lib/message";
 import { useDebounce } from "react-use";
 import {
   useMemo,

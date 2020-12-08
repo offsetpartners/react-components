@@ -1,5 +1,7 @@
+import Col from "antd/lib/col";
 import { Fragment } from "react";
-import { Col, Input, Select } from "antd";
+import Input from "antd/lib/input";
+import Select from "antd/lib/select";
 import { KEYWORD_CONDITIONS } from "components/QueryBuilder/lib/conditions";
 
 export default ({ value, setValue, disabled, condition, setCondition }) => {

@@ -1,6 +1,9 @@
 import moment from "moment";
 import { memo } from "react";
-import { Row, Col, Space, Button } from "antd";
+import Row from "antd/lib/row";
+import Col from "antd/lib/col";
+import Space from "antd/lib/space";
+import Button from "antd/lib/button";
 import {
   ChevronLeft,
   ChevronRight,
@@ -331,7 +334,10 @@ const Header = () => {
                 { length: selectedMoment.daysInMonth() },
                 (_, i) => {
                   const additionalProps = {};
-                  const tempMoment = moment(`${month + 1}/${i + 1}/${year}`, "M/D/YYYY");
+                  const tempMoment = moment(
+                    `${month + 1}/${i + 1}/${year}`,
+                    "M/D/YYYY"
+                  );
                   if (tempMoment.isAfter(moment(maxDate), "day")) {
                     additionalProps.disabled = true;
                   }

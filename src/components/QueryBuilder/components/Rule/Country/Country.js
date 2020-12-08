@@ -1,6 +1,8 @@
+import Col from "antd/lib/col";
 import { Fragment } from "react";
-import { Col, Select, Cascader } from "antd";
-import { parseCountryRegion } from "./helpers";
+import Select from "antd/lib/select";
+import Cascader from "antd/lib/cascader";
+import { CountryRegionData } from "./data";
 import { MULTI_SELECT_CONDITIONS } from "components/QueryBuilder/lib/conditions";
 
 export default ({
@@ -11,7 +13,6 @@ export default ({
   setCondition,
   inputProps = {},
 }) => {
-  const options = parseCountryRegion();
   return (
     <Fragment>
       <Col xs={12} sm={4}>
@@ -36,10 +37,23 @@ export default ({
             value={value}
             changeOnSelect
             {...inputProps}
-            showSearch={10}
-            options={options}
             disabled={disabled}
+            options={CountryRegionData}
             onChange={(val) => setValue(val)}
+            fieldNames={{
+              label: "name",
+              value: "shortCode",
+              children: "regions",
+            }}
+            showSearch={{
+              filter: (inputValue, path) => {
+                const found = path.find((p) => {
+                  return p.name.indexOf(inputValue) !== -1;
+                });
+
+                return !!found;
+              },
+            }}
           />
         </Col>
       )}

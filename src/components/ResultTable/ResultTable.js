@@ -1,4 +1,4 @@
-import { Table } from "antd";
+import Table from "antd/lib/table";
 import PropTypes from "prop-types";
 import getColumn from "./lib/columns";
 import CommonProps from "./lib/common.js";

@@ -1,5 +1,5 @@
 import "./typeDefs";
-import { message } from "antd";
+import message from "antd/lib/message";
 import {
   DATE_CONDITIONS,
   NUMBER_CONDITIONS,

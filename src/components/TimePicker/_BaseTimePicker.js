@@ -1,8 +1,8 @@
 import moment from "moment";
 import { useRef } from "react";
-import { TimePicker } from "antd";
 import PropTypes from "prop-types";
 import { findDOMNode } from "react-dom";
+import TimePicker from "antd/lib/time-picker";
 
 const BaseTimePicker = (props) => {
   const { type, inputId } = props;

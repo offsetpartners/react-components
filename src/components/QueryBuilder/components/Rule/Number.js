@@ -1,5 +1,7 @@
+import Col from "antd/lib/col";
 import { Fragment } from "react";
-import { Col, Select, Slider } from "antd";
+import Select from "antd/lib/select";
+import Slider from "antd/lib/slider";
 import { NUMBER_CONDITIONS } from "components/QueryBuilder/lib/conditions";
 
 export default ({

@@ -1,5 +1,7 @@
+import Menu from "antd/lib/menu";
+import Button from "antd/lib/button";
 import { memo, useState } from "react";
-import { Menu, Button, Dropdown } from "antd";
+import Dropdown from "antd/lib/dropdown";
 
 const HeaderDropdown = ({ label, items, onClick, menuProps }) => {
   const [open, setOpen] = useState(false);

@@ -1,8 +1,12 @@
 import Segment from "../Segment";
 import { Fragment } from "react";
+import Row from "antd/lib/row";
+import Col from "antd/lib/col";
+import Button from "antd/lib/button";
+import Skeleton from "antd/lib/skeleton";
 import { Edit3, Plus } from "react-feather";
+import Typography from "antd/lib/typography";
 import ResultTable from "components/ResultTable";
-import { Row, Col, Button, Typography, Skeleton } from "antd";
 import { useQueryBuilder } from "components/QueryBuilder/lib/Provider";
 
 export default ({ type, inputs }) => {

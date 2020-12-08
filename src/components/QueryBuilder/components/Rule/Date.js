@@ -1,6 +1,7 @@
 import moment from "moment";
+import Col from "antd/lib/col";
 import { Fragment } from "react";
-import { Col, Select } from "antd";
+import Select from "antd/lib/select";
 import DatePicker from "components/DatePicker";
 import { DATE_CONDITIONS } from "components/QueryBuilder/lib/conditions";
 

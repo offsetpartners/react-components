@@ -1,7 +1,11 @@
 import moment from "moment";
+import Row from "antd/lib/row";
+import Col from "antd/lib/col";
+import Menu from "antd/lib/menu";
 import { useState } from "react";
+import Button from "antd/lib/button";
+import Dropdown from "antd/lib/dropdown";
 import { ChevronUp, ChevronDown } from "react-feather";
-import { Row, Col, Menu, Button, Dropdown } from "antd";
 import { useDatePicker } from "components/DatePicker/provider";
 import { getValueFromPreset } from "components/DatePicker/utils";
 

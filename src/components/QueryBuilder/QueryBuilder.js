@@ -1,6 +1,7 @@
-import PropTypes from "prop-types";
 import { memo } from "react";
-import { Tabs, Layout } from "antd";
+import Tabs from "antd/lib/tabs";
+import PropTypes from "prop-types";
+import Layout from "antd/lib/layout";
 import QueryTab from "./components/QueryTab";
 import QueryBuilderProvider, { useQueryBuilder } from "./lib/Provider";
 

@@ -1,6 +1,11 @@
 import Base from "./Base";
+import Row from "antd/lib/row";
+import Col from "antd/lib/col";
+import Space from "antd/lib/space";
+import Button from "antd/lib/button";
+import Select from "antd/lib/select";
 import { Plus, Trash } from "react-feather";
-import { Row, Col, Space, Button, Select, Popconfirm } from "antd";
+import Popconfirm from "antd/lib/popconfirm";
 
 export default (props) => {
   const {

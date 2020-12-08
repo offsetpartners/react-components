@@ -1,6 +1,7 @@
 import "./style.less";
+import Grid from "antd/lib/grid";
 import PropTypes from "prop-types";
-import { Select, Grid } from "antd";
+import Select from "antd/lib/select";
 import { useSelectRef } from "./hooks";
 import { ChevronDown } from "react-feather";
 import { useRef, useEffect, useState } from "react";

@@ -1,4 +1,4 @@
-import { Popover } from "antd";
+import Popover from "antd/lib/popover";
 import SingleInput from "./SingleInput";
 import RangeInputs from "./RangeInputs";
 import { useDatePicker } from "components/DatePicker/provider";

@@ -1,5 +1,5 @@
 import moment from "moment";
-import { message } from "antd";
+import message from "antd/lib/message";
 import Calendar from "components/Calendar";
 import { useDatePicker } from "components/DatePicker/provider";
 import { getPresetFromValue } from "components/DatePicker/utils";
