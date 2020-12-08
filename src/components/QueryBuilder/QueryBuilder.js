@@ -20,7 +20,7 @@ const Content = () => {
   return (
     <Layout className="fig-query-builder-layout">
       <Layout.Content className="fig-query-builder-content">
-        <Tabs animated defaultActiveKey={initial.type}>
+        <Tabs defaultActiveKey={initial.type}>
           <TabPane disabled={loading || disabled} key="orders" tab="Orders">
             <QueryTab type="orders" inputs={inputs.orders} />
           </TabPane>
