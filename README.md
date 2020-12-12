@@ -100,8 +100,9 @@ npm run start
 
 ## **Roadmap**
 
-- Remove certain packages from global library and add them on a per component basis??
+- Assign QueryBuilder into its own library
+- Convert to Typescript
 
 ### **Version**
 
-v. 0.6.5
+v. 0.6.6
