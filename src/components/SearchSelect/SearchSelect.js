@@ -3,6 +3,7 @@ import Grid from "antd/lib/grid";
 import PropTypes from "prop-types";
 import Select from "antd/lib/select";
 import { useSelectRef } from "./hooks";
+import Skeleton from "antd/lib/skeleton";
 import { ChevronDown } from "react-feather";
 import { useRef, useEffect, useState } from "react";
 import { fixOptions, handleChange } from "./helpers";
@@ -22,6 +23,7 @@ const SearchSelect = ({
   autoClearSearchValue = true,
   className = "search-select",
   suffixIcon = <ChevronDown />,
+  dropdownRender = (menu) => menu,
   placeholder = "Select a value...",
 }) => {
   // 1. Ensure that the Component does not have the same className
@@ -88,6 +90,7 @@ const SearchSelect = ({
         style={{ width: "100%" }}
         placeholder={placeholder}
         filterOption={filterOption}
+        dropdownRender={dropdownRender}
         maxTagCount={selectMaxTagCount}
         mode={multiple ? "multiple" : null}
         autoClearSearchValue={autoClearSearchValue}
