@@ -43,6 +43,7 @@ useState(() => {
   <SearchSelect
     options={options}
     filterOption={false}
+    autoClearSearchValue={false}
     searchValue={search}
     onSearch={(v) => {
       setSearch(v);

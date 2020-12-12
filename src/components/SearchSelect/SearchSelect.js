@@ -19,6 +19,7 @@ const SearchSelect = ({
   initialValue,
   multiple = false,
   filterOption = true,
+  autoClearSearchValue = true,
   className = "search-select",
   suffixIcon = <ChevronDown />,
   placeholder = "Select a value...",
@@ -89,6 +90,7 @@ const SearchSelect = ({
         filterOption={filterOption}
         maxTagCount={selectMaxTagCount}
         mode={multiple ? "multiple" : null}
+        autoClearSearchValue={autoClearSearchValue}
         onSearch={(v) => {
           if (typeof onSearch === "function") {
             onSearch(v);
@@ -129,6 +131,10 @@ SearchSelect.propTypes = {
    * Enables Options to be filtered
    */
   filterOption: PropTypes.bool,
+  /**
+   * Whether search should clear when selecting an item
+   */
+  autoClearSearchValue: PropTypes.bool,
   /**
    * Custom ClassName for Component.<br />
    * Warning: This cannot be set to `fig-search-select` as that is reserved for moundNode.
