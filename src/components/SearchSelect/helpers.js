@@ -10,7 +10,7 @@ export const getTextWidth = (text, font) => {
 };
 
 export const fixOptions = (options) => {
-  return options.map((option) => {
+  const fixed = options.map((option) => {
     if (typeof option !== "object") {
       return { value: option, label: option };
     } else if (option.value && option.label) {
@@ -21,6 +21,12 @@ export const fixOptions = (options) => {
       );
     }
   });
+
+  if (!Array.isArray(fixed) || fixed.length === 0) {
+    return [];
+  }
+
+  return fixed;
 };
 
 export const handleChange = (

@@ -12,13 +12,16 @@ const SearchSelect = ({
   inputId,
   disabled,
   setValue,
+  onSearch,
   onSetValue,
+  searchValue,
   options = [],
   initialValue,
   multiple = false,
+  filterOption = true,
   className = "search-select",
-  placeholder = "Select a value...",
   suffixIcon = <ChevronDown />,
+  placeholder = "Select a value...",
 }) => {
   // 1. Ensure that the Component does not have the same className
   // as the mountNode
@@ -79,11 +82,18 @@ const SearchSelect = ({
         className={className}
         options={fixedOptions}
         suffixIcon={wrappedIcon}
+        searchValue={searchValue}
         optionFilterProp="label"
         style={{ width: "100%" }}
         placeholder={placeholder}
+        filterOption={filterOption}
         maxTagCount={selectMaxTagCount}
         mode={multiple ? "multiple" : null}
+        onSearch={(v) => {
+          if (typeof onSearch === "function") {
+            onSearch(v);
+          }
+        }}
         onChange={(val) => {
           const sortedVal = handleChange(
             val,
@@ -116,6 +126,10 @@ SearchSelect.propTypes = {
    */
   disabled: PropTypes.bool,
   /**
+   * Enables Options to be filtered
+   */
+  filterOption: PropTypes.bool,
+  /**
    * Custom ClassName for Component.<br />
    * Warning: This cannot be set to `fig-search-select` as that is reserved for moundNode.
    */
@@ -127,7 +141,13 @@ SearchSelect.propTypes = {
   /**
    * Options for Select
    */
-  options: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+  options: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.shape({ label: PropTypes.string, value: PropTypes.string }),
+    ])
+  ),
   /**
    * Initial Value
    */
@@ -156,6 +176,15 @@ SearchSelect.propTypes = {
    * @param {(String|Number|Array.<(String|Number)>)} value
    */
   onSetValue: PropTypes.func,
+  /**
+   * SearchValue
+   */
+  searchValue: PropTypes.string,
+  /**
+   * Setter Function for searchValue
+   * @param {String} value
+   */
+  onSearch: PropTypes.func,
 };
 
 export default SearchSelect;
