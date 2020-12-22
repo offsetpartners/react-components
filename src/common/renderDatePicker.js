@@ -1,6 +1,6 @@
 import moment from "moment";
 import { render } from "react-dom";
-import DatePicker from "./DatePicker";
+import DatePicker from "components/DatePicker";
 
 export default () => {
   // Allows for Component to mount via a normal DOM Classname
