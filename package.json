@@ -1,6 +1,5 @@
 {
   "name": "@offsetpartners/react-components",
-  "version": "0.6.7",
   "description": "React Components for Figure and Offset",
   "main": "./dist/figure.js",
   "module": "./dist/figure.js",
@@ -8,8 +7,8 @@
     "access": "public"
   },
   "dependencies": {
-    "antd": "^4.9.2",
-    "moment": "^2.27.0",
+    "antd": "^4.9.4",
+    "moment": "^2.29.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
