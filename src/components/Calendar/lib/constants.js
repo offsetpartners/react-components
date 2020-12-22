@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const MONTHS = [
   { code: "JAN", displayName: "January" },
   { code: "FEB", displayName: "February" },
@@ -16,7 +18,7 @@ export const MONTHS = [
 export const WEEKS_ARRAY = [0, 1, 2, 3, 4, 5];
 export const DAYS_ARRAY = [0, 1, 2, 3, 4, 5, 6];
 
-export const MIN_YEAR = 1970;
+export const MIN_YEAR = moment().subtract(100, "years").year();
 
 /**
  * @param {Number|Null} maxYear
@@ -51,4 +53,13 @@ export const GET_WEEKDAYS = (type = "short") => {
     default:
       return ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   }
+};
+
+export const ERRORS = {
+  /**
+   *
+   * @param {Dat} maxDate
+   */
+  maxDate: (maxDate) =>
+    `Cannot exceed the max date of ${moment(maxDate).format("MMM D, YYYY")}`,
 };

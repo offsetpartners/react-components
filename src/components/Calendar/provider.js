@@ -1,5 +1,4 @@
 import moment from "moment";
-import message from "antd/lib/message";
 import { useDebounce } from "react-use";
 import {
   useMemo,
@@ -9,6 +8,7 @@ import {
   useCallback,
   createContext,
 } from "react";
+import { ERRORS } from "./lib/constants";
 
 /**
  * Hook to debounce onDateChange
@@ -94,7 +94,8 @@ const CalendarProvider = ({
   year,
   setYear,
 
-  // Data fetching Props
+  // Handler props
+  onError,
   onCellClick,
   onDateChange,
   doesCellHaveEvent,
@@ -152,23 +153,15 @@ const CalendarProvider = ({
     if (setYear && typeof setYear === "function") setterFn = setYear;
 
     if (actualMonth > _maxDate.getMonth() && v >= _maxDate.getFullYear()) {
-      message.warning(
-        `Cannot exceed the max date of ${moment(_maxDate).format(
-          "MMM D, YYYY"
-        )}!`
-      );
       setterFn(_maxDate.getFullYear());
       handleMonthChange(_maxDate.getMonth());
+      typeof onError === "function" && onError(ERRORS.maxDate(_maxDate));
       return;
     }
 
     if (v > _maxDate.getFullYear()) {
-      message.warning(
-        `Cannot exceed the max date of ${moment(_maxDate).format(
-          "MMM D, YYYY"
-        )}!`
-      );
       setterFn(_maxDate.getFullYear());
+      typeof onError === "function" && onError(ERRORS.maxDate(_maxDate));
       return;
     }
 
@@ -180,12 +173,8 @@ const CalendarProvider = ({
     if (typeof setMonth === "function") setterFn = setMonth;
 
     if (_v > _maxDate.getMonth() && actualYear >= _maxDate.getFullYear()) {
-      message.warning(
-        `Cannot exceed the max date of ${moment(_maxDate).format(
-          "MMM D, YYYY"
-        )}!`
-      );
       setterFn(_maxDate.getMonth());
+      typeof onError === "function" && onError(ERRORS.maxDate(_maxDate));
       return;
     }
 
@@ -204,12 +193,8 @@ const CalendarProvider = ({
     if (typeof setSelected === "function") setterFn = setSelected;
 
     if (v > _maxDate) {
-      message.warning(
-        `Cannot exceed the max date of ${moment(_maxDate).format(
-          "MMM D, YYYY"
-        )}!`
-      );
       setterFn(_maxDate);
+      typeof onError === "function" && onError(ERRORS.maxDate(_maxDate));
       return;
     }
     setterFn(v);

@@ -92,6 +92,13 @@ Calendar.propTypes = {
   setYear: PropTypes.func,
 
   /**
+   * Error callback
+   *
+   * @param {String} error
+   */
+  onError: PropTypes.func,
+
+  /**
    * Callback for when a cell is clicked
    *
    * @param {Date} date

@@ -9,7 +9,7 @@ const generateDate = (month, day, year) => {
 };
 
 const Week = () => {
-  const { month, year } = useCalendar();
+  const { maxDate, month, year } = useCalendar();
 
   let date = 1;
 
@@ -59,7 +59,12 @@ const Week = () => {
 
       const dateObj = generateDate(month + 1, date, year);
       return (
-        <Cell active key={key} date={dateObj} isLastWeek={isLastWeek}>
+        <Cell
+          key={key}
+          date={dateObj}
+          isLastWeek={isLastWeek}
+          active={dateObj <= maxDate}
+        >
           {date++}
         </Cell>
       );
