@@ -2,7 +2,6 @@ import moment from "moment";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
 import Input from "antd/lib/input";
-import message from "antd/lib/message";
 import * as Feather from "react-feather";
 import Calendar from "components/Calendar";
 import { useRef, useState, useEffect } from "react";
@@ -16,6 +15,7 @@ export default () => {
     month,
     year,
     value,
+    onError,
     maxDate,
     maxDateRange,
     setValue,
@@ -82,6 +82,7 @@ export default () => {
         selected={value}
         maxDate={maxDate}
         setYear={setYear}
+        onError={onError}
         setMonth={setMonth}
         headerComponents={{
           month: { left: ["previousMonth"], right: ["nextMonth"] },
@@ -130,9 +131,7 @@ export default () => {
           const isToDateTooFar =
             maxDateRange && newValues[1].diff(newValues[0], "d") > maxDateRange;
           if (isToDateTooFar) {
-            message.warning(
-              `You cannot exceed the max date range of ${maxDateRange}!`
-            );
+            onError(`You cannot exceed the max date range of ${maxDateRange}!`);
 
             if (focused === 0) {
               if (invalidDateFlag) {

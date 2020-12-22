@@ -1,5 +1,4 @@
 import moment from "moment";
-import message from "antd/lib/message";
 import Calendar from "components/Calendar";
 import { useDatePicker } from "components/DatePicker/provider";
 import { getPresetFromValue } from "components/DatePicker/utils";
@@ -9,6 +8,7 @@ export default () => {
     type,
     items,
     maxDate,
+    onError,
     value,
     setValue,
     month,
@@ -24,6 +24,7 @@ export default () => {
       month={month}
       selected={value}
       maxDate={maxDate}
+      onError={onError}
       setYear={setYear}
       setMonth={setMonth}
       headerComponents={{
@@ -35,8 +36,8 @@ export default () => {
         if (maxDate) {
           const max = moment(maxDate);
           if (newValue.isAfter(max, "d")) {
-            message.warning(
-              `You cannot exceed the max date of ${max.format("MMM D, YYYY")}!`
+            onError(
+              `Cannot exceed the max date of ${max.format("MMM D, YYYY")}!`
             );
             newValue = max;
           }

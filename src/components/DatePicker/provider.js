@@ -1,6 +1,13 @@
 import moment from "moment";
 import { generateItems, getPresetFromValue } from "./utils";
-import { useMemo, useState, useEffect, useContext, createContext, useCallback } from "react";
+import {
+  useMemo,
+  useState,
+  useEffect,
+  useContext,
+  createContext,
+  useCallback,
+} from "react";
 
 const DatePickerContext = createContext({
   inputId: "",
@@ -21,6 +28,7 @@ const DatePickerContext = createContext({
   value: new Date() || [new Date()],
 
   onSave: () => {},
+  onError: () => {},
 });
 
 const DatePickerProvider = (props) => {
@@ -37,86 +45,117 @@ const DatePickerProvider = (props) => {
     disabledPresets = [],
 
     onSave,
+    onError,
 
     value,
     setValue,
     initialValue,
   } = props;
 
-  // Internal
-  const _maxDate = maxDate instanceof Date ? maxDate : null;
-  const _maxDateRange = typeof maxDateRange === "number" ? maxDateRange : false;
+  // 1. Initialize internal properties
+  const refMaxDate = maxDate instanceof Date ? maxDate : null;
+  const refMaxDateRange =
+    typeof maxDateRange === "number" ? maxDateRange : false;
   const today = moment();
-  const items = generateItems(type, _maxDateRange, disabledPresets);
-  const [_month, _setMonth] = useState(today.month());
-  const [_year, _setYear] = useState(today.year());
+  const items = generateItems(
+    type,
+    refMaxDate,
+    refMaxDateRange,
+    disabledPresets
+  );
+  const [refMonth, setRefMonth] = useState(today.month());
+  const [refYear, setRefYear] = useState(today.year());
 
-  const [_value, _setValue] = useState(() => {
-    let value, month, year;
+  // 2. Initialize internal value state
+  const [refValue, setRefValue] = useState(() => {
+    let initValue, initMonth, initYear;
+    // 2a. Handle initial value for `range` type
     if (type === "range") {
+      // Check that the initial value provided is a
+      // valid date
       if (
         typeof initialValue !== "undefined" &&
         Array.isArray(initialValue) &&
         initialValue.length === 2
       ) {
-        // Check that both values provided are Dates
         if (
           initialValue[0] instanceof Date &&
           initialValue[1] instanceof Date
         ) {
-          // Check if End Date is greater than Start Date
           if (initialValue[0] > initialValue[1]) {
-            value = [initialValue[1], initialValue[0]];
+            initValue = [initialValue[1], initialValue[0]];
           } else {
-            value = initialValue;
+            initValue = initialValue;
           }
         }
       } else {
-        value = [today.toDate(), today.clone().add(1, "d").toDate()];
+        initValue = [today.toDate(), today.clone().add(1, "d").toDate()];
       }
-      month = value[0].getMonth();
-      year = value[0].getFullYear();
-    } else {
-      if (typeof initialValue !== "undefined" && initialValue instanceof Date) {
-        value = initialValue;
-      } else {
-        value = today.toDate();
-      }
-      month = value.getMonth();
-      year = value.getFullYear();
+      initMonth = initValue[0].getMonth();
+      initYear = initValue[0].getFullYear();
     }
-    _setYear(year);
-    _setMonth(month);
-    return value;
+    // 2b. Handle initial value for `single` type
+    else {
+      // Check that the initial value provided is a
+      // valid date
+      if (typeof initialValue !== "undefined" && initialValue instanceof Date) {
+        initValue = initialValue;
+      } else {
+        initValue = today.toDate();
+      }
+      initMonth = initValue.getMonth();
+      initYear = initValue.getFullYear();
+    }
+
+    if (refMaxDate) setRefMonth(refMaxDate.getMonth());
+    else setRefMonth(initMonth);
+    setRefYear(initYear);
+    return initValue;
   });
-  let actualValue = _value;
+
+  // 3. Retrieve passed value state prop if
+  // possible
+  let actualValue = refValue;
   if (typeof value !== "undefined") {
     actualValue = value;
   }
+
+  // 4. Initialize internal preset state
   const [preset, setPreset] = useState(
-    getPresetFromValue(type, items, value || _value) || false
+    getPresetFromValue(type, items, value || refValue) || false
   );
-  // Callbacks to handle state Setters
+
+  // 5. Generate handler functions
   const handleValueChange = useCallback((v) => {
-    let setterFn = _setValue;
+    let setterFn = setRefValue;
     if (typeof setValue === "function") setterFn = setValue;
 
-    if (type === "range" && _maxDateRange) {
-      const fromDate = moment(v[0]);
-      const toDate = moment(v[1]);
+    if (type === "range") {
+      let fromDate = moment(v[0]);
+      let toDate = moment(v[1]);
 
-      const diff = toDate.diff(fromDate, "d");
-      if (diff > _maxDateRange) {
-        setterFn([
-          toDate.toDate(),
-          toDate.clone().add(_maxDateRange, "d").toDate(),
-        ]);
-        return;
+      if (refMaxDate) {
+        const momentMax = moment(refMaxDate);
+        if (fromDate.isSameOrAfter(momentMax, "d")) {
+          fromDate = momentMax.clone().subtract(1, "d");
+        }
+        if (toDate.isAfter(momentMax, "d")) {
+          toDate = momentMax;
+        }
       }
-    } else if (type === "single" && _maxDate) {
-      const momentNew = moment(v);
-      const momentMax = moment(_maxDate);
 
+      if (refMaxDateRange) {
+        const diff = toDate.diff(fromDate, "d");
+        if (diff > refMaxDateRange) {
+          fromDate = toDate;
+          toDate = toDate.add(refMaxDateRange, "d");
+        }
+      }
+      setterFn([fromDate.toDate(), toDate.toDate()]);
+      return;
+    } else if (type === "single" && refMaxDate) {
+      const momentNew = moment(v);
+      const momentMax = moment(refMaxDate);
       if (momentNew.isAfter(momentMax, "d")) {
         setterFn(momentMax.toDate());
         return;
@@ -126,13 +165,23 @@ const DatePickerProvider = (props) => {
     setterFn(v);
   });
   const handleSave = useCallback((val) => {
-    if (typeof onSave === "function") onSave(inputId, val);
+    if (typeof onSave === "function") {
+      const mMax = moment(refMaxDate);
+      if (refMaxDate && moment(val).isAfter(mMax, "d")) {
+        onSave(inputId, mMax.toDate());
+      } else {
+        onSave(inputId, val);
+      }
+    }
+  });
+  const handleError = useCallback((val) => {
+    if (typeof onError === "function") onError(val);
   });
 
-  // When type changes change values
-  // to fit appropriate structure
+  // 6. Hook that handles value if and when
+  // type changes
   useEffect(() => {
-    let act = value || _value;
+    let act = value || refValue;
     if (type === "range" && !Array.isArray(act)) {
       act = [act, moment(act).add(1, "d").toDate()];
     } else if (type === "single" && Array.isArray(act)) {
@@ -144,6 +193,8 @@ const DatePickerProvider = (props) => {
     }
     handleValueChange(act);
   }, [type]);
+
+  // 7. Generate provided values
   const providerValue = useMemo(
     () => ({
       type,
@@ -151,16 +202,17 @@ const DatePickerProvider = (props) => {
       format,
       inputId,
       disabled,
-      maxDate: _maxDate,
-      maxDateRange: _maxDateRange,
+      maxDate: refMaxDate,
+      maxDateRange: refMaxDateRange,
 
       onSave: handleSave,
+      onError: handleError,
 
       // Calendar State
-      month: _month,
-      setMonth: _setMonth,
-      year: _year,
-      setYear: _setYear,
+      month: refMonth,
+      setMonth: setRefMonth,
+      year: refYear,
+      setYear: setRefYear,
 
       // Date Picker State
       preset,
@@ -168,9 +220,10 @@ const DatePickerProvider = (props) => {
       value: actualValue,
       setValue: handleValueChange,
     }),
-    [disabled, _month, _year, type, value, _value]
+    [disabled, refMonth, refYear, type, value, refValue]
   );
 
+  // 8. Return Provider
   return (
     <DatePickerContext.Provider value={providerValue}>
       {children}

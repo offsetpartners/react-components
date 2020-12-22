@@ -2,15 +2,12 @@ import "./styles/index.less";
 import { memo } from "react";
 import PropTypes from "prop-types";
 import Button from "./components/Button";
-import Popover from "./components/Popover";
 import DatePickerProvider from "./provider";
 
 const DatePicker = memo((props) => {
   return (
     <DatePickerProvider {...props}>
-      <Popover>
-        <Button />
-      </Popover>
+      <Button />
     </DatePickerProvider>
   );
 });
@@ -36,6 +33,12 @@ DatePicker.propTypes = {
    * Format of Date in Button
    */
   format: PropTypes.string,
+  /**
+   * Error callback
+   *
+   * @param {String} error
+   */
+  onError: PropTypes.func,
 
   /**
    * Initial Value to load.

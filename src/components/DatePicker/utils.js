@@ -1,11 +1,19 @@
 import moment from "moment";
 
 /**
+ * Generates Presets from props
  * @param {"range"|"single"} type
- * @param {Number} maxDateRange
+ * @param {Date|null} maxDate
+ * @param {Number|null} maxDateRange
  * @param {"all"|Array.<String>|function} disabledPresets
  */
-export const generateItems = (type, maxDateRange, disabledPresets = null) => {
+export const generateItems = (
+  type,
+  maxDate = null,
+  maxDateRange = null,
+  disabledPresets = null
+) => {
+  // 1. Early check for no presets
   if (disabledPresets === "all") {
     return [];
   }
@@ -15,6 +23,8 @@ export const generateItems = (type, maxDateRange, disabledPresets = null) => {
    */
   let items;
   const today = moment();
+
+  // 2. Handle different types
   if (type === "range") {
     const last2Days = [today.clone().subtract(2, "d"), today];
     const last3Days = [today.clone().subtract(3, "d"), today];
@@ -113,16 +123,29 @@ export const generateItems = (type, maxDateRange, disabledPresets = null) => {
       { key: "END_OF_QUARTER", label: "End of Quarter", date: endOfQuarter },
     ];
   }
-  let filtered = items;
 
+  // 3. Filter through items
+  let filtered = items;
   if (type === "range" && maxDateRange) {
     filtered = items.filter((i) => {
       return i.date[1].diff(i.date[0], "days") + 1 <= maxDateRange;
     });
   }
-
+  if (maxDate) {
+    filtered = filtered.filter((i) => {
+      const mMax = moment(maxDate);
+      if (type === "range") {
+        return (
+          i.date[0].isSameOrBefore(mMax, "d") &&
+          i.date[1].isSameOrBefore(mMax, "d")
+        );
+      } else {
+        return i.date.isSameOrBefore(mMax, "d");
+      }
+    });
+  }
   if (Array.isArray(disabledPresets)) {
-    return filtered.filter((i) => !disabledPresets.includes(i.key));
+    filtered = filtered.filter((i) => !disabledPresets.includes(i.key));
   }
 
   return filtered;
@@ -149,6 +172,7 @@ export const getPresetFromValue = (type, items, value) => {
 };
 
 /**
+ * Get Selected Date from Preset
  * @param {"range"|"single"} type
  * @param {{key: String, label: String, date: moment.Moment}} preset
  * @param {Function} setPreset

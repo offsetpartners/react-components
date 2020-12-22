@@ -1,9 +1,11 @@
 import flatten from "./flatten";
 import formatMoney from "./formatMoney";
-import renderSearchSelect from "./renderSearchSelect"
+import renderDatePicker from "./renderDatePicker";
+import renderSearchSelect from "./renderSearchSelect";
 
 export default {
   flatten,
   formatMoney,
-  renderSearchSelect
+  renderDatePicker,
+  renderSearchSelect,
 };

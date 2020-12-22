@@ -22,6 +22,9 @@
 // Button
 // ---
 .fig-datepicker-preset {
+  border-top-right-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+  
   &:focus {
     background-color: #fff;
   }
@@ -44,11 +47,12 @@
 }
 
 .fig-datepicker-calendar {
-  border-top-left-radius: 0px !important;
-  border-bottom-left-radius: 0px !important;
-
+  border-radius: 4px;
+  
   &:not(.no-preset) {
-    border-left: 1px solid @border-color-base !important;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-left: 1px solid @border-color-base;
   }
 
   .fig-datepicker-calendar-icon {
@@ -85,6 +89,7 @@
 .fig-datepicker-calendar-popover {
   width: 100%;
   min-width: 300px;
+  max-width: 450px;
 
   // Arrow
   // ---

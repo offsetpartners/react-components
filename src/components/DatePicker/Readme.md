@@ -19,14 +19,18 @@ const [type, setType] = useState("single");
 
   <DatePicker
     type={type}
+    // disabledPresets="all"
     initialValue={[
       new Date(new Date().setMonth(1)),
       new Date(new Date(new Date().setMonth(1)).setDate(11)),
     ]}
-    // maxDate={new Date()}
-    maxDateRange={5}
+    maxDate={new Date(new Date().setMonth(9))}
+    maxDateRange={7}
     onSave={(inutId, value) => {
       console.log(value)
+    }}
+    onError={e => {
+      console.log(e)
     }}
   />
 </>;

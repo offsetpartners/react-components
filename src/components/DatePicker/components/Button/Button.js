@@ -107,8 +107,11 @@ export default () => {
   return (
     <Row align="middle" className="fig-datepicker-container">
       {LeftButton}
-      <Col span={hasDropdown ? 12 : 24} className="fig-datepicker-calendar-col">
-        <Popover>
+      <Popover>
+        <Col
+          span={hasDropdown ? 12 : 24}
+          className="fig-datepicker-calendar-col"
+        >
           <Button
             block
             type="ghost"
@@ -126,8 +129,8 @@ export default () => {
               </Col>
             </Row>
           </Button>
-        </Popover>
-      </Col>
+        </Col>
+      </Popover>
     </Row>
   );
 };
