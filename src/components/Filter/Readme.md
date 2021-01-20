@@ -3,6 +3,7 @@ Filter Example
 Example:
 
 ```jsx
+import { useState } from "react";
 import { Filter } from "@offsetpartners/react-components";
 
 const options = {
@@ -24,16 +25,20 @@ const options = {
   shipping_date: {
     type: "date",
     label: "Shipping Date",
-    props: {
-      type: "range",
-    },
   },
   first_name: {
     type: "text",
     label: "First Name",
   },
 };
+const [selected, setSelected] = useState({});
 <>
-  <Filter options={options} />
+  <Filter
+    options={options}
+    selected={selected}
+    setSelected={setSelected}
+    defaultSelected={{ order_channel: ["Web", "POS", "Admin"] }}
+    onDone={(selected) => console.log(selected)}
+  />
 </>;
 ```

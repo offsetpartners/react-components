@@ -54,15 +54,16 @@ const Select = (props) => {
                   className="filter-box-popover-select-children-select"
                   onKeyDown={() => {}}
                   onClick={(e) => {
+                    const isChecked = selected.length === options.length;
                     if (typeof onChildChange === "function") {
                       onChildChange("SELECT_ALL", {
-                        target: { checked: !selected.includes("SELECT_ALL") },
+                        target: { checked: !isChecked },
                       });
                     }
                   }}
                 >
                   <CheckBox
-                    checked={selected.includes("SELECT_ALL")}
+                    checked={selected.length === options.length}
                     className="filter-box-popover-select-children-select-checkbox"
                     onChange={(e) => {
                       if (typeof onChildChange === "function") {

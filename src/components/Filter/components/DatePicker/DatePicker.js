@@ -1,14 +1,17 @@
 import Select from "antd/lib/select";
+import { memo, useState } from "react";
 import CheckBox from "antd/lib/checkbox";
 import { ChevronDown } from "react-feather";
-import { memo, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import DatePicker from "components/DatePicker";
 
 const _DatePicker = (props) => {
   const [type, setType] = useState("single");
   const { id, title, checked, selected, onChildChange, onParentChange } = props;
-  const getDatePickerProps = useMemo(() => {
+  const resetComponent = () => {
+    setType("single");
+  };
+  const getDatePickerProps = () => {
     const defaultProps = {
       onChange: (val) => {
         if (typeof onChildChange === "function" && val !== selected) {
@@ -16,27 +19,18 @@ const _DatePicker = (props) => {
         }
       },
     };
-    let _props = {};
-    if (type === "single") {
-      _props = {
-        type: "single",
-      };
-    } else if (type === "range") {
-      _props = {
-        type: "range",
-      };
-    }
 
-    return { ..._props, ...defaultProps };
-  }, [type]);
+    return { type, ...defaultProps };
+  };
   return (
     <div className="filter-box-popover-datepicker">
       <div
         className="filter-box-popover-datepicker-parent"
         onKeyDown={() => {}}
         onClick={(e) => {
+          if (!checked) resetComponent();
           if (typeof onParentChange === "function") {
-            onParentChange(id, { target: { checked: !checked } });
+            onParentChange(id, { target: { checked: !checked } }, { type });
           }
         }}
       >
@@ -44,8 +38,9 @@ const _DatePicker = (props) => {
           checked={checked}
           className="filter-box-popover-datepicker-parent-checkbox"
           onChange={(e) => {
+            if (!checked) resetComponent();
             if (typeof onParentChange === "function") {
-              onParentChange(id, e);
+              onParentChange(id, e, { type });
             }
           }}
         />
@@ -79,7 +74,7 @@ const _DatePicker = (props) => {
                   </span>
                 }
               />
-              <DatePicker {...getDatePickerProps} />
+              <DatePicker {...getDatePickerProps()} />
             </div>
           </motion.div>
         )}

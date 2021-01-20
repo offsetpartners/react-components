@@ -39,8 +39,9 @@ const Text = (props) => {
           >
             <div className="filter-box-popover-text-children-wrapper">
               <input
-                className="filter-box-popover-text-children-input"
                 value={selected}
+                placeholder="Search..."
+                className="filter-box-popover-text-children-input"
                 onChange={(e) => {
                   if (typeof onChildChange === "function") {
                     onChildChange(id, e);
