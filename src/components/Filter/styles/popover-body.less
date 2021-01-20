@@ -1,0 +1,121 @@
+.filter-box-popover-body {
+  overflow: hidden;
+  overflow-y: auto;
+  max-height: 100vh;
+  .filter-box-popover-text,
+  .filter-box-popover-select,
+  .filter-box-popover-datepicker {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    &:last-child {
+      & .filter-box-popover-text-parent,
+      .filter-box-popover-select-parent,
+      .filter-box-popover-datepicker-parent {
+        border-bottom: 1px solid #dee2e6;
+      }
+    }
+    &-parent {
+      cursor: pointer;
+      padding: 15px 10px;
+      border-top: 1px solid #dee2e6;
+
+      &-checkbox {
+      }
+
+      &-title {
+        font-size: 14px;
+        color: #2a2f56;
+        line-height: 18px;
+        margin-left: 10px;
+        user-select: none;
+        letter-spacing: -0.006em;
+      }
+    }
+
+    &-children {
+      overflow: hidden;
+      background-color: #f6f6fb;
+
+      &-wrapper {
+        height: 100%;
+        padding: 15px;
+        overflow: hidden;
+        overflow-y: auto;
+        max-height: 225px;
+      }
+
+      &-select {
+        cursor: pointer;
+        &:not(:first-child) {
+          margin-top: 6px;
+        }
+
+        &-checkbox {
+        }
+
+        &-title {
+          color: #2a2f56;
+          font-size: 12.8px;
+          line-height: 26px;
+          margin-left: 10px;
+          user-select: none;
+          letter-spacing: -0.006em;
+        }
+      }
+
+      .fig-datepicker-container {
+        width: 100%;
+        overflow: hidden;
+        margin-top: 12px;
+        background-color: #fff;
+
+        .fig-datepicker-preset-col,
+        .fig-datepicker-calendar-col {
+          width: 100%;
+          overflow: hidden;
+
+          button.ant-btn {
+            font-size: 12.8px;
+            line-height: 26px;
+            user-select: none;
+            letter-spacing: -0.006em;
+
+            span:not(.anticon) {
+              font-size: 12.8px;
+              line-height: 26px;
+              user-select: none;
+              letter-spacing: -0.006em;
+            }
+          }
+        }
+      }
+
+      &-type {
+        width: 100%;
+        font-size: 12.8px;
+        line-height: 26px;
+        user-select: none;
+        letter-spacing: -0.006em;
+        .ant-select-arrow,
+        .ant-select-clear {
+          top: 50%;
+          width: 16px;
+          height: 16px;
+          font-size: 16px;
+          margin-top: -8px;
+          color: #2a2f56;
+          user-select: none;
+
+          span {
+            svg {
+              width: 16px;
+              height: 16px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+@import "button";
+
+// Removes Popover Arrow
+.ant-popover.ant-popover-placement-bottomLeft.filter-box-popover-container {
+  width: 100%;
+  max-width: 260px;
+  padding-top: 5px;
+  .ant-popover-arrow {
+    display: none;
+  }
+  .ant-popover-inner {
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.08),
+      0px 15px 35px rgba(49, 49, 93, 0.1),
+      0px 0px 0px 1px rgba(136, 152, 170, 0.1);
+
+    &-content {
+      padding: 0px;
+      .filter-box-popover {
+        display: flex;
+        flex-direction: column;
+        background-color: #fff;
+
+        @import "popover-header";
+        @import "popover-body";
+      }
+    }
+  }
+}
