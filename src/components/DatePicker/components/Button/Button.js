@@ -54,7 +54,7 @@ export default () => {
 
   if (hasDropdown) {
     LeftButton = (
-      <Col span={12}>
+      <Col className="fig-datepicker-preset-col">
         <Dropdown
           visible={open}
           disabled={disabled}
@@ -108,16 +108,13 @@ export default () => {
     <Row align="middle" className="fig-datepicker-container">
       {LeftButton}
       <Popover>
-        <Col
-          span={hasDropdown ? 12 : 24}
-          className="fig-datepicker-calendar-col"
-        >
+        <Col className="fig-datepicker-calendar-col">
           <Button
             block
             type="ghost"
             disabled={disabled}
-            className={`fig-datepicker-calendar ${
-              hasDropdown ? "" : "no-preset"
+            className={`fig-datepicker-calendar${
+              hasDropdown ? "" : " no-preset"
             }`}
           >
             <Row align="middle" className="fig-datepicker-calendar-row">

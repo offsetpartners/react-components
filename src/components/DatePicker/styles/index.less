@@ -2,74 +2,76 @@
 
 // Container
 // ---
-.fig-datepicker-container {
+.ant-row.fig-datepicker-container {
+  flex-wrap: nowrap;
   border-radius: 4px;
+  display: inline-flex;
   box-shadow: @box-shadow-base;
 
   .ant-btn {
     border: none;
   }
-}
 
-.fig-datepicker-input-group {
-  margin-bottom: 0px !important;
-}
+  .fig-datepicker-preset-col {
+    // Button
+    // ---
+    .fig-datepicker-preset {
+      border-top-right-radius: 0px !important;
+      border-bottom-right-radius: 0px !important;
 
-.fig-datepicker-calendar-row {
-  flex-wrap: nowrap !important;
-}
+      &:focus {
+        background-color: #fff;
+      }
 
-// Button
-// ---
-.fig-datepicker-preset {
-  border-top-right-radius: 0px !important;
-  border-bottom-right-radius: 0px !important;
-  
-  &:focus {
-    background-color: #fff;
-  }
+      .ant-row {
+        width: 100%;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: space-between;
+        .fig-datepicker-preset-label {
+          overflow: hidden;
+          text-align: start;
+          text-overflow: ellipsis;
+        }
 
-  .ant-row {
-    width: 100%;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: space-between;
-    .fig-datepicker-preset-label {
-      overflow: hidden;
-      text-align: start;
-      text-overflow: ellipsis;
-    }
-
-    .fig-datepicker-preset-icon {
-      display: inline-flex;
+        .fig-datepicker-preset-icon {
+          display: inline-flex;
+        }
+      }
     }
   }
-}
 
-.fig-datepicker-calendar {
-  border-radius: 4px;
-  
-  &:not(.no-preset) {
-    border-top-left-radius: 0px;
-    border-bottom-left-radius: 0px;
-    border-left: 1px solid @border-color-base;
-  }
+  .fig-datepicker-calendar-col {
+    .fig-datepicker-calendar {
+      border-radius: 4px;
 
-  .fig-datepicker-calendar-icon {
-    display: inline-flex;
-  }
+      .fig-datepicker-calendar-row {
+        flex-wrap: nowrap !important;
 
-  .fig-datepicker-calendar-label {
-    margin-left: 8px;
-    overflow: hidden;
-    text-align: start;
-    text-overflow: ellipsis;
-  }
+        .fig-datepicker-calendar-icon {
+          display: inline-flex;
+        }
 
-  .fig-typography {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+        .fig-datepicker-calendar-label {
+          margin-left: 8px;
+          overflow: hidden;
+          text-align: start;
+          text-overflow: ellipsis;
+        }
+
+        .fig-typography {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+      }
+
+      &:not(.no-preset) {
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+        border-left: 1px solid @border-color-base;
+      }
+    }
   }
 }
 
@@ -89,7 +91,7 @@
 .fig-datepicker-calendar-popover {
   width: 100%;
   min-width: 300px;
-  max-width: 450px;
+  max-width: 350px;
 
   // Arrow
   // ---
@@ -119,7 +121,6 @@
   // ---
   .fig-calendar-wrapper {
     border: none;
-    border-radius: 0px;
   }
 
   .fig-calendar-header-left {
