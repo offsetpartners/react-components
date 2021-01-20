@@ -96,7 +96,7 @@ npm run start
 ## **Reference Libraries**
 
 - [React](https://reactjs.org/)
-= [Moment](https://momentjs.com/)
+- [Moment](https://momentjs.com/)
 - [AntDesign](https://ant.design/)
 - [Framer Motion](https://www.framer.com/api/motion/)
 - [React Use](https://github.com/streamich/react-use)
@@ -104,7 +104,9 @@ npm run start
 
 ## **Roadmap**
 
+- Add tests to each Component
 - Convert to Typescript
+- Optimize bundle
 
 ### **Version**
 
