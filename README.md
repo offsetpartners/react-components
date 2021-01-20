@@ -95,14 +95,17 @@ npm run start
 
 ## **Reference Libraries**
 
+- [React](https://reactjs.org/)
+= [Moment](https://momentjs.com/)
 - [AntDesign](https://ant.design/)
+- [Framer Motion](https://www.framer.com/api/motion/)
+- [React Use](https://github.com/streamich/react-use)
 - [React Feather](https://github.com/feathericons/react-feather)
 
 ## **Roadmap**
 
-- Assign QueryBuilder into its own library
 - Convert to Typescript
 
 ### **Version**
 
-v. 0.6.9
+v. 0.7.0
