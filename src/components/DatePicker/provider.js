@@ -46,6 +46,7 @@ const DatePickerProvider = (props) => {
 
     onSave,
     onError,
+    onChange,
 
     value,
     setValue,
@@ -163,6 +164,9 @@ const DatePickerProvider = (props) => {
     }
 
     setterFn(v);
+    if (typeof onChange === "function") {
+      onChange(v);
+    }
   });
   const handleSave = useCallback((val) => {
     if (typeof onSave === "function") {
@@ -178,8 +182,8 @@ const DatePickerProvider = (props) => {
     if (typeof onError === "function") onError(val);
   });
 
-  // 6. Hook that handles value if and when
-  // type changes
+  // 6. Hook that listen to type changes to set appropriate
+  // value
   useEffect(() => {
     let act = value || refValue;
     if (type === "range" && !Array.isArray(act)) {

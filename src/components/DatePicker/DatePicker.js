@@ -69,6 +69,11 @@ DatePicker.propTypes = {
    */
   onSave: PropTypes.func,
   /**
+   * Callback to when value is changed
+   * @param {Date|Date[]}value
+   */
+  onChange: PropTypes.func,
+  /**
    * Max Date to allow for selection
    */
   maxDate: PropTypes.instanceOf(Date),

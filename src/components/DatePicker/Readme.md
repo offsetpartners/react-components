@@ -16,6 +16,7 @@ const [type, setType] = useState("single");
       { label: "Range", value: "range" },
     ]}
   />
+  <br />
 
   <DatePicker
     type={type}
@@ -27,10 +28,10 @@ const [type, setType] = useState("single");
     maxDate={new Date(new Date().setMonth(9))}
     maxDateRange={7}
     onSave={(inutId, value) => {
-      console.log(value)
+      console.log(value);
     }}
-    onError={e => {
-      console.log(e)
+    onError={(e) => {
+      console.log(e);
     }}
   />
 </>;
