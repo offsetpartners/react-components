@@ -3,7 +3,6 @@ import Grid from "antd/lib/grid";
 import PropTypes from "prop-types";
 import Select from "antd/lib/select";
 import { useSelectRef } from "./hooks";
-import Skeleton from "antd/lib/skeleton";
 import { ChevronDown } from "react-feather";
 import { useRef, useEffect, useState } from "react";
 import { fixOptions, handleChange } from "./helpers";
@@ -18,13 +17,16 @@ const SearchSelect = ({
   searchValue,
   options = [],
   initialValue,
+  disableClear,
+  disableArrow,
+  notFoundContent,
   multiple = false,
   filterOption = true,
   autoClearSearchValue = true,
   className = "search-select",
-  suffixIcon = <ChevronDown />,
   dropdownRender = (menu) => menu,
   placeholder = "Select a value...",
+  suffixIcon = <ChevronDown opacity="0.5" color="#2a2f56" />,
 }) => {
   // 1. Ensure that the Component does not have the same className
   // as the mountNode
@@ -77,21 +79,22 @@ const SearchSelect = ({
       className="fig-search-select-container"
     >
       <Select
-        showArrow
-        allowClear
         showSearch
         value={actualValue}
         disabled={disabled}
         className={className}
         options={fixedOptions}
         suffixIcon={wrappedIcon}
-        searchValue={searchValue}
         optionFilterProp="label"
+        searchValue={searchValue}
         style={{ width: "100%" }}
         placeholder={placeholder}
+        showArrow={!disableArrow}
+        allowClear={!disableClear}
         filterOption={filterOption}
         dropdownRender={dropdownRender}
         maxTagCount={selectMaxTagCount}
+        notFoundContent={notFoundContent}
         mode={multiple ? "multiple" : null}
         autoClearSearchValue={autoClearSearchValue}
         onSearch={(v) => {
@@ -130,6 +133,18 @@ SearchSelect.propTypes = {
    * Makes Component read-only
    */
   disabled: PropTypes.bool,
+  /**
+   * Disable arrow icon
+   */
+  disableArrow: PropTypes.bool,
+  /**
+   * Disables clear functionality
+   */
+  disableClear: PropTypes.bool,
+  /**
+   * React Node for when no results match
+   */
+  notFoundContent: PropTypes.element,
   /**
    * Enables Options to be filtered
    */

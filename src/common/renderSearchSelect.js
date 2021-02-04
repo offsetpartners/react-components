@@ -15,6 +15,8 @@ export default () => {
       "className",
       "placeholder",
       "initialValue",
+      "disableArrow",
+      "disableClear",
     ];
     const validProps = [...validDataSets, "onSetValue"];
     let providedProps;

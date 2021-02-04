@@ -41,8 +41,11 @@ useState(() => {
 <>
   <h4>Dynamic Options</h4>
   <SearchSelect
+    disableClear
+    disableArrow
     options={options}
     filterOption={false}
+    notFoundContent={null}
     autoClearSearchValue={false}
     searchValue={search}
     onSearch={(v) => {
