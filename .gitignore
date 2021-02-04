@@ -105,3 +105,5 @@ dist
 
 # Styleguidist Docs
 dist-docs
+
+.DS_STORE
